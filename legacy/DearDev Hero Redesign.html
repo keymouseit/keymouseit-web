@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DearDev — Hero Redesign</title>
+<link rel="stylesheet" href="assets/colors_and_type.css" />
+<link rel="stylesheet" href="assets/hero.css" />
+<style>
+  html, body { margin: 0; background: #0e0f12; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="heroes.jsx"></script>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard, DCPostIt } = window;
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection id="rationale" title="DearDev · Hero Redesign" subtitle="Conversion-led. One goal: book the discovery call.">
+        <DCArtboard id="note" label="Why these choices" width={520} height={400}>
+          <div style={{ background: "#12161F", color: "#C3C8D4", height: "100%", padding: "34px 36px", fontFamily: "var(--font-sans)", fontSize: 15, lineHeight: 1.62, borderTop: "3px solid #43BDFA" }}>
+            <div style={{ fontWeight: 800, fontSize: 18, color: "#F4F5F7", marginBottom: 16, letterSpacing: -0.2 }}>The conversion logic</div>
+            <ul style={{ margin: 0, paddingLeft: 18 }}>
+              <li style={{ marginBottom: 10 }}>Headline = the client <i>outcome</i>, not our activity.</li>
+              <li style={{ marginBottom: 10 }}>Named proof in the fold — countries, regulated domains, Mercedes-Benz — beats vanity stats.</li>
+              <li style={{ marginBottom: 10 }}>One dominant CTA, <b style={{ color: "#F4F5F7" }}>Book a discovery call</b>. "See selected work" is a quiet text link.</li>
+              <li style={{ marginBottom: 0 }}>Specificity over adjectives — a CTO learns what's different in 5 seconds.</li>
+            </ul>
+            <div style={{ marginTop: 18, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)", fontSize: 14, color: "#8A92A6" }}>
+              Three angles to compare — each pairs a different headline with a different focal element. Any headline works with any focal treatment, so mix &amp; match.
+            </div>
+          </div>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="variants" title="Hero variants" subtitle="Headline angle + focal element. Hover the CTAs.">
+        <DCArtboard id="speed" label="A · Speed / reliability — 3D product render" width={1320} height={840}>
+          <HeroSpeed />
+        </DCArtboard>
+        <DCArtboard id="regulated" label="B · Regulated domains — credibility card" width={1320} height={840}>
+          <HeroRegulated />
+        </DCArtboard>
+        <DCArtboard id="proof" label="C · Proof / partner — named-proof wall" width={1320} height={840}>
+          <HeroProof />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

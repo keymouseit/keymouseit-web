@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KeyMouse IT — AI-Powered Systems. Real Business Impact.</title>
+<meta name="description" content="KeyMouse IT builds AI-powered operational systems, enterprise platforms, and workflow automation. Inputs become intelligence. Intelligence drives outcomes." />
+<link rel="stylesheet" href="assets/site.css" />
+<link rel="stylesheet" href="assets/site-v2.css" />
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="image-slot.js"></script>
+
+<script type="text/babel" src="site-data.jsx"></script>
+<script type="text/babel" src="site-ui.jsx"></script>
+<script type="text/babel" src="site-solutions.jsx"></script>
+<script type="text/babel" src="site-faq-cta.jsx"></script>
+<script type="text/babel" src="v2-hero.jsx"></script>
+<script type="text/babel" src="v2-problem.jsx"></script>
+<script type="text/babel" src="v2-cases.jsx"></script>
+<script type="text/babel" src="v2-why.jsx"></script>
+<script type="text/babel" src="v2-founder.jsx"></script>
+<script type="text/babel" src="v2-solutions.jsx"></script>
+<script type="text/babel" src="v2-capabilities.jsx"></script>
+<script type="text/babel" src="v2-engage-process.jsx"></script>
+<script type="text/babel" src="v2-cta.jsx"></script>
+
+<script type="text/babel">
+function PageV2() {
+  return (
+    <>
+      <window.NavV2 />
+      <window.HeroV2 />
+      <window.SignatureRibbon />
+      <window.ProblemV2 />
+      <window.CasesV2 />
+      <window.WhyV2 />
+      <window.FounderV2 />
+      <window.SolutionsV2 />
+      <window.IndustrySolutions />
+      <window.CapabilitiesV2 />
+      <window.EngagementV2 />
+      <window.ProcessV2 />
+      <window.FaqSection />
+      <window.FinalCTAV2 />
+      <window.Footer />
+      <window.MobileCTABar />
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<PageV2 />);
+</script>
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#2563FF"/>
+  <g transform="translate(120,120)" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 6 L10 120 L40 92 L60 134 L78 126 L58 84 L96 84 Z"/>
+  </g>
+</svg>
+</template>
+</body>
+</html>

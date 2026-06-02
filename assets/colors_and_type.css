@@ -1,0 +1,406 @@
+/* ============================================================
+   _DearDev / KeyMouseIT — Design Tokens
+   Dark-mode-native. Inter + Space Grotesk. Engineered precision.
+   ============================================================ */
+
+/* ---- Fonts ---- */
+/* Inter is the brand font, loaded locally from fonts/.
+   Space Grotesk + JetBrains Mono are still CDN-loaded. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/Inter-VariableFont_opsz_wght.ttf") format("truetype-variations"),
+       url("../fonts/Inter-VariableFont_opsz_wght.ttf") format("truetype");
+}
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* ------------------------------------------------------------
+     COLOR — Neutrals (near-black surfaces, cool grey text)
+     The UI lives on dark surfaces; light variants exist for docs
+     and the literal "design system template" header screen.
+     ------------------------------------------------------------ */
+  --bg-0:           rgb(14, 14, 14);   /* footer / deepest  */
+  --bg-1:           rgb(18, 18, 18);   /* DS canvas         */
+  --bg-2:           rgb(19, 19, 19);   /* page background   */
+  --bg-3:           rgb(28, 27, 27);   /* elevated section  */
+  --bg-4:           rgb(31, 31, 31);   /* card on dark      */
+  --bg-5:           rgb(53, 52, 59);   /* raised chip       */
+
+  --surface-glass:  rgba(19, 19, 19, 0.7);   /* navbar w/ blur */
+  --surface-dim:    rgba(14, 14, 14, 0.5);   /* trust bar      */
+  --surface-quiet:  rgba(19, 19, 19, 0.5);   /* quote overlay  */
+
+  --hairline:       rgba(255, 255, 255, 0.04); /* nav borders */
+  --hairline-2:     rgba(255, 255, 255, 0.05); /* section divs */
+  --hairline-3:     rgba(255, 255, 255, 0.10); /* emphasized   */
+  --border-soft:    rgba(71, 71, 71, 0.2);     /* card borders */
+  --border-med:     rgb(71, 71, 71);           /* secondary btn */
+  --border-mute:    rgb(54, 54, 54);           /* spacing bars */
+
+  /* Text */
+  --fg-1:           rgb(255, 255, 255);   /* primary          */
+  --fg-2:           rgb(229, 226, 225);   /* warm off-white   */
+  --fg-3:           rgb(199, 198, 198);   /* secondary body   */
+  --fg-4:           rgb(198, 198, 198);   /* alt body         */
+  --fg-5:           rgb(168, 168, 168);   /* tertiary         */
+  --fg-6:           rgb(145, 145, 145);   /* muted caps       */
+  --fg-7:           rgb(113, 113, 122);   /* footnotes        */
+
+  /* ------------------------------------------------------------
+     COLOR — Brand gradient
+     The signature: cyan → royal blue → violet → deep navy.
+     Used on all primary CTAs and accent fills.
+     ------------------------------------------------------------ */
+  --brand-cyan:     rgb(67, 189, 250);   /*  0%  */
+  --brand-blue:     rgb(71, 125, 240);   /* 24%  */
+  --brand-violet:   rgb(84,  65, 201);   /* 63%  */
+  --brand-navy:     rgb( 0,  54, 135);   /*100%  */
+
+  --brand-violet-s: rgb(82,  64, 199);   /* solid — for icon tiles */
+  --brand-indigo:   rgb(81,  79, 210);
+
+  /* Full brand gradient (vertical) */
+  --gradient-cta: linear-gradient(
+    180deg,
+    rgb(67,189,250) 0%,
+    rgb(71,125,240) 24%,
+    rgb(84, 65,201) 63%,
+    rgb( 0, 54,135) 100%
+  );
+  /* Horizontal version for wide banners */
+  --gradient-cta-h: linear-gradient(
+    90deg,
+    rgb(67,189,250) 0%,
+    rgb(71,125,240) 24%,
+    rgb(84, 65,201) 63%,
+    rgb( 0, 54,135) 100%
+  );
+  /* Pale two-stop, used on the "Start a Conversation" dark-text CTA */
+  --gradient-cta-pale: linear-gradient(
+    90deg,
+    rgb(32,187,255) 0%,
+    rgb( 0, 70,221) 100%
+  );
+
+  /* Complementary magenta accent (rare, from DS palette) */
+  --accent-magenta: rgb(198, 67, 250);
+  --accent-purple:  rgb(142, 65, 201);
+  --accent-plum:    rgb( 91, 34, 170);
+
+  /* ------------------------------------------------------------
+     COLOR — Semantic (inferred, not in Figma)
+     ------------------------------------------------------------ */
+  --color-success:  rgb( 52, 199, 89);
+  --color-warning:  rgb(255, 179,  0);
+  --color-danger:   rgb(255,  69,  58);
+  --color-info:     var(--brand-cyan);
+
+  /* ------------------------------------------------------------
+     TYPOGRAPHY — Families
+     Inter = body + UI (primary).
+     Space Grotesk = display headings on marketing pages.
+     JetMono = substituted for the "_DearDev" mono vibe in code.
+     ------------------------------------------------------------ */
+  --font-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ------------------------------------------------------------
+     TYPOGRAPHY — Scale (pulled directly from Figma frames)
+     ------------------------------------------------------------ */
+  --text-hero:     56px; --lh-hero:     72px; --ls-hero:     -1.8px;  /* H1 marketing */
+  --text-h1:       60px; --lh-h1:       60px; --ls-h1:       -3px;   /* final CTA  */
+  --text-h2:       48px; --lh-h2:       64px; --ls-h2:        0;     /* DS title   */
+  --text-h3:       36px; --lh-h3:       40px; --ls-h3:       3.6px;  /* section H  */
+  --text-h4:       30px; --lh-h4:       36px; --ls-h4:       -0.75px;/* WHO WE ARE */
+  --text-h5:       24px; --lh-h5:       32px; --ls-h5:        0;     /* bento H    */
+  --text-lead:     20px; --lh-lead:     32.5px; --ls-lead:    0;     /* sub-hero   */
+  --text-body:     18px; --lh-body:     29.25px; --ls-body:   0;     /* subtitle   */
+  --text-md:       16px; --lh-md:       26px;                          /* body-L    */
+  --text-base:     14px; --lh-base:     20px;                          /* body      */
+  --text-sm:       12px; --lh-sm:       16px;                          /* meta/nav  */
+  --text-xs:       10px; --lh-xs:       15px;                          /* caption   */
+
+  /* Letter-spacing presets (Inter Bold with generous tracking
+     is a core brand motif on buttons, nav, section labels.) */
+  --track-hero:    -1.8px;
+  --track-btn-lg:   1.6px;   /* 16px bold btn */
+  --track-btn-md:   1.4px;   /* 14px bold btn */
+  --track-btn-sm:   1.2px;   /* 12px bold btn */
+  --track-nav:      0.7px;   /* 14px nav link */
+  --track-mono:     2px;     /* footer caps   */
+  --track-caps:     3px;     /* "Capabilities"*/
+  --track-caps-xl:  3.6px;   /* section label */
+  --track-cta-hero: 2.8px;   /* dark-text CTA */
+  --track-wordmark: 13px;    /* _DearDev mega */
+
+  /* ------------------------------------------------------------
+     SEMANTIC TYPOGRAPHY — drop-in classes
+     ------------------------------------------------------------ */
+}
+
+/* Semantic type classes — use directly in HTML/JSX */
+.dd-wordmark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 130px;
+  line-height: 1;
+  letter-spacing: 13px;
+  color: var(--fg-1);
+}
+.dd-wordmark-sm {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 2px;
+  color: var(--fg-1);
+}
+.dd-h1, h1.dd {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-hero);
+  color: var(--fg-1);
+  text-transform: uppercase;
+}
+.dd-h1-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-hero);
+  color: var(--fg-1);
+}
+.dd-h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: 1.8px;
+  color: var(--fg-1);
+}
+.dd-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h4);
+  line-height: var(--lh-h4);
+  letter-spacing: var(--ls-h4);
+  color: var(--fg-2);
+}
+.dd-h4 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-h5);
+  line-height: var(--lh-h5);
+  color: var(--fg-2);
+}
+.dd-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--fg-3);
+}
+.dd-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--fg-4);
+}
+.dd-body-md {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-md);
+  line-height: var(--lh-md);
+  color: var(--fg-4);
+}
+.dd-body-sm {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--lh-base);
+  color: var(--fg-3);
+}
+.dd-label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  line-height: var(--lh-xs);
+  letter-spacing: var(--track-caps);
+  color: var(--fg-3);
+  text-transform: uppercase;
+}
+.dd-label-xl {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  line-height: var(--lh-sm);
+  letter-spacing: var(--track-caps-xl);
+  color: var(--fg-6);
+  text-transform: uppercase;
+}
+.dd-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--text-xs);
+  line-height: var(--lh-xs);
+  letter-spacing: 1px;
+  color: var(--fg-3);
+  text-transform: uppercase;
+}
+.dd-mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--lh-base);
+  color: var(--fg-3);
+}
+.dd-quote {
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: 20px;
+  color: var(--fg-4);
+}
+
+/* ------------------------------------------------------------
+   SPACING — multiples of 4 and 8 (per /DS/Spacings frame).
+   ------------------------------------------------------------ */
+:root {
+  --space-0:   0;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  80px;
+  --space-10: 96px;
+  --space-11: 128px;
+
+  /* Radii — overwhelmingly 0. A few large-radius exceptions. */
+  --radius-0: 0;          /* default */
+  --radius-sm: 2px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;      /* /DS/Spacings outer frame */
+  --radius-full: 9999px;  /* pill */
+
+  /* Borders */
+  --border-hairline: 1px solid var(--hairline);
+  --border-section:  1px solid var(--hairline-2);
+  --border-card:     1px solid var(--border-soft);
+  --border-strong:   2px solid var(--border-med);
+
+  /* Shadows — spare. Mainly elevation for cards on dark surfaces
+     and an inner-glow accent on gradient CTAs. */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: 0 8px 24px rgba(0,0,0,0.35);
+  --shadow-3: 0 24px 48px rgba(0,0,0,0.5);
+  --shadow-cta-glow: 0 8px 32px rgba(71,125,240,0.35);
+  --shadow-inner-top: inset 0 1px 0 rgba(255,255,255,0.08);
+
+  /* Blur presets */
+  --blur-nav:  blur(24px);
+  --blur-trust: blur(4px);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --ease-enter:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:   120ms;
+  --dur-med:    200ms;
+  --dur-slow:   400ms;
+}
+
+/* ------------------------------------------------------------
+   RESET + BASE
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-2);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--lh-md);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Reusable patterns */
+.dd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  transition: transform var(--dur-med) var(--ease-standard),
+              filter var(--dur-med) var(--ease-standard),
+              background var(--dur-med) var(--ease-standard);
+  text-transform: none;
+  color: var(--fg-1);
+  text-decoration: none;
+}
+.dd-btn:hover { filter: brightness(1.10); }
+.dd-btn:active { transform: translateY(1px); filter: brightness(0.95); }
+
+.dd-btn--primary {
+  background: var(--gradient-cta);
+  padding: 17px 40px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: var(--track-btn-lg);
+  box-shadow: var(--shadow-inner-top);
+}
+.dd-btn--primary-sm {
+  background: var(--gradient-cta);
+  padding: 8px 24px;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: var(--track-btn-sm);
+}
+.dd-btn--secondary {
+  background: transparent;
+  border: 2px solid var(--border-med);
+  padding: 16px 40px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: var(--track-btn-lg);
+  color: var(--fg-1);
+}
+.dd-btn--secondary:hover { background: rgba(255,255,255,0.04); }
+.dd-btn--cta-pale {
+  background: var(--gradient-cta-pale);
+  color: var(--bg-3);
+  padding: 20px 48px;
+  font-size: 14px;
+  letter-spacing: var(--track-cta-hero);
+}
+
+.dd-card {
+  background: var(--bg-0);
+  border: var(--border-card);
+  padding: 32px;
+}
+.dd-card--filled {
+  background: var(--bg-4);
+}
+
+.dd-hairline { border-top: var(--border-section); }

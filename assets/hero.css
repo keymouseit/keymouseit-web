@@ -1,0 +1,179 @@
+/* ============================================================
+   DearDev — Hero redesign tokens
+   Brief-exact palette layered over the _DearDev design system.
+   Bluer near-black canvas; one focal gradient reserved for a
+   single highlight. Inter, sharp corners, mono eyebrow accents.
+   ============================================================ */
+
+.hero-sys {
+  /* ---- Surfaces (brief) ---- */
+  --h-canvas:   #0A0D14;   /* near-black, faint blue cast */
+  --h-card:     #12161F;   /* elevated surface            */
+  --h-card-2:   #161B26;   /* raised chip / inset         */
+  --h-line:     rgba(255,255,255,0.08);   /* hairline     */
+  --h-line-2:   rgba(255,255,255,0.05);   /* faint        */
+  --h-line-3:   rgba(255,255,255,0.14);   /* emphasized   */
+
+  /* ---- Text (brief) ---- */
+  --h-fg:       #F4F5F7;   /* primary  */
+  --h-fg-2:     #C3C8D4;   /* secondary body */
+  --h-mut:      #8A92A6;   /* muted    */
+  --h-faint:    #5C6478;   /* faintest meta */
+
+  /* ---- Accent / CTA (brief) ---- */
+  --h-accent:   #43BDFA;
+  --h-accent-2: #477DF0;
+  --h-cta:      linear-gradient(135deg, #43BDFA 0%, #477DF0 100%);
+  --h-cta-h:    linear-gradient(135deg, #5ac7fb 0%, #5b8df3 100%);
+
+  /* ---- The ONE focal gradient ---- */
+  --h-focal:    linear-gradient(100deg, #477DF0 0%, #8E41C9 100%);
+  --h-focal-soft: linear-gradient(180deg, rgba(71,125,240,0.18), rgba(142,65,201,0.10));
+
+  font-family: var(--font-sans);
+  background: var(--h-canvas);
+  color: var(--h-fg);
+}
+
+/* Highlight word — the single focal-gradient moment per hero */
+.hero-sys .focal-word {
+  background: var(--h-focal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Monospace eyebrow */
+.hero-sys .eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--h-mut);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-sys .eyebrow .tick {
+  width: 7px; height: 7px; border-radius: 2px;
+  background: var(--h-accent);
+  box-shadow: 0 0 12px rgba(67,189,250,0.8);
+}
+
+/* Oversized headline */
+.hero-sys h1.head {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 62px;
+  line-height: 1.04;
+  letter-spacing: -2px;
+  color: var(--h-fg);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.hero-sys .subhead {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--h-mut);
+  margin: 24px 0 0;
+  max-width: 30em;
+}
+
+/* ---- CTAs ---- */
+.hero-sys .cta-primary {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--h-cta);
+  color: #06121f;
+  border: 0;
+  padding: 18px 34px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(67,140,240,0.35), inset 0 1px 0 rgba(255,255,255,0.35);
+  transition: transform 160ms var(--ease-standard), box-shadow 160ms var(--ease-standard), background 160ms var(--ease-standard);
+}
+.hero-sys .cta-primary:hover {
+  background: var(--h-cta-h);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 38px rgba(67,140,240,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.hero-sys .cta-primary:active { transform: translateY(1px); }
+.hero-sys .cta-primary .arrow { transition: transform 160ms var(--ease-standard); }
+.hero-sys .cta-primary:hover .arrow { transform: translateX(4px); }
+
+.hero-sys .cta-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; border: 0;
+  color: var(--h-fg-2);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 8px 4px;
+  transition: color 160ms var(--ease-standard);
+}
+.hero-sys .cta-secondary .ln {
+  border-bottom: 1px solid var(--h-line-3);
+  padding-bottom: 2px;
+  transition: border-color 160ms var(--ease-standard);
+}
+.hero-sys .cta-secondary:hover { color: var(--h-fg); }
+.hero-sys .cta-secondary:hover .ln { border-color: var(--h-accent); }
+
+/* ---- Named-proof lozenges ---- */
+.hero-sys .proof-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.hero-sys .lozenge {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--h-line);
+  background: rgba(255,255,255,0.025);
+  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.2px;
+  color: var(--h-fg-2);
+  white-space: nowrap;
+}
+.hero-sys .lozenge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--h-accent); }
+
+/* ---- Nav ---- */
+.hero-sys .nav {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 40px;
+  background: rgba(10,13,20,0.72);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--h-line);
+}
+.hero-sys .nav .wordmark {
+  font-family: var(--font-mono); font-weight: 700; font-size: 19px;
+  letter-spacing: 1px; color: var(--h-fg);
+}
+.hero-sys .nav .links { display: flex; gap: 30px; align-items: center; }
+.hero-sys .nav .links a {
+  font-size: 14px; font-weight: 500; color: var(--h-mut);
+  text-decoration: none; letter-spacing: 0.2px;
+  transition: color 140ms var(--ease-standard);
+}
+.hero-sys .nav .links a:hover { color: var(--h-fg); }
+.hero-sys .nav .nav-cta {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--h-line);
+  color: var(--h-fg);
+  padding: 9px 18px; font-size: 13.5px; font-weight: 600;
+  cursor: pointer; text-decoration: none;
+  transition: background 140ms var(--ease-standard);
+}
+.hero-sys .nav .nav-cta:hover { background: rgba(255,255,255,0.10); }
+
+/* Ambient focal glow behind the fold */
+.hero-sys .glow {
+  position: absolute; pointer-events: none; border-radius: 50%;
+  filter: blur(80px); opacity: 0.5;
+}
