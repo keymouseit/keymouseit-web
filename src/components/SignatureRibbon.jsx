@@ -15,7 +15,7 @@ export default function SignatureRibbon() {
       <div className="container" style={{ position: "relative", padding: "30px 32px" }}>
         <Reveal variant="fade-in">
           <div style={{ display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", gap: 8, marginBottom: 22 }}>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 11.5, letterSpacing: 2, textTransform: "uppercase", color: "var(--muted)" }}>The KeyMouse method</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 11.5, letterSpacing: 2, textTransform: "uppercase", color: "var(--muted)" }}>The KeyMouse IT method</span>
           </div>
         </Reveal>
         

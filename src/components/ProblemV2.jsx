@@ -179,7 +179,7 @@ export default function ProblemV2() {
 
             {/* before/after pills */}
             <div style={{ display: "inline-flex", gap: 4, marginTop: 28, background: "#fff", border: "1px solid var(--line)", borderRadius: 12, padding: 5 }}>
-              {[["Before KeyMouse", false], ["After KeyMouse", true]].map(([label, v]) => (
+              {[["Before KeyMouse IT", false], ["After KeyMouse IT", true]].map(([label, v]) => (
                 <button key={label} onClick={() => setState(v)} style={{
                   border: 0, cursor: "pointer", borderRadius: 8, padding: "10px 18px", fontSize: 13.5, fontWeight: 600, fontFamily: "var(--font)",
                   background: connected === v ? "var(--blue)" : "transparent", color: connected === v ? "#fff" : "var(--muted)", transition: "all 0.18s",
@@ -191,7 +191,7 @@ export default function ProblemV2() {
             <div style={{ marginTop: 24, minHeight: 90 }}>
               <p className="body" key={connected ? "a" : "b"} style={{ fontSize: 16, color: connected ? "var(--text)" : "var(--text-2)", fontWeight: connected ? 500 : 400, transition: "color 0.3s" }}>
                 {connected
-                  ? "KeyMouse connects your tools, workflows, and data into intelligent systems that create real-time visibility and measurable outcomes."
+                  ? "KeyMouse IT connects your tools, workflows, and data into intelligent systems that create real-time visibility and measurable outcomes."
                   : "Disconnected tools create duplicate work, manual handoffs, and delayed decisions."}
               </p>
               {/* outcome chips (after) */}

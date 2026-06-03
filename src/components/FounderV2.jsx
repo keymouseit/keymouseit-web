@@ -266,7 +266,7 @@ export default function FounderV2() {
             
             <Reveal variant="slide-right" delay={150}>
               <p className="body" style={{ marginTop: 16, fontSize: 16.5 }}>
-                KeyMouse was built to help companies turn complex operational challenges into scalable software systems — engineered to perform, secure by default, and ready for AI.
+                KeyMouse IT was built to help companies turn complex operational challenges into scalable software systems — engineered to perform, secure by default, and ready for AI.
               </p>
             </Reveal>
 

@@ -301,7 +301,7 @@ export const FAQS = [
   { q: "How do you estimate timelines and cost?", a: "After a short discovery, we scope the work into clear milestones with a transparent estimate. You'll know the plan, the cost, and the trade-offs before we write a line of code." },
 ];
 
-/* ---- Why KeyMouse comparison ---- */
+/* ---- Why KeyMouse IT comparison ---- */
 export const WHY_COMPARE = [
   { agency: "Builds features", us: "Solves business problems", icon: "Target" },
   { agency: "Junior-heavy teams", us: "Senior-led engineering", icon: "Award,Star" },

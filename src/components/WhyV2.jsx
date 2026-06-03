@@ -12,7 +12,7 @@ function CompareRow({ row, i, header }) {
         <div style={{ width: 66, flexShrink: 0 }} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 10, padding: "18px 28px", background: "linear-gradient(180deg, rgba(37,99,255,0.10), rgba(124,58,237,0.05))", borderLeft: "2px solid var(--blue)" }}>
           <span style={{ width: 26, height: 26, borderRadius: 7, background: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "var(--sh-blue)" }}><Icon name="MousePointer2,MousePointer" size={14} color="#fff" stroke={2.2} /></span>
-          <span style={{ fontSize: 16.5, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>KeyMouse</span>
+          <span style={{ fontSize: 16.5, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>KeyMouse IT</span>
         </div>
       </div>
     );
@@ -55,7 +55,7 @@ export default function WhyV2() {
       <div className="container" style={{ position: "relative" }}>
         <Reveal>
           <div className="section-head center" style={{ maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
-            <Eyebrow>Why KeyMouse</Eyebrow>
+            <Eyebrow>Why KeyMouse IT</Eyebrow>
             <h2 className="h2" style={{ marginTop: 16, marginBottom: 16 }}>Not another development agency.</h2>
             <ScrollScrubText 
               className="lead"
@@ -67,7 +67,7 @@ export default function WhyV2() {
         <Reveal delay={60}>
           <div style={{ textAlign: "center", marginTop: 22 }}>
             <span style={{ fontSize: 17, fontStyle: "italic", color: "var(--text-2)", fontWeight: 500 }}>
-              Most agencies ship features. <span style={{ color: "var(--blue)", fontStyle: "normal", fontWeight: 700 }}>KeyMouse ships outcomes.</span>
+              Most agencies ship features. <span style={{ color: "var(--blue)", fontStyle: "normal", fontWeight: 700 }}>KeyMouse IT ships outcomes.</span>
             </span>
           </div>
         </Reveal>
