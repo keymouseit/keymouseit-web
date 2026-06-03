@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, Eyebrow, Arrow, Reveal } from './site-ui';
+import { Icon, Eyebrow, Btn, Reveal } from './site-ui';
 
 const NET_NODES = [
   [80, 90], [240, 200], [140, 360], [330, 470], [60, 520],
@@ -72,7 +72,7 @@ export default function FinalCTAV2() {
                       <select defaultValue=""><option value="" disabled>Select timeline</option><option>ASAP</option><option>1–3 months</option><option>3–6 months</option><option>Exploring</option></select>
                     </div>
                   </div>
-                  <button type="submit" className="btn btn-primary btn-lg btn-block" style={{ marginTop: 22 }}>Book Strategy Call <Arrow /></button>
+                  <Btn type="submit" variant="primary" lg block style={{ marginTop: 22 }}>Book Strategy Call</Btn>
                   <p style={{ fontSize: 12.5, color: "#6B7689", textAlign: "center", marginTop: 14 }}>Free consultation · No commitment · Quick response</p>
                 </form>
               )}

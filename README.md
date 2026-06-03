@@ -44,10 +44,28 @@ npx surge dist keymouseit-modern.surge.sh
 
 ## 🎨 Motion Design Architecture
 
-The motion experience is driven by two main layers: **Section Entrance Reveals** (ScrollTrigger) and **Interactive Micro-Animations** (CSS Keyframes).
+The motion experience is driven by three main layers: **Scroll-Driven Physics & Pinning**, **Section Entrance Reveals** (ScrollTrigger), and **Interactive Micro-Animations** (CSS Keyframes).
 
-### 1. Section Entrance Reveals (`src/components/site-ui.jsx`)
-We re-engineered the legacy reveal engine to utilize **GSAP + ScrollTrigger**. Wrap components inside `<Reveal>` and specify a bespoke `variant` to match the behavior of the content:
+### 1. Scroll-Driven Physics & Pinning (GSAP)
+We have implemented advanced storytelling animations that respond directly to the scrollbar:
+
+* **Pinned Horizontal Showcase (`src/components/CasesV2.jsx`)**: 
+  On desktop viewports (width >= 960px), the Featured Case Studies section pins itself at `top 80px`. Vertical scrolling is hijacked to translate the card track horizontally from right to left using a customized GSAP timeline.
+  * *Mobile Fallback*: Automatically scales down to a clean, vertical card list on mobile screens using ScrollTrigger's `matchMedia`.
+* **Scroll Scrub Text Reveal (`ScrollScrubText`)**: 
+  Splits paragraph text into individual words wrapped in inline-block spans. As the user scrolls, the words fade from `opacity: 0.15` to solid `opacity: 1` word-by-word.
+  * Supports markdown-style `**highlight**` tags to highlight words with a beautiful background gradient.
+  * *Example Usage:*
+    ```jsx
+    import { ScrollScrubText } from './site-ui';
+    
+    <ScrollScrubText 
+      text="We build **operational systems** that deliver **business outcomes**." 
+    />
+    ```
+
+### 2. Section Entrance Reveals (`src/components/site-ui.jsx`)
+Wrap components inside `<Reveal>` and specify a bespoke `variant` to match the behavior of the content:
 
 | Variant | Entrance Direction | Perfect For |
 | :--- | :--- | :--- |
@@ -65,7 +83,7 @@ import { Reveal } from './site-ui';
 </Reveal>
 ```
 
-### 2. Interactive Micro-Animations
+### 3. Interactive Micro-Animations
 Universal premium animations are globally declared in `src/App.jsx` under `PREMIUM_EFFECTS`:
 
 * **`flow-line`**: Animates dotted flow paths continuously from left-to-right to visualize information traveling across data pipelines.
@@ -73,6 +91,7 @@ Universal premium animations are globally declared in `src/App.jsx` under `PREMI
 * **`pulse-core-glow-ring`**: Creates double breathing wave overlays around the active AI Processing hub.
 * **`hover-card-tilt`**: Gives all cards a physical 3D tilt response when hovered (rotates slightly, lifts, and projects a deep shadow).
 * **`btn-shimmer`**: Sweeps a reflective bright overlay across CTA buttons on hover.
+* **`Magnetic` Wrapper**: An elastic 2D physics mouse-tracking wrapper that pulls interactive buttons toward the user's cursor when within a 50px radius.
 
 ---
 

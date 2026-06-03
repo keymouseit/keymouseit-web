@@ -58,7 +58,13 @@ function SilosViz({ connected }) {
 
       {/* center hub (after) */}
       <div style={{ position: "absolute", left: "50%", top: "50%", transform: `translate(-50%,-50%) scale(${connected ? 1 : 0.6})`, display: "flex", flexDirection: "column", alignItems: "center", transition: "opacity 0.5s var(--ease), transform 0.5s var(--ease)", opacity: connected ? 1 : 0, pointerEvents: "none", zIndex: 3 }}>
-        <div className={connected ? "core-glow" : ""} style={{ width: 92, height: 92, borderRadius: "50%", background: "linear-gradient(150deg,#2563FF,#7C3AED)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 16px 40px rgba(37,99,255,0.4)" }}>
+        <div className={connected ? "core-glow" : ""} style={{ position: "relative", width: 92, height: 92, borderRadius: "50%", background: "linear-gradient(150deg,#2563FF,#7C3AED)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 16px 40px rgba(37,99,255,0.4)" }}>
+          {connected && (
+            <>
+              <span className="pulse-core-glow-ring" style={{ position: "absolute", inset: 0, borderRadius: "50%", border: "2px solid rgba(37,99,255,0.5)", pointerEvents: "none" }} />
+              <span className="pulse-core-glow-ring-delay" style={{ position: "absolute", inset: 0, borderRadius: "50%", border: "2px solid rgba(124,58,237,0.5)", pointerEvents: "none" }} />
+            </>
+          )}
           <Icon name="BrainCircuit,Brain" size={36} color="#fff" stroke={1.9} />
         </div>
         <div style={{ marginTop: 9, fontFamily: "var(--mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 0.4, color: "var(--blue)", textTransform: "uppercase", background: "#fff", padding: "4px 9px", borderRadius: 6, boxShadow: "var(--sh-xs)", whiteSpace: "nowrap" }}>AI Processing Layer</div>
@@ -67,7 +73,7 @@ function SilosViz({ connected }) {
       {/* warning badges (before) */}
       {BADGES.map((b) => (
         <div key={b.t} style={{ position: "absolute", left: `${b.x}%`, top: `${b.y}%`, transform: "translate(-50%,-50%)", transition: "opacity 0.4s var(--ease)", opacity: connected ? 0 : 1, zIndex: 4, pointerEvents: "none" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#fff", border: "1px solid #FCD9C4", color: "#D9531E", borderRadius: 999, padding: "5px 10px", fontSize: 11, fontWeight: 600, boxShadow: "var(--sh-sm)", whiteSpace: "nowrap" }}>
+          <span className="pulse-warning-badge" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#fff", border: "1px solid #FCD9C4", color: "#D9531E", borderRadius: 999, padding: "5px 10px", fontSize: 11, fontWeight: 600, boxShadow: "var(--sh-sm)", whiteSpace: "nowrap" }}>
             <Icon name={b.i} size={12} stroke={2} />{b.t}
           </span>
         </div>

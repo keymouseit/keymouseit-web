@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Icon, Btn, Arrow } from './site-ui';
+import { Icon, Btn, Arrow, Logo } from './site-ui';
 
 export default function NavV2() {
   const [scrolled, setScrolled] = useState(false);
@@ -29,9 +29,8 @@ export default function NavV2() {
   return (
     <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="container nav-inner">
-        <a className="brand" href="#top" onClick={() => setOpen(false)}>
-          <span className="glyph"><Icon name="MousePointer2,MousePointer" size={18} color="#fff" stroke={2.2} /></span>
-          KeyMouse<span style={{ color: "var(--blue)" }}>IT</span>
+        <a className="brand" href="#top" onClick={() => setOpen(false)} style={{ display: "flex", alignItems: "center", textDecoration: "none", padding: "4px 0" }}>
+          <Logo height={44} />
         </a>
         <div className="nav-links">
           {links.slice(0, 5).map(([l, h]) => (

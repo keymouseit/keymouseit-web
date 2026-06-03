@@ -37,7 +37,7 @@ export default function SolutionsV2() {
         <div className="grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 22, marginTop: 56 }}>
           {SOLUTIONS.map((s, i) => (
             <Reveal key={s.title} delay={(i % 3) * 70}>
-              <div className="card hover sol-card" style={{ padding: "26px 26px 24px", height: "100%", display: "flex", flexDirection: "column" }}>
+              <div className="card hover sol-card hover-card-tilt" style={{ padding: "26px 26px 24px", height: "100%", display: "flex", flexDirection: "column" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
                   <span className="icon-chip" style={{ width: 46, height: 46 }}><Icon name={s.icon} size={22} stroke={1.9} /></span>
                   <h3 className="h3" style={{ fontSize: 19 }}>{s.title}</h3>

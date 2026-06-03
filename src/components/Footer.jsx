@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from './site-ui';
+import { Icon, Logo } from './site-ui';
 
 export default function Footer() {
   const cols = [
@@ -13,9 +13,8 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: 40 }}>
           <div>
-            <a className="brand" href="#top" style={{ color: "#fff" }}>
-              <span className="glyph"><Icon name="MousePointer2,MousePointer" size={18} color="#fff" stroke={2.2} /></span>
-              KeyMouse<span style={{ color: "var(--blue)" }}>IT</span>
+            <a className="brand" href="#top" style={{ display: "flex", alignItems: "center", textDecoration: "none", color: "#fff" }}>
+              <Logo height={48} mode="dark" />
             </a>
             <p style={{ fontSize: 15, lineHeight: 1.6, marginTop: 16, maxWidth: "26em", color: "#9FB0C8", fontWeight: 500 }}>
               KeyMouse IT builds AI-powered operational systems for companies that need to scale.

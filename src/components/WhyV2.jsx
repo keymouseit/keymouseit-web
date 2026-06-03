@@ -1,5 +1,4 @@
-import React from 'react';
-import { Icon, SectionHead, Reveal, Btn } from './site-ui';
+import { Icon, SectionHead, Reveal, Btn, ScrollScrubText, Eyebrow } from './site-ui';
 import { WHY_COMPARE } from '../data/site-data';
 
 function CompareRow({ row, i, header }) {
@@ -10,7 +9,7 @@ function CompareRow({ row, i, header }) {
           <Icon name="Building2" size={18} stroke={2} color="var(--faint)" />
           <span style={{ fontSize: 15, fontWeight: 700, color: "var(--muted)" }}>Typical Agency</span>
         </div>
-        <div style={{ width: 64, flexShrink: 0 }} />
+        <div style={{ width: 66, flexShrink: 0 }} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 10, padding: "18px 28px", background: "linear-gradient(180deg, rgba(37,99,255,0.10), rgba(124,58,237,0.05))", borderLeft: "2px solid var(--blue)" }}>
           <span style={{ width: 26, height: 26, borderRadius: 7, background: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "var(--sh-blue)" }}><Icon name="MousePointer2,MousePointer" size={14} color="#fff" stroke={2.2} /></span>
           <span style={{ fontSize: 16.5, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>KeyMouse</span>
@@ -55,10 +54,14 @@ export default function WhyV2() {
       <div className="mesh" style={{ opacity: 0.8 }} />
       <div className="container" style={{ position: "relative" }}>
         <Reveal>
-          <SectionHead center maxWidth={700}
-            eyebrow="Why KeyMouse"
-            title="Not another development agency."
-            lead="We help companies build operational systems that create measurable business outcomes — not just ship features." />
+          <div className="section-head center" style={{ maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
+            <Eyebrow>Why KeyMouse</Eyebrow>
+            <h2 className="h2" style={{ marginTop: 16, marginBottom: 16 }}>Not another development agency.</h2>
+            <ScrollScrubText 
+              className="lead"
+              text="We help companies build **operational systems** that create **measurable business outcomes** — not just ship features."
+            />
+          </div>
         </Reveal>
 
         <Reveal delay={60}>
