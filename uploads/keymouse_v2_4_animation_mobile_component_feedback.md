@@ -534,7 +534,7 @@ Suggested quote:
 Credibility chips:
 
 ```text
-7+ years product engineering
+10+ years product engineering
 50+ projects delivered
 Multiple industries served
 Founder-led delivery

@@ -40,7 +40,7 @@ View Case Studies
 ### Trust Metrics
 
 - 50+ Projects Delivered
-- 7+ Years Experience
+- 10+ Years Experience
 - 95% Client Retention
 - 4.9/5 Client Satisfaction
 
@@ -275,7 +275,7 @@ Founder & CEO
 
 Summary:
 
-Over the last 7+ years, Shiven has led the delivery of software products across healthcare, logistics, education, fintech, retail, and enterprise identity.
+Over the last 10+ years, Shiven has led the delivery of software products across healthcare, logistics, education, fintech, retail, and enterprise identity.
 
 Focus:
 

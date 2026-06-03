@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon, Logo } from './site-ui';
 
 export default function Footer() {
@@ -7,6 +8,29 @@ export default function Footer() {
     ["Industries", ["Logistics", "Manufacturing", "Energy", "Retail"]],
     ["Company", ["Case Studies", "Services", "Contact"]],
   ];
+
+  const getHref = (link) => {
+    switch (link) {
+      case "Operational Intelligence":
+      case "AI Automation":
+      case "Enterprise Platforms":
+      case "Identity & Security":
+        return "#solutions";
+      case "Logistics":
+      case "Manufacturing":
+      case "Energy":
+      case "Retail":
+        return "#industries";
+      case "Case Studies":
+        return "#cases";
+      case "Services":
+        return "#services";
+      case "Contact":
+        return "#contact";
+      default:
+        return "#contact";
+    }
+  };
 
   return (
     <footer style={{ background: "#070B14", color: "#8A97AC", padding: "64px 0 40px" }}>
@@ -20,15 +44,15 @@ export default function Footer() {
               KeyMouse IT builds AI-powered operational systems for companies that need to scale.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
-              <a href="#contact" aria-label="LinkedIn" style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#9FB0C8", textDecoration: "none" }}><Icon name="Linkedin" size={18} stroke={2} /></a>
-              <a href="#contact" aria-label="Email" style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#9FB0C8", textDecoration: "none" }}><Icon name="Mail" size={18} stroke={2} /></a>
+              <a href="https://www.linkedin.com/company/keymouse-it" target='_blank' aria-label="LinkedIn" style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#9FB0C8", textDecoration: "none" }}><Icon name="Linkedin" size={18} stroke={2} /></a>
+              <a href="mailto:info@keymouseit.com" aria-label="Email" style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#9FB0C8", textDecoration: "none" }}><Icon name="Mail" size={18} stroke={2} /></a>
             </div>
           </div>
           {cols.map(([h, links]) => (
             <div key={h}>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", letterSpacing: 0.3, marginBottom: 16 }}>{h}</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                {links.map((l) => <a key={l} href="#contact" style={{ fontSize: 14.5, color: "#8A97AC", textDecoration: "none" }}>{l}</a>)}
+                {links.map((l) => <a key={l} href={getHref(l)} style={{ fontSize: 14.5, color: "#8A97AC", textDecoration: "none" }}>{l}</a>)}
               </div>
             </div>
           ))}
@@ -36,8 +60,8 @@ export default function Footer() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, marginTop: 48, paddingTop: 28, borderTop: "1px solid rgba(255,255,255,0.08)", fontSize: 13.5 }}>
           <span>© {new Date().getFullYear()} KeyMouse IT. All rights reserved.</span>
           <div style={{ display: "flex", gap: 24 }}>
-            <a href="#contact" style={{ color: "#8A97AC", textDecoration: "none" }}>Privacy</a>
-            <a href="#contact" style={{ color: "#8A97AC", textDecoration: "none" }}>Terms</a>
+            <Link to="/privacy" target='_blank' rel='noopener noreferrer' style={{ color: "#8A97AC", textDecoration: "none" }}>Privacy</Link>
+            <Link to="/terms" target='_blank' rel='noopener noreferrer' style={{ color: "#8A97AC", textDecoration: "none" }}>Terms</Link>
           </div>
         </div>
       </div>

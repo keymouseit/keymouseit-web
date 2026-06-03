@@ -555,7 +555,7 @@ This should be one of the most memorable parts of the homepage.
 
 ### Recommended Copy
 
-> Over the last 7+ years, Shiven Juneja has led the delivery of software products across identity, healthcare, logistics, education, fintech, retail, and energy. KeyMouse was built to help companies turn complex operational challenges into scalable software systems.
+> Over the last 10+ years, Shiven Juneja has led the delivery of software products across identity, healthcare, logistics, education, fintech, retail, and energy. KeyMouse was built to help companies turn complex operational challenges into scalable software systems.
 
 ---
 

@@ -245,7 +245,7 @@ export default function FounderV2() {
                     <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>Shiven Juneja</div>
                     <div style={{ fontSize: 13, color: "var(--muted)" }}>Founder &amp; CEO</div>
                   </div>
-                  <span className="pill"><span className="dot" />7+ yrs delivery</span>
+                  <span className="pill"><span className="dot" />10+ yrs delivery</span>
                 </div>
               </div>
             </div>
@@ -261,7 +261,7 @@ export default function FounderV2() {
             <ScrollScrubText 
               className="lead"
               style={{ marginTop: 20 }}
-              text="Over the last **7+ years**, Shiven Juneja has led the delivery of software products across **identity**, **healthcare**, **logistics**, **education**, **fintech**, **retail**, and **energy**."
+              text="Over the last **10+ years**, Shiven Juneja has led the delivery of software products across **identity**, **healthcare**, **logistics**, **education**, **fintech**, **retail**, and **energy**."
             />
             
             <Reveal variant="slide-right" delay={150}>
@@ -281,7 +281,7 @@ export default function FounderV2() {
             {/* credibility markers with stagger pop-in */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px 24px", marginTop: 26 }}>
               {[
-                ["Briefcase,Award", "7+ years in product engineering"],
+                ["Briefcase,Award", "10+ years in product engineering"],
                 ["Boxes,Box", "50+ projects delivered"],
                 ["Globe,Layers", "Multiple industries served"],
                 ["UserCheck,Users", "Founder-led delivery"]

@@ -327,7 +327,7 @@ Use a high-quality founder photo with a more editorial layout.
 Add credibility points near the founder:
 
 ```text
-7+ years in product engineering
+10+ years in product engineering
 50+ projects delivered
 Multiple industries served
 Founder-led delivery

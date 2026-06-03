@@ -45,7 +45,7 @@ function FounderSection() {
                   <div style={{ fontSize: 17, fontWeight: 700, color: "#fff" }}>Shiven Juneja</div>
                   <div style={{ fontSize: 13, color: "#9FB0C8" }}>Founder &amp; CEO</div>
                 </div>
-                <span className="pill" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.16)", color: "#C7D2E0" }}><span className="dot" />7+ yrs delivery</span>
+                <span className="pill" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.16)", color: "#C7D2E0" }}><span className="dot" />10+ yrs delivery</span>
               </div>
             </div>
           </Reveal>
@@ -55,7 +55,7 @@ function FounderSection() {
             <Eyebrow>Founder</Eyebrow>
             <h2 className="h2" style={{ marginTop: 16 }}>Built by engineers who understand delivery.</h2>
             <p className="lead" style={{ marginTop: 20, fontSize: 19, color: "#B9C6D9" }}>
-              Over the last 7+ years, Shiven has led the delivery of software products across healthcare, logistics, education, fintech, retail, and enterprise identity.
+              Over the last 10+ years, Shiven has led the delivery of software products across healthcare, logistics, education, fintech, retail, and enterprise identity.
             </p>
             <p className="body" style={{ marginTop: 18, fontSize: 16.5, color: "#9FB0C8" }}>
               His focus: helping organizations transform complex operational challenges into scalable software systems — built to perform, secure by default, and ready for AI.

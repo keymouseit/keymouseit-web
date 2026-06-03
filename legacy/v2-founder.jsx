@@ -18,7 +18,7 @@ function FounderV2() {
                   <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>Shiven Juneja</div>
                   <div style={{ fontSize: 13, color: "var(--muted)" }}>Founder &amp; CEO</div>
                 </div>
-                <span className="pill"><span className="dot" />7+ yrs delivery</span>
+                <span className="pill"><span className="dot" />10+ yrs delivery</span>
               </div>
             </div>
           </Reveal>
@@ -28,7 +28,7 @@ function FounderV2() {
             <Eyebrow>The founder</Eyebrow>
             <h2 className="h2" style={{ marginTop: 16 }}>Built by engineers who understand delivery.</h2>
             <p className="lead" style={{ marginTop: 20 }}>
-              Over the last 7+ years, Shiven Juneja has led the delivery of software products across identity, healthcare, logistics, education, fintech, retail, and energy.
+              Over the last 10+ years, Shiven Juneja has led the delivery of software products across identity, healthcare, logistics, education, fintech, retail, and energy.
             </p>
             <p className="body" style={{ marginTop: 16, fontSize: 16.5 }}>
               KeyMouse was built to help companies turn complex operational challenges into scalable software systems — engineered to perform, secure by default, and ready for AI.
@@ -43,7 +43,7 @@ function FounderV2() {
 
             {/* credibility markers */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px 24px", marginTop: 24 }}>
-              {[["Briefcase,Award", "7+ years in product engineering"], ["Boxes,Box", "50+ projects delivered"], ["Globe,Layers", "Multiple industries served"], ["UserCheck,Users", "Founder-led delivery"]].map(([ic, t]) => (
+              {[["Briefcase,Award", "10+ years in product engineering"], ["Boxes,Box", "50+ projects delivered"], ["Globe,Layers", "Multiple industries served"], ["UserCheck,Users", "Founder-led delivery"]].map(([ic, t]) => (
                 <div key={t} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <span style={{ width: 28, height: 28, flexShrink: 0, borderRadius: 8, background: "var(--blue-50)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={ic} size={15} stroke={2} /></span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: "var(--text-2)" }}>{t}</span>
