@@ -6,6 +6,7 @@ import ProblemV2 from './components/ProblemV2';
 import CasesV2 from './components/CasesV2';
 import WhyV2 from './components/WhyV2';
 import FounderV2 from './components/FounderV2';
+import CoFounderV2 from './components/CoFounderV2';
 import SolutionsV2 from './components/SolutionsV2';
 import IndustrySolutions from './components/IndustrySolutions';
 import CapabilitiesV2 from './components/CapabilitiesV2';
@@ -133,6 +134,7 @@ export default function App() {
       <CasesV2 />
       <WhyV2 />
       <FounderV2 />
+      <CoFounderV2 />
       <SolutionsV2 />
       <IndustrySolutions />
       <CapabilitiesV2 />
