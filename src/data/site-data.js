@@ -192,10 +192,10 @@ export const INDUSTRIES = [
 
 /* ---- Trust ---- */
 export const TRUST_METRICS = [
-  { value: "50+", label: "Projects delivered" },
-  { value: "10+", label: "Years experience" },
-  { value: "95%", label: "Client retention" },
-  { value: "4.9/5", label: "Client satisfaction" },
+  { value: "250+", label: "Projects delivered", icon: "Boxes,Box" },
+  { value: "10+", label: "Years experience", icon: "Award" },
+  { value: "100%", label: "Client retention", icon: "HeartHandshake" },
+  { value: "5/5", label: "Client satisfaction", icon: "Star" },
 ];
 export const CLIENT_LOGOS = ["SEforALL", "Private ID", "Outlier", "Passenger Coffee", "Penny Profit"];
 

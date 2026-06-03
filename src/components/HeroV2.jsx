@@ -255,9 +255,14 @@ export default function HeroV2() {
             
             <div className="gsap-hero-fade hero-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: 34, marginTop: 50, opacity: 0 }}>
               {TRUST_METRICS.map((m) => (
-                <div key={m.label}>
-                  <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.03em", color: "var(--text)" }}><CountUp value={m.value} /></div>
-                  <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 2 }}>{m.label}</div>
+                <div key={m.label} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                  <span style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 10, background: "var(--blue-50)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2, boxShadow: "0 2px 8px rgba(37,99,255,0.06)" }}>
+                    <Icon name={m.icon} size={18} stroke={2} />
+                  </span>
+                  <div>
+                    <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.03em", color: "var(--text)", lineHeight: 1 }}><CountUp value={m.value} /></div>
+                    <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 2, lineHeight: 1.1 }}>{m.label}</div>
+                  </div>
                 </div>
               ))}
             </div>
