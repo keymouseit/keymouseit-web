@@ -527,6 +527,7 @@ export function Logo({ height = 38, className, mode = "light", style }) {
               />
             </g>
 
+
             {/* Horizontal separator line */}
             <g transform="translate(54.0286, 146.0993)">
               <path
