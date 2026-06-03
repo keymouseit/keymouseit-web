@@ -1,156 +1,203 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Icon, Eyebrow, Arrow, Reveal, CountUp } from './site-ui';
+import React from 'react';
+import { Icon, Eyebrow, Arrow, Reveal, CountUp, withAlpha } from './site-ui';
+
+
 import { CASES } from '../data/site-data';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-function CaseCard({ c }) {
+function FlowStep({ kind, text, accent, last }) {
+  const meta = {
+    Challenge: { i: "CircleAlert,AlertCircle", c: "#E11D48", bg: "#FEF2F2" },
+    Solution: { i: "Lightbulb,Wrench", c: accent, bg: withAlpha(accent, 0.1) },
+    Outcome: { i: "TrendingUp", c: "var(--green)", bg: "var(--green-50)" }
+  }[kind];
+  
   return (
-    <div className="case-slide" style={{
-      background: "#fff",
-      border: "1px solid var(--line)",
-      borderRadius: 24,
-      boxShadow: "var(--sh-xl)",
-      display: "grid",
-      gridTemplateColumns: "1.2fr 0.8fr",
-      overflow: "hidden",
-      flexShrink: 0,
-    }}>
-      {/* Left side details */}
-      <div style={{ padding: "36px 40px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-            <span className="icon-chip" style={{ width: 44, height: 44, borderRadius: 12, background: "var(--blue-50)", color: "var(--blue)" }}><Icon name={c.icon} size={20} stroke={2} /></span>
-            <div>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--muted)" }}>{c.industry}</div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", marginTop: 2, letterSpacing: "-0.01em" }}>{c.title}</div>
-            </div>
-          </div>
-          
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ position: "relative", paddingLeft: 36 }}>
-              <span style={{ position: "absolute", left: 13, top: 22, bottom: -10, width: 2, background: "var(--line)" }} />
-              <span style={{ position: "absolute", left: 0, top: 0, width: 26, height: 26, borderRadius: 7, background: "#FEF2F2", color: "#E11D48", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name="CircleAlert,AlertCircle" size={13} stroke={2.2} />
-              </span>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)", marginBottom: 3 }}>Challenge</div>
-              <div style={{ fontSize: 14.5, color: "var(--text-2)", lineHeight: 1.45 }}>{c.challenge}</div>
-            </div>
-
-            <div style={{ position: "relative", paddingLeft: 36 }}>
-              <span style={{ position: "absolute", left: 13, top: 22, bottom: -10, width: 2, background: "var(--line)" }} />
-              <span style={{ position: "absolute", left: 0, top: 0, width: 26, height: 26, borderRadius: 7, background: "var(--blue-50)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name="Lightbulb,Wrench" size={13} stroke={2.2} />
-              </span>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)", marginBottom: 3 }}>Solution</div>
-              <div style={{ fontSize: 14.5, color: "var(--text-2)", lineHeight: 1.45 }}>{c.solution}</div>
-            </div>
-
-            <div style={{ position: "relative", paddingLeft: 36 }}>
-              <span style={{ position: "absolute", left: 0, top: 0, width: 26, height: 26, borderRadius: 7, background: "var(--green-50)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name="TrendingUp" size={13} stroke={2.2} />
-              </span>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)", marginBottom: 3 }}>Outcome</div>
-              <div style={{ fontSize: 14.5, color: "var(--text)", fontWeight: 600, lineHeight: 1.45 }}>Measurable performance enhancements built to scale automatically.</div>
-            </div>
-          </div>
-        </div>
-
-        <a className="linka" href="#contact" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, fontWeight: 700, color: "var(--blue)", marginTop: 20 }}>
-          View Full Case Study <Arrow size={14} />
-        </a>
-      </div>
-
-      {/* Right side metrics rail */}
-      <div style={{
-        background: "linear-gradient(160deg,#0B1120,#131A2C)",
-        padding: "36px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        gap: 24,
-        position: "relative",
-        overflow: "hidden"
-      }}>
-        <div className="mesh" style={{ opacity: 0.6 }} />
-        {c.impact.map((m) => (
-          <div key={m.l} style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ fontSize: 38, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1 }}>
-              <CountUp value={m.v} />
-            </div>
-            <div style={{ fontSize: 12.5, color: "#9FB0C8", marginTop: 4, textTransform: "uppercase", letterSpacing: 0.5, fontWeight: 500 }}>{m.l}</div>
-          </div>
-        ))}
-      </div>
+    <div style={{ position: "relative", paddingLeft: 44, paddingBottom: last ? 0 : 22 }}>
+      {!last && <span style={{ position: "absolute", left: 15, top: 34, bottom: 0, width: 2, background: "var(--line)" }} />}
+      <span style={{ position: "absolute", left: 0, top: 0, width: 32, height: 32, borderRadius: 9, background: meta.bg, color: meta.c, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Icon name={meta.i} size={17} stroke={2} />
+      </span>
+      <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1.2, textTransform: "uppercase", color: "var(--faint)", marginBottom: 5, paddingTop: 7 }}>{kind}</div>
+      <div style={{ fontSize: 15.5, lineHeight: 1.5, color: "var(--text)" }}>{text}</div>
     </div>
   );
 }
 
-export default function CasesV2() {
-  const triggerRef = useRef(null);
-  const trackRef = useRef(null);
-
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      ScrollTrigger.matchMedia({
-        "(min-width: 960px)": function() {
-          const track = trackRef.current;
-          if (!track) return;
-          
-          const getScrollAmount = () => track.scrollWidth - window.innerWidth;
-          
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: triggerRef.current,
-              pin: true,
-              scrub: 0.5,
-              start: "top 80px",
-              end: () => `+=${getScrollAmount() + 250}`,
-              invalidateOnRefresh: true,
-            }
-          });
-
-          tl.to(track, {
-            x: () => -getScrollAmount(),
-            ease: "none",
-            duration: 1
-          });
-          
-          tl.to({}, { duration: 0.25 }); // scroll-hold after final card is fully visible
-        }
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
+function FeaturedCase({ c }) {
   return (
-    <div ref={triggerRef} className="cases-section-wrapper" style={{ background: "linear-gradient(180deg,#F6F8FE,#FFFFFF)" }}>
-      <section className="section" id="cases" style={{ overflow: "hidden", paddingBottom: "8vh" }}>
-        <div className="container">
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap", marginBottom: 44 }}>
-            <Reveal>
-              <Eyebrow>Featured case studies</Eyebrow>
-              <h2 className="h2" style={{ marginTop: 16 }}>Real systems. Real outcomes.</h2>
-            </Reveal>
-            <Reveal delay={80}>
-              <a className="linka" href="#contact">Browse all work <Arrow /></a>
-            </Reveal>
-          </div>
-        </div>
+    <Reveal variant="slide-left">
+      <div className="card feat-case" style={{ padding: 0, overflow: "hidden", display: "grid", gridTemplateColumns: "1.25fr 0.75fr", boxShadow: "var(--sh-lg)" }}>
+        <div style={{ padding: "38px 40px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 13, marginBottom: 24 }}>
+            <span className="icon-chip" style={{ width: 50, height: 50, borderRadius: 14 }}><Icon name={c.icon} size={24} stroke={2} /></span>
 
-        <div className="cases-track-container">
-          <div ref={trackRef} className="cases-track">
-            {CASES.map((c, idx) => (
-              <CaseCard key={c.title} c={c} index={idx} />
+
+
+
+
+
+
+
+
+
+            <div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "var(--muted)" }}>{c.industry}</div>
+              <div style={{ fontSize: 24, fontWeight: 800, color: "var(--text)", marginTop: 3, letterSpacing: "-0.02em" }}>{c.title}</div>
+            </div>
+          </div>
+          <FlowStep kind="Challenge" text={c.challenge} accent={c.accent} />
+          <FlowStep kind="Solution" text={c.solution} accent={c.accent} />
+          <FlowStep kind="Outcome" text="A real-time operational backbone that leadership trusts for daily decisions." accent={c.accent} last />
+        </div>
+        {/* metrics rail */}
+        <div style={{ background: "linear-gradient(160deg,#0B1120,#131A2C)", padding: "38px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 26, position: "relative", overflow: "hidden" }}>
+          <div className="mesh" style={{ opacity: 0.6 }} />
+          {c.impact.map((m) => (
+            <div key={m.l} style={{ position: "relative" }}>
+              <div style={{ fontSize: 44, fontWeight: 800, color: "#fff", letterSpacing: "-0.03em", lineHeight: 1 }}><CountUp value={m.v} /></div>
+              <div style={{ fontSize: 13.5, color: "#9FB0C8", marginTop: 6 }}>{m.l}</div>
+            </div>
+          ))}
+          <a className="btn btn-primary" href="http://logistics.keymouseit.com/" target="_blank" rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+function SupportingCase({ c, i }) {
+  return (
+    <Reveal variant="scale-in" delay={i * 120 + 80}>
+      <div className="card hover supp-case" style={{ padding: 0, height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <span className="supp-accent" style={{ height: 3, background: "linear-gradient(90deg,#2563FF,#7C3AED)", display: "block" }} />
+        <div style={{ padding: "26px 28px", display: "flex", flexDirection: "column", flex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span className="icon-chip"><Icon name={c.icon} size={22} stroke={2} /></span>
+            <div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--muted)" }}>{c.industry}</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginTop: 2, letterSpacing: "-0.01em" }}>{c.title}</div>
+            </div>
+          </div>
+          {/* challenge -> solution */}
+          <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+            {[["Challenge", c.challenge, "CircleAlert,AlertCircle", "#E11D48"], ["Solution", c.solution, "Lightbulb,Wrench", "var(--blue)"]].map(([k, t, ic, col]) => (
+              <div key={k} style={{ display: "flex", gap: 11, alignItems: "flex-start" }}>
+                <span style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 8, background: col === "#E11D48" ? "#FEF2F2" : "var(--blue-50)", color: col, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}><Icon name={ic} size={14} stroke={2} /></span>
+                <div>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--faint)" }}>{k}</div>
+                  <div style={{ fontSize: 14, color: "var(--text-2)", lineHeight: 1.45, marginTop: 2 }}>{t}</div>
+                </div>
+              </div>
             ))}
           </div>
+          {/* outcome — emphasized */}
+          <div style={{ marginTop: "auto", paddingTop: 18 }}>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--green)", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}><Icon name="TrendingUp" size={13} stroke={2.2} /> Outcome</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", background: "linear-gradient(90deg, rgba(37,99,255,0.05), rgba(124,58,237,0.03))", borderRadius: 12, border: "1px solid var(--line)" }}>
+              <div style={{ display: "flex", gap: 22 }}>
+                {c.impact.slice(0, 2).map((m) => (
+                  <div key={m.l}>
+                    <div style={{ fontSize: 21, fontWeight: 800, color: "var(--blue)", letterSpacing: "-0.02em" }}>{m.v}</div>
+                    <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 1 }}>{m.l}</div>
+                  </div>
+                ))}
+              </div>
+              <a className="linka supp-link" href="#contact" aria-label="Read case study" style={{ fontSize: 13.5 }}><Arrow size={16} /></a>
+            </div>
+          </div>
         </div>
-      </section>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </Reveal>
+  );
+}
+
+export default function CasesV2() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  return (
+    <section className="section" id="cases">
+      <div className="container">
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap", marginBottom: 44 }}>
+          <Reveal>
+            <Eyebrow>Featured case studies</Eyebrow>
+            <h2 className="h2" style={{ marginTop: 16 }}>Real systems. Real business outcomes.</h2>
+          </Reveal>
+          <Reveal delay={80}><a className="linka" href="#contact">Browse all work <Arrow /></a></Reveal>
+
+
+
+
+        </div>
+        <FeaturedCase c={CASES[0]} />
+        <div className="cases-supp" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22, marginTop: 22 }}>
+          <SupportingCase c={CASES[1]} i={0} />
+          <SupportingCase c={CASES[3]} i={1} />
+
+
+
+        </div>
+      </div>
+    </section>
   );
 }

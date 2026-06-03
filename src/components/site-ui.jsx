@@ -426,7 +426,7 @@ export function Logo({ height = 38, className, mode = "light", style }) {
           </g>
 
           {/* TEXT GROUP shifted horizontally to the right, scaled up and vertically aligned */}
-          <g transform="translate(680, 290) scale(1.35)">
+          <g transform="translate(680, 250) scale(1.35)">
             {/* Letter K */}
             <g transform="translate(103.2385,249.6384)">
               <path
@@ -529,7 +529,7 @@ export function Logo({ height = 38, className, mode = "light", style }) {
 
 
             {/* Horizontal separator line */}
-            <g transform="translate(54.0286, 146.0993)">
+            {/* <g transform="translate(54.0286, 146.0993)">
               <path
                 stroke={textColor}
                 strokeWidth={2}
@@ -537,12 +537,12 @@ export function Logo({ height = 38, className, mode = "light", style }) {
                 strokeLinejoin="miter"
                 d="M 0,0 H 870.21"
               />
-            </g>
+            </g> */}
           </g>
         </g>
 
         {/* Tagline Text rendered outside the Y-flipped parent group for subpixel clarity */}
-        <text
+        {/* <text
           x={1025}
           y={560}
           fill={textColor}
@@ -555,7 +555,7 @@ export function Logo({ height = 38, className, mode = "light", style }) {
           }}
         >
           KEY TO YOUR IT CHALLENGES
-        </text>
+        </text> */}
       </svg>
     </div>
   );
