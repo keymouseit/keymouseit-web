@@ -58,7 +58,7 @@ function FeaturedCase({ c }) {
               <div style={{ fontSize: 13.5, color: "#9FB0C8", marginTop: 6 }}>{m.l}</div>
             </div>
           ))}
-          <a className="btn btn-primary" href="http://logistics.keymouseit.com/" target="_blank" rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
+          <a className="btn btn-primary" href={c.link || "#contact"} target="_blank" rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
         </div>
       </div>
     </Reveal>
@@ -93,7 +93,25 @@ function SupportingCase({ c, i }) {
           {/* outcome — emphasized */}
           <div style={{ marginTop: "auto", paddingTop: 18 }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--green)", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}><Icon name="TrendingUp" size={13} stroke={2.2} /> Outcome</div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", background: "linear-gradient(90deg, rgba(37,99,255,0.05), rgba(124,58,237,0.03))", borderRadius: 12, border: "1px solid var(--line)" }}>
+            <a 
+              className="supp-outcome-link" 
+              href={c.link || "#contact"} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "space-between", 
+                padding: "14px 16px", 
+                background: "linear-gradient(90deg, rgba(37,99,255,0.04), rgba(124,58,237,0.02))", 
+                borderRadius: 12, 
+                border: "1px solid var(--line)",
+                textDecoration: "none",
+                color: "inherit",
+                cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+            >
               <div style={{ display: "flex", gap: 22 }}>
                 {c.impact.slice(0, 2).map((m) => (
                   <div key={m.l}>
@@ -102,8 +120,10 @@ function SupportingCase({ c, i }) {
                   </div>
                 ))}
               </div>
-              <a className="linka supp-link" href="#contact" aria-label="Read case study" style={{ fontSize: 13.5 }}><Arrow size={16} /></a>
-            </div>
+              <span className="supp-arrow" style={{ color: "var(--blue)", display: "flex", alignItems: "center", transition: "transform 0.2s ease" }}>
+                <Arrow size={16} />
+              </span>
+            </a>
           </div>
         </div>
 
@@ -183,7 +203,7 @@ export default function CasesV2() {
             <Eyebrow>Featured case studies</Eyebrow>
             <h2 className="h2" style={{ marginTop: 16 }}>Real systems. Real business outcomes.</h2>
           </Reveal>
-          <Reveal delay={80}><a className="linka" href="#contact">Browse all work <Arrow /></a></Reveal>
+          <Reveal delay={80}><a className="linka" href="/case-studies/index.html" target="_blank" rel="noopener noreferrer">Browse all work <Arrow /></a></Reveal>
 
 
 

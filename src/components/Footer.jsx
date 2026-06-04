@@ -22,7 +22,7 @@ export default function Footer() {
       case "Retail":
         return "#industries";
       case "Case Studies":
-        return "#cases";
+        return "/case-studies/index.html";
       case "Services":
         return "#services";
       case "Contact":
@@ -46,6 +46,22 @@ export default function Footer() {
             <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
               <a href="https://www.linkedin.com/company/keymouse-it" target='_blank' aria-label="LinkedIn" style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#9FB0C8", textDecoration: "none" }}><Icon name="Linkedin" size={18} stroke={2} /></a>
               <a href="mailto:info@keymouseit.com" aria-label="Email" style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#9FB0C8", textDecoration: "none" }}><Icon name="Mail" size={18} stroke={2} /></a>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 24, fontSize: 14.5, color: "#9FB0C8" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ color: "#6FA0FF", display: "inline-flex" }}><Icon name="Phone" size={16} stroke={2.2} /></span>
+                <div style={{ display: "flex", gap: 8, fontWeight: 500 }}>
+                  <a href="tel:+919501755574" style={{ color: "#9FB0C8", textDecoration: "none" }}>+91 95017 55574</a>
+                  <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+                  <a href="tel:+919501555574" style={{ color: "#9FB0C8", textDecoration: "none" }}>+91 95015 55574</a>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ color: "#25D366", display: "inline-flex" }}><Icon name="MessageSquare" size={16} stroke={2.2} /></span>
+                <a href="https://wa.me/919501055574" target="_blank" rel="noopener noreferrer" style={{ color: "#9FB0C8", textDecoration: "none", fontWeight: 500, display: "flex", alignItems: "center", gap: 6 }}>
+                  +91 95010 55574 <span style={{ fontSize: 11, background: "rgba(37,211,102,0.14)", color: "#25D366", padding: "1px 6px", borderRadius: 4, fontWeight: "bold" }}>WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
           {cols.map(([h, links]) => (

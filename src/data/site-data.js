@@ -217,6 +217,7 @@ export const CASES = [
     challenge: "Shipment data lived in five disconnected systems; delays were found after the fact.",
     solution: "A unified control tower with live tracking, forecasting, and exception alerts.",
     impact: [{ v: "30%", l: "faster delivery" }, { v: "25%", l: "lower cost" }, { v: "95%", l: "data accuracy" }],
+    link: "/case-studies/Logistics%20Control%20Tower.html"
   },
   {
     industry: "Manufacturing", tag: "Intelligence Platform", icon: "Factory", accent: BLUE,
@@ -224,6 +225,7 @@ export const CASES = [
     challenge: "Plant managers lacked a live view of OEE, quality, and downtime across lines.",
     solution: "A factory intelligence platform connecting MES, quality, and maintenance data.",
     impact: [{ v: "+18%", l: "OEE" }, { v: "−31%", l: "downtime" }],
+    link: "/case-studies/Manufacturing%20Control%20Tower.html"
   },
   {
     industry: "AI Automation", tag: "Workflow Automation", icon: "Sparkles", accent: BLUE,
@@ -231,6 +233,7 @@ export const CASES = [
     challenge: "Operations teams spent days on manual document handling and data entry.",
     solution: "Document intelligence plus agents that route, validate, and act — with review queues.",
     impact: [{ v: "70%", l: "manual work cut" }, { v: "4.2x", l: "faster" }],
+    link: "/case-studies/Predictive%20Inventory%20Planning.html"
   },
   {
     industry: "Identity & Security", tag: "Identity Platform", icon: "ShieldCheck,Shield", accent: BLUE,
@@ -238,6 +241,7 @@ export const CASES = [
     challenge: "Fragmented access control made audits painful and risky.",
     solution: "Zero-trust identity with SSO, governance, anomaly detection, and audit trails.",
     impact: [{ v: "Zero", l: "trust default" }, { v: "SOC 2", l: "ready" }],
+    link: "/case-studies/Decision%20Intelligence.html"
   },
 ];
 
@@ -310,3 +314,10 @@ export const WHY_COMPARE = [
   { agency: "Development only", us: "End-to-end ownership", icon: "GitBranch,Workflow" },
   { agency: "Short-term engagement", us: "Long-term partnership", icon: "Handshake,Heart" },
 ];
+
+/* ---- Contact Form & Calendly configuration ---- */
+export const CONTACT_CONFIG = {
+  web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY", // Get a free access key from https://web3forms.com/
+  calendlyUrl: "https://calendly.com/hi-shivenj/30min",
+};
+

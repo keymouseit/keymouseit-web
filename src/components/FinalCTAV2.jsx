@@ -22,8 +22,75 @@ function NetworkBg() {
 }
 
 export default function FinalCTAV2() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    challenge: '',
+    budget: '',
+    timeline: ''
+  });
+  const [errorMsg, setErrorMsg] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
-  const submit = (e) => { e.preventDefault(); setSent(true); };
+
+  const DISALLOWED_DOMAINS = ['mailinator.com', 'yopmail.com', 'tempmail.com', 'dispostable.com', 'trashmail.com', 'guerrillamail.com', 'mailinator2.com'];
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    const emailLower = formData.email.trim().toLowerCase();
+    const domain = emailLower.split('@')[1];
+    
+    if (!domain) {
+      setErrorMsg("Please enter a valid email address.");
+      return;
+    }
+
+    const isDisposable = DISALLOWED_DOMAINS.some(disallowed => domain.includes(disallowed));
+    if (isDisposable) {
+      setErrorMsg("Disposable or temporary emails are not allowed. Please use a work email.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    // Pre-emptively set cPanel anti-bot verification cookie to bypass firewalls
+    document.cookie = "humans_21909=1; path=/; max-age=31536000";
+
+    const params = new URLSearchParams();
+    params.append('name', formData.name);
+    params.append('email', formData.email);
+    params.append('company', formData.company);
+    params.append('challenge', formData.challenge);
+    params.append('budget', formData.budget);
+    params.append('timeline', formData.timeline);
+
+    try {
+      const res = await fetch("/submit-lead.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json"
+        },
+        body: params
+      });
+
+      const result = await res.json();
+      if (result && result.success) {
+        setSent(true);
+      } else {
+        setErrorMsg(result.message || "Failed to submit. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error submitting contact form:", err);
+      setErrorMsg("Connection error. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const notes = [["CircleCheck,CheckCircle", "Free consultation"], ["Lock", "No commitment"], ["Sparkles", "Expert guidance"], ["Zap", "Quick response"]];
   
   return (
@@ -49,30 +116,74 @@ export default function FinalCTAV2() {
               ))}
             </div>
           </Reveal>
-
+  
           <Reveal delay={100}>
             <div className="card" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.13)", borderRadius: 22, padding: 34, boxShadow: "var(--sh-xl)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
               {sent ? (
-                <div style={{ textAlign: "center", padding: "44px 10px" }}>
-                  <span style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(22,163,74,0.16)", border: "1px solid rgba(22,163,74,0.4)", color: "#4ADE80", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><Icon name="Check" size={32} stroke={2.4} /></span>
-                  <h3 style={{ color: "#fff", fontSize: 24, marginTop: 22 }}>Thank you — message received.</h3>
-                  <p style={{ color: "#9FB0C8", fontSize: 16, marginTop: 10, lineHeight: 1.6 }}>We'll review your requirements and get back to you within one business day.</p>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 20 }}>
+                    <span style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(22,163,74,0.16)", border: "1px solid rgba(22,163,74,0.4)", color: "#4ADE80", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><Icon name="Check" size={15} stroke={2.6} /></span>
+                    <span style={{ color: "#fff", fontSize: 16, fontWeight: 600 }}>Inquiry sent! Now lock in your time slot below:</span>
+                  </div>
+                  <div style={{ width: "100%", height: 550, borderRadius: 14, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
+                    <iframe 
+                      src={`https://calendly.com/hi-shivenj/30min?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&hide_landing_page_details=1&hide_gdpr_banner=1`}
+                      width="100%" 
+                      height="100%" 
+                      frameBorder="0" 
+                      title="Schedule Strategy Call"
+                    />
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={submit}>
-                  <div className="form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                    <div className="field"><label>Name</label><input required placeholder="Your name" /></div>
-                    <div className="field"><label>Work email</label><input required type="email" placeholder="you@company.com" /></div>
-                    <div className="field" style={{ gridColumn: "1 / -1" }}><label>Company</label><input required placeholder="Company name" /></div>
-                    <div className="field" style={{ gridColumn: "1 / -1" }}><label>Project challenge</label><textarea required rows="3" placeholder="What operational problem are you trying to solve?"></textarea></div>
-                    <div className="field"><label>Budget range</label>
-                      <select defaultValue=""><option value="" disabled>Select range</option><option>{"< $25k"}</option><option>$25k – $75k</option><option>$75k – $200k</option><option>$200k+</option></select>
+                  {errorMsg && (
+                    <div style={{ color: '#F87171', backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, fontSize: 14.5, display: 'flex', alignItems: 'flex-start', gap: 10, lineHeight: 1.5 }}>
+                      <span style={{ display: 'inline-flex', flexShrink: 0, marginTop: 2, color: '#EF4444' }}><Icon name="AlertCircle" size={16} stroke={2.5} /></span>
+                      <span>{errorMsg}</span>
                     </div>
-                    <div className="field"><label>Timeline</label>
-                      <select defaultValue=""><option value="" disabled>Select timeline</option><option>ASAP</option><option>1–3 months</option><option>3–6 months</option><option>Exploring</option></select>
+                  )}
+                  <div className="form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <div className="field">
+                      <label>Name</label>
+                      <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" />
+                    </div>
+                    <div className="field">
+                      <label>Work email</label>
+                      <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="you@company.com" />
+                    </div>
+                    <div className="field" style={{ gridColumn: "1 / -1" }}>
+                      <label>Company</label>
+                      <input required value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" />
+                    </div>
+                    <div className="field" style={{ gridColumn: "1 / -1" }}>
+                      <label>Project challenge</label>
+                      <textarea required rows="3" value={formData.challenge} onChange={e => setFormData({...formData, challenge: e.target.value})} placeholder="What operational problem are you trying to solve?"></textarea>
+                    </div>
+                    <div className="field">
+                      <label>Budget range</label>
+                      <select value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})} required>
+                        <option value="" disabled>Select range</option>
+                        <option>{"< $25k"}</option>
+                        <option>$25k – $75k</option>
+                        <option>$75k – $200k</option>
+                        <option>$200k+</option>
+                      </select>
+                    </div>
+                    <div className="field">
+                      <label>Timeline</label>
+                      <select value={formData.timeline} onChange={e => setFormData({...formData, timeline: e.target.value})} required>
+                        <option value="" disabled>Select timeline</option>
+                        <option>ASAP</option>
+                        <option>1–3 months</option>
+                        <option>3–6 months</option>
+                        <option>Exploring</option>
+                      </select>
                     </div>
                   </div>
-                  <Btn type="submit" variant="primary" lg block style={{ marginTop: 22 }}>Book Strategy Call</Btn>
+                  <Btn type="submit" variant="primary" lg block disabled={submitting} style={{ marginTop: 22 }}>
+                    {submitting ? "Sending Inquiry..." : "Book Strategy Call"}
+                  </Btn>
                   <p style={{ fontSize: 12.5, color: "#6B7689", textAlign: "center", marginTop: 14 }}>Free consultation · No commitment · Quick response</p>
                 </form>
               )}

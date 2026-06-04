@@ -1,286 +1,160 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import * as LucideIcons from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+/* eslint-disable */
+// Small, sharp line-icons for failure modes + UI
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+const ArrowRight = ({ size = 14, stroke = "currentColor" }) => (
+  <svg className="arrow" width={size} height={size} viewBox="0 0 16 16" fill="none">
+    <path d="M3 8h10M9 4l4 4-4 4" stroke={stroke} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
-/* ---------- Icon Bridge ---------- */
-const iconKeys = Object.keys(LucideIcons);
-const keyMap = {};
-iconKeys.forEach(k => {
-  keyMap[k.toLowerCase()] = k;
-});
+const ArrowUpRight = ({ size = 14, stroke = "currentColor" }) => (
+  <svg className="arrow" width={size} height={size} viewBox="0 0 16 16" fill="none">
+    <path d="M5 11l6-6M5 5h6v6" stroke={stroke} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
-export function Icon({ name, size = 20, stroke = 1.9, color = "currentColor", style }) {
-  if (!name) return null;
-  
-  const candidates = String(name).split(",");
-  let SelectedIcon = null;
-  
-  for (const raw of candidates) {
-    const clean = raw.trim();
-    if (LucideIcons[clean]) {
-      SelectedIcon = LucideIcons[clean];
-      break;
-    }
-    const lower = clean.toLowerCase();
-    const matchedKey = keyMap[lower];
-    if (matchedKey && LucideIcons[matchedKey]) {
-      SelectedIcon = LucideIcons[matchedKey];
-      break;
-    }
-  }
-
-  if (!SelectedIcon) {
-    return <span style={{ display: "inline-block", width: size, height: size, borderRadius: 3, background: "currentColor", opacity: 0.22, ...style }} />;
-  }
-
-  return <SelectedIcon size={size} strokeWidth={stroke} color={color} style={style} />;
-}
-
-export const Arrow = ({ size = 17 }) => <Icon name="ArrowRight" size={size} stroke={2.2} />;
-
-export function withAlpha(hex, a) {
-  const m = hex.replace("#", "");
-  const r = parseInt(m.slice(0, 2), 16), g = parseInt(m.slice(2, 4), 16), b = parseInt(m.slice(4, 6), 16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-
-/* ---------- Scroll Reveal Hooks & Components ---------- */
-export function useInView(opts = {}) {
-  const ref = useRef(null);
-  const [state, setState] = useState({ seen: false, instant: false });
-  
-  const inViewNow = () => {
-    const el = ref.current; if (!el) return false;
-    const r = el.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    return r.top < vh * (opts.margin ?? 0.92) && r.bottom > 0;
-  };
-
-  useLayoutEffect(() => {
-    if (inViewNow()) setState({ seen: true, instant: true });
-  }, []);
-
-  useEffect(() => {
-    if (ref.current && state.seen) return;
-    let done = state.seen;
-    const check = () => {
-      if (done || !ref.current) return;
-      if (inViewNow()) {
-        done = true;
-        setState({ seen: true, instant: false });
-        cleanup();
-      }
-    };
-    const cleanup = () => {
-      window.removeEventListener("scroll", check);
-      window.removeEventListener("resize", check);
-      clearTimeout(t);
-    };
-    window.addEventListener("scroll", check, { passive: true });
-    window.addEventListener("resize", check);
-    const t = setTimeout(() => {
-      if (!done) {
-        done = true;
-        setState({ seen: true, instant: true });
-        cleanup();
-      }
-    }, 1800);
-    return cleanup;
-  }, []);
-
-  return [ref, state.seen, state.instant];
-}
-
-export function Reveal({ children, delay = 0, as = "div", className = "", style, direction = "up" }) {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const yOffset = direction === "up" ? 32 : direction === "down" ? -32 : 0;
-    const xOffset = direction === "left" ? 32 : direction === "right" ? -32 : 0;
-
-    const anim = gsap.fromTo(el, 
-      { 
-        opacity: 0, 
-        y: yOffset,
-        x: xOffset
-      },
-      { 
-        opacity: 1, 
-        y: 0, 
-        x: 0,
-        duration: 0.85,
-        ease: "power3.out",
-        delay: delay / 1000,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 92%",
-          toggleActions: "play none none none"
-        }
-      }
-    );
-
-    return () => {
-      if (anim.scrollTrigger) anim.scrollTrigger.kill();
-      anim.kill();
-    };
-  }, [delay, direction]);
-
-  return React.createElement(as, {
-    ref, 
-    className: className,
-    style: { opacity: 0, ...style },
-  }, children);
-}
-
-/* ---------- Layout & Text Primitives ---------- */
-export function Eyebrow({ children, muted }) {
-  return <div className={`eyebrow ${muted ? "muted" : ""}`}><span className="sq" />{children}</div>;
-}
-
-export function SectionHead({ eyebrow, title, lead, center, maxWidth, style }) {
+// Failure-mode icons — each is a 56x56 diagrammatic glyph
+function IconCoordination() {
   return (
-    <div className={`section-head ${center ? "center" : ""}`} style={{ maxWidth, ...style }}>
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h2 className="h2">{title}</h2>
-      {lead && <p className="lead">{lead}</p>}
-    </div>
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round">
+        <circle cx="12" cy="14" r="3.5" />
+        <circle cx="44" cy="14" r="3.5" />
+        <circle cx="12" cy="42" r="3.5" />
+        <circle cx="44" cy="42" r="3.5" />
+        <circle cx="28" cy="28" r="2.5" fill="currentColor" opacity="0.4"/>
+        {/* broken connections — dashed */}
+        <path d="M15 14 H41" strokeDasharray="2 3"/>
+        <path d="M12 17 V39" strokeDasharray="2 3"/>
+        <path d="M44 17 V39" strokeDasharray="2 3" opacity="0.4"/>
+        <path d="M15 42 H41" strokeDasharray="2 3" opacity="0.4"/>
+      </g>
+    </svg>
   );
 }
 
-export function Magnetic({ children, range = 50, tolerance = 0.28 }) {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const onMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const { left, top, width, height } = el.getBoundingClientRect();
-      const centerX = left + width / 2;
-      const centerY = top + height / 2;
-      const distanceX = clientX - centerX;
-      const distanceY = clientY - centerY;
-      const distance = Math.hypot(distanceX, distanceY);
-
-      if (distance < range) {
-        gsap.to(el, {
-          x: distanceX * tolerance,
-          y: distanceY * tolerance,
-          duration: 0.35,
-          ease: "power2.out"
-        });
-      } else {
-        gsap.to(el, {
-          x: 0,
-          y: 0,
-          duration: 0.5,
-          ease: "power3.out"
-        });
-      }
-    };
-
-    const onMouseLeave = () => {
-      gsap.to(el, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: "power3.out"
-      });
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    el.addEventListener("mouseleave", onMouseLeave);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      el.removeEventListener("mouseleave", onMouseLeave);
-    };
-  }, [range, tolerance]);
-
-  return <div ref={ref} style={{ display: "inline-block", position: "relative" }}>{children}</div>;
-}
-
-export function Btn({ variant = "primary", lg, block, children, href = "#", icon, onClick, type, style }) {
-  const cls = `btn btn-${variant} ${lg ? "btn-lg" : ""} ${block ? "btn-block" : ""} btn-shimmer`;
-  const inner = <>{children}{icon && <Arrow />}</>;
-  const el = type === "button" || type === "submit"
-    ? <button type={type} className={cls} style={style} onClick={onClick}>{inner}</button>
-    : <a className={cls} href={href} style={style} onClick={onClick}>{inner}</a>;
-  return <Magnetic>{el}</Magnetic>;
-}
-
-/* ---------- Dynamic CountUp ---------- */
-export function CountUp({ value }) {
-  return <span>{value}</span>;
-}
-
-/* ---------- Scroll Scrub Text (GSAP-powered) ---------- */
-export function ScrollScrubText({ text, style, className }) {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    // Split text into tokens, keeping **highlight** markers intact
-    const tokens = text.split(/(\*\*[^*]+\*\*|\s+)/);
-    
-    let html = "";
-    tokens.forEach(token => {
-      if (!token) return;
-      if (token.startsWith("**") && token.endsWith("**")) {
-        const clean = token.slice(2, -2);
-        const innerWords = clean.split(/\s+/);
-        innerWords.forEach((w, idx) => {
-          html += `<span class="scrub-word scrub-highlight grad-text" style="opacity: 0.15; display: inline-block; font-weight: 800; background-image: linear-gradient(110deg,#2563EB,#7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${w}</span>${idx < innerWords.length - 1 ? ' ' : ''}`;
-        });
-      } else if (token.trim() === "") {
-        html += token;
-      } else {
-        html += `<span class="scrub-word" style="opacity: 0.15; display: inline-block; color: var(--text-2);">${token}</span>`;
-      }
-    });
-
-    el.innerHTML = html;
-
-    const spans = el.querySelectorAll(".scrub-word");
-    const anim = gsap.to(spans, {
-      opacity: 1,
-      stagger: 0.12,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 88%",
-        end: "bottom 58%",
-        scrub: 0.5,
-      }
-    });
-
-    return () => {
-      if (anim.scrollTrigger) anim.scrollTrigger.kill();
-      anim.kill();
-    };
-  }, [text]);
-
+function IconVisibility() {
   return (
-    <p ref={containerRef} className={className} style={{ margin: 0, ...style }}>
-      {text}
-    </p>
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="8" y="14" width="40" height="28" rx="2" />
+        <path d="M8 22 H48" />
+        {/* dashboard bars, partly faded */}
+        <path d="M14 36 V28" opacity="0.9"/>
+        <path d="M20 36 V32" opacity="0.6"/>
+        <path d="M26 36 V26" opacity="0.3"/>
+        <path d="M32 36 V30" opacity="0.2"/>
+        <path d="M38 36 V32" opacity="0.15"/>
+        <path d="M44 36 V28" opacity="0.1"/>
+        {/* stale tag */}
+        <circle cx="42" cy="18" r="1.2" fill="currentColor"/>
+      </g>
+    </svg>
   );
 }
 
-/* ---------- Brand SVG Logo Component ---------- */
-export function Logo({ height = 38, className, mode = "light", style }) {
+function IconSequencing() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+        {/* 3 boxes in wrong order */}
+        <rect x="6" y="20" width="12" height="16" rx="1.5"/>
+        <rect x="22" y="20" width="12" height="16" rx="1.5"/>
+        <rect x="38" y="20" width="12" height="16" rx="1.5"/>
+        <text x="12" y="31" textAnchor="middle" fontFamily="Geist Mono, monospace" fontSize="8" fill="currentColor" stroke="none">02</text>
+        <text x="28" y="31" textAnchor="middle" fontFamily="Geist Mono, monospace" fontSize="8" fill="currentColor" stroke="none">03</text>
+        <text x="44" y="31" textAnchor="middle" fontFamily="Geist Mono, monospace" fontSize="8" fill="currentColor" stroke="none">01</text>
+        {/* swap arc */}
+        <path d="M12 16 Q28 6 44 16" strokeDasharray="2 2"/>
+      </g>
+    </svg>
+  );
+}
+
+function IconPlanning() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" strokeLinecap="round">
+        {/* curve: overshoot and undershoot */}
+        <path d="M6 30 L14 30 L14 18 L22 18 L22 40 L30 40 L30 24 L38 24 L38 12 L46 12 L46 36 L50 36" />
+        {/* target line */}
+        <path d="M6 26 H50" strokeDasharray="3 3" opacity="0.5"/>
+      </g>
+    </svg>
+  );
+}
+
+function IconLatency() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="28" cy="28" r="16"/>
+        <path d="M28 16 V28 L36 33" />
+        {/* tick marks */}
+        <path d="M28 10 V12"/>
+        <path d="M28 44 V46"/>
+        <path d="M10 28 H12"/>
+        <path d="M44 28 H46"/>
+        {/* alert */}
+        <circle cx="44" cy="14" r="3" fill="currentColor" opacity="0.9" stroke="none"/>
+      </g>
+    </svg>
+  );
+}
+
+// Case-study layer icons
+function LayerGlyph({ kind }) {
+  // kind: exec | vis | orch | plan | dec
+  const common = { width: 40, height: 40, viewBox: "0 0 40 40", fill: "none" };
+  if (kind === "exec") return (
+    <svg {...common}><g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round">
+      <rect x="6" y="8" width="8" height="8"/><rect x="16" y="8" width="8" height="8"/><rect x="26" y="8" width="8" height="8"/>
+      <rect x="6" y="18" width="8" height="8"/><rect x="16" y="18" width="8" height="8" fill="currentColor" opacity="0.25"/><rect x="26" y="18" width="8" height="8"/>
+      <rect x="6" y="28" width="8" height="4"/><rect x="16" y="28" width="8" height="4"/><rect x="26" y="28" width="8" height="4"/>
+    </g></svg>
+  );
+  if (kind === "vis") return (
+    <svg {...common}><g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round">
+      <rect x="6" y="6" width="28" height="28" rx="1.5"/>
+      <path d="M6 14 H34"/>
+      <path d="M10 26 V20"/><path d="M14 26 V18"/><path d="M18 26 V22"/><path d="M22 26 V16"/><path d="M26 26 V20"/><path d="M30 26 V24"/>
+    </g></svg>
+  );
+  if (kind === "orch") return (
+    <svg {...common}><g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round">
+      <circle cx="20" cy="20" r="3" fill="currentColor"/>
+      <circle cx="8"  cy="10" r="2.5"/><circle cx="32" cy="10" r="2.5"/>
+      <circle cx="8"  cy="30" r="2.5"/><circle cx="32" cy="30" r="2.5"/>
+      <path d="M10 12 L18 18"/><path d="M30 12 L22 18"/>
+      <path d="M10 28 L18 22"/><path d="M30 28 L22 22"/>
+    </g></svg>
+  );
+  if (kind === "plan") return (
+    <svg {...common}><g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 28 L14 22 L20 26 L28 14 L34 18"/>
+      <circle cx="6"  cy="28" r="1.5" fill="currentColor"/>
+      <circle cx="14" cy="22" r="1.5" fill="currentColor"/>
+      <circle cx="20" cy="26" r="1.5" fill="currentColor"/>
+      <circle cx="28" cy="14" r="1.5" fill="currentColor"/>
+      <circle cx="34" cy="18" r="1.5" fill="currentColor"/>
+      <path d="M6 34 H34" strokeDasharray="2 2" opacity="0.5"/>
+    </g></svg>
+  );
+  if (kind === "dec") return (
+    <svg {...common}><g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 6 L20 34"/>
+      <path d="M20 14 L10 22"/>
+      <path d="M20 14 L30 22"/>
+      <circle cx="20" cy="6" r="2" fill="currentColor"/>
+      <circle cx="10" cy="22" r="2"/>
+      <circle cx="30" cy="22" r="2"/>
+      <circle cx="20" cy="34" r="2" fill="currentColor"/>
+    </g></svg>
+  );
+  return null;
+}
+
+function Logo({ height = 38, className, mode = "light", style }) {
   const textColor = mode === "dark" ? "#FFFFFF" : "#343434";
 
   return (
@@ -506,37 +380,15 @@ export function Logo({ height = 38, className, mode = "light", style }) {
                 d="m 0,0 v -125.936 -2 h 2 17.32 2 v 2 V 0 Z"
               />
             </g>
-
-
-            {/* Horizontal separator line */}
-            {/* <g transform="translate(54.0286, 146.0993)">
-              <path
-                stroke={textColor}
-                strokeWidth={2}
-                strokeLinecap="butt"
-                strokeLinejoin="miter"
-                d="M 0,0 H 870.21"
-              />
-            </g> */}
           </g>
         </g>
-
-        {/* Tagline Text rendered outside the Y-flipped parent group for subpixel clarity */}
-        {/* <text
-          x={1025}
-          y={560}
-          fill={textColor}
-          style={{
-            fontVariant: "normal",
-            fontWeight: "bold",
-            fontStretch: "normal",
-            fontSize: "100px",
-            fontFamily: "Montserrat, sans-serif"
-          }}
-        >
-          KEY TO YOUR IT CHALLENGES
-        </text> */}
       </svg>
     </div>
   );
 }
+
+Object.assign(window, {
+  ArrowRight, ArrowUpRight,
+  IconCoordination, IconVisibility, IconSequencing, IconPlanning, IconLatency,
+  LayerGlyph, Logo,
+});
