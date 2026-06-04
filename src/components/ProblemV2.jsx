@@ -86,7 +86,7 @@ function SilosViz({ connected }) {
           <div key={tool.t} className={connected ? "" : ["drift-a", "drift-b", "drift-c"][i % 3]}
             style={{ position: "absolute", left: `${pos.x}%`, top: `${pos.y}%`, transform: "translate(-50%,-50%)", transition: "left 0.7s var(--ease), top 0.7s var(--ease)", zIndex: 2 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 12px", background: "#fff", borderRadius: 11, border: `1px solid ${connected ? "var(--blue-100)" : "var(--line-strong)"}`, boxShadow: connected ? "var(--sh-md)" : "var(--sh-sm)", transition: "border-color 0.5s, box-shadow 0.5s", whiteSpace: "nowrap" }}>
-              <span style={{ width: 24, height: 24, borderRadius: 7, background: connected ? "var(--blue-50)" : "#F1F3F7", color: connected ? "var(--blue)" : "var(--faint)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.5s" }}>
+              <span style={{ width: 24, height: 24, borderRadius: 7, background: connected ? "var(--blue-50)" : "rgba(240, 121, 43, 0.1)", color: connected ? "var(--blue)" : "#F0792B", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.5s" }}>
                 <Icon name={tool.i} size={13} stroke={2} />
               </span>
               <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--text)" }}>{tool.t}</span>

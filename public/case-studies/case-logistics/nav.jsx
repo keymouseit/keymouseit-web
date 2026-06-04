@@ -15,9 +15,6 @@ function CaseNav() {
         </div>
 
         <div className="nav-cta" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <a href="index.html#audit" className="btn btn-ghost" style={{ padding: "9px 14px", fontSize: 13 }}>
-            Contact
-          </a>
           <a href="#cta" className="btn btn-primary" style={{ padding: "9px 14px", fontSize: 13 }}>
             Get System Map <ArrowRight />
           </a>

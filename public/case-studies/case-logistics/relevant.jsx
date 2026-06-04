@@ -93,7 +93,7 @@ function Relevant() {
               }}>
                 <RelevantGlyph kind={r.glyph}/>
               </div>
-              <span style={{ fontSize: 13.5, fontWeight: 500, color: "var(--text)", letterSpacing: "-0.005em", lineHeight: 1.3 }}>
+              <span style={{ fontSize: 13.5, fontWeight: 500, color: "var(--blue)", letterSpacing: "-0.005em", lineHeight: 1.3 }}>
                 {r.title}
               </span>
             </div>

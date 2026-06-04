@@ -19,9 +19,6 @@ function Nav() {
         </div>
 
         <div className="nav-cta">
-          <a href="#contact" className="btn btn-ghost" style={{ padding: "9px 14px", fontSize: 13 }}>
-            Contact
-          </a>
           <a href="#audit" className="btn btn-primary" style={{ padding: "9px 14px", fontSize: 13 }}>
             Get System Map<ArrowRight />
           </a>

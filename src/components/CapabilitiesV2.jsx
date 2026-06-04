@@ -25,7 +25,7 @@ function StagePanel({ s, i, open, onToggle }) {
           <span className="icon-chip" style={{ width: 42, height: 42 }}><Icon name={s.icon} size={21} stroke={2} /></span>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: 1, color: "var(--faint)" }}>{s.n}</div>
-            <div style={{ fontSize: 19, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>{s.stage}</div>
+            <div style={{ fontSize: 19, fontWeight: 800, color: "var(--blue)", letterSpacing: "-0.01em" }}>{s.stage}</div>
           </div>
           <span className="cap-chev" style={{ color: "var(--blue)", transition: "transform 0.28s var(--ease)", transform: open ? "rotate(180deg)" : "none" }}><Icon name="ChevronDown" size={20} stroke={2.2} /></span>
         </button>
