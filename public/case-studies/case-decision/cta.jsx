@@ -57,9 +57,9 @@ function CaseCTA() {
               </p>
 
               <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 32, flexWrap: "wrap" }}>
-                <a href="#" className="btn btn-primary" style={{ padding: "14px 22px", fontSize: 14.5 }}>
+                {/* <a href="#" className="btn btn-primary" style={{ padding: "14px 22px", fontSize: 14.5 }}>
                   Get Decision System Map <ArrowRight/>
-                </a>
+                </a> */}
                 <a href="mailto:hello@keymouseit.com" className="btn btn-ghost" style={{ padding: "14px 22px", fontSize: 14.5, color: "#fff", borderColor: "rgba(255,255,255,0.2)" }}>
                   hello@keymouseit.com <ArrowUpRight/>
                 </a>
@@ -125,9 +125,9 @@ function MobileCaseCTA() {
         3 audit slots left · Q3 ’26
       </div>
       <div className="row">
-        <a href="#cta" className="btn btn-primary" style={{ color: "#fff" }}>
+        {/* <a href="#cta" className="btn btn-primary" style={{ color: "#fff" }}>
           Get Decision System Map <ArrowRight/>
-        </a>
+        </a> */}
         <a href="mailto:hello@keymouseit.com" className="btn btn-ghost" aria-label="Email">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
             <rect x="1.5" y="3" width="13" height="10" rx="1.5"/>

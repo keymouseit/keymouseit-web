@@ -56,9 +56,9 @@ function CTA() {
               </p>
 
               <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 32, flexWrap: "wrap" }}>
-                <a href="#" className="btn btn-primary" style={{ padding: "14px 22px", fontSize: 14.5 }}>
+                {/* <a href="#" className="btn btn-primary" style={{ padding: "14px 22px", fontSize: 14.5 }}>
                   Pick a slot <ArrowRight />
-                </a>
+                </a> */}
                 <a href="mailto:hello@keymouseit.com" className="btn btn-ghost" style={{ padding: "14px 22px", fontSize: 14.5, color: "#fff", borderColor: "rgba(255,255,255,0.2)" }}>
                   hello@keymouseit.com <ArrowUpRight />
                 </a>

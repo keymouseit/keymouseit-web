@@ -233,10 +233,17 @@ function PipelineStage({ s, i }) {
         )}
       </div>
 
+<div style={{
+        width: 44, height: 44, borderRadius: 10,
+        background: accent ? "rgba(37, 99, 255, 0.12)" : "var(--blue-50)",
+        border: `1px solid ${accent ? "rgba(37, 99, 255, 0.3)" : "var(--blue-100)"}`,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        color: accent ? "var(--accent)" : "var(--blue)", flexShrink: 0
+      }}>
       <StageGlyph kind={s.kind} accent={accent}/>
-
+</div>
       <div>
-        <div style={{ fontSize: 14, fontWeight: 500, color: "var(--text)", letterSpacing: "-0.01em" }}>{s.label}</div>
+        <div style={{ fontSize: 14, fontWeight: 500, color: "var(--blue)", letterSpacing: "-0.01em" }}>{s.label}</div>
         <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 4 }}>{s.sub}</div>
       </div>
 
@@ -252,7 +259,7 @@ function PipelineStage({ s, i }) {
 }
 
 function StageGlyph({ kind, accent }) {
-  const c = accent ? "var(--accent)" : "var(--text-2)";
+    const c = "currentColor";
   const common = { width: 36, height: 36, viewBox: "0 0 36 36", fill: "none", stroke: c, strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" };
   if (kind === "shipment") return (<svg {...common}><path d="M5 11 L18 6 L31 11 V25 L18 30 L5 25 Z"/><path d="M5 11 L18 16 L31 11"/><path d="M18 16 V30"/></svg>);
   if (kind === "gate")     return (<svg {...common}><rect x="6" y="14" width="24" height="14" rx="2"/><path d="M11 14 V10 a7 7 0 0 1 14 0 V14"/><circle cx="18" cy="21" r="1.4" fill={c}/></svg>);
