@@ -181,9 +181,7 @@ export default function FinalCTAV2() {
                       </select>
                     </div>
                   </div>
-                  <Btn type="submit" variant="primary" lg block disabled={submitting} style={{ marginTop: 22 }}>
-                    {submitting ? "Sending Inquiry..." : "Book Strategy Call"}
-                  </Btn>
+                  <button type="submit" className="btn btn-primary btn-lg btn-block" style={{ marginTop: 22 }} disabled={submitting}>{submitting ? "Sending Inquiry..." : "Book Strategy Call"}</button>
                   <p style={{ fontSize: 12.5, color: "#6B7689", textAlign: "center", marginTop: 14 }}>Free consultation · No commitment · Quick response</p>
                 </form>
               )}
