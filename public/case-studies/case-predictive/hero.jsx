@@ -47,7 +47,7 @@ function CaseHero() {
 
         <h1 className="display">
           Predictive Inventory<br/>
-          &amp; Supply Planning.
+          <span style={{ color: "var(--blue)" }}>&amp; Supply Planning.</span>
         </h1>
         <p className="lead" style={{ marginTop: 24, fontSize: 20, maxWidth: "52ch" }}>
           Cut peak-period stockouts{" "}

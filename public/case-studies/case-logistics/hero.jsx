@@ -49,7 +49,7 @@ function CaseHero() {
         {/* Title block */}
         <h1 className="display">
           Logistics<br/>
-          Control Tower.
+          <span style={{ color: "var(--blue)" }}>Control Tower.</span>
         </h1>
         <p style={{
           marginTop: 24,

@@ -47,7 +47,7 @@ function CaseHero() {
 
         <h1 className="display">
           Inventory<br/>
-          Intelligence.
+          <span style={{ color: "var(--blue)" }}>Intelligence.</span>
         </h1>
         <p className="lead" style={{ marginTop: 24, fontSize: 20, maxWidth: "52ch" }}>
           Cut inventory leakage by{" "}

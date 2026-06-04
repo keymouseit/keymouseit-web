@@ -47,7 +47,7 @@ function CaseHero() {
 
         <h1 className="display">
           Decision<br/>
-          Intelligence System.
+          <span style={{ color: "var(--blue)" }}>Intelligence System.</span>
         </h1>
         <p className="lead" style={{ marginTop: 24, fontSize: 20, maxWidth: "58ch", color: "var(--text)" }}>
           If your teams report different numbers — your decisions are already compromised.
