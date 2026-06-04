@@ -1,4 +1,4 @@
-import { Icon, SectionHead, Reveal, Btn, ScrollScrubText, Eyebrow } from './site-ui';
+import { Icon, SectionHead, Reveal, Btn, ScrollScrubText, Eyebrow, Logo } from './site-ui';
 import { WHY_COMPARE } from '../data/site-data';
 
 function CompareRow({ row, i, header }) {
@@ -11,8 +11,7 @@ function CompareRow({ row, i, header }) {
         </div>
         <div style={{ width: 66, flexShrink: 0 }} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 10, padding: "18px 28px", background: "linear-gradient(180deg, rgba(37,99,255,0.10), rgba(124,58,237,0.05))", borderLeft: "2px solid var(--blue)" }}>
-          <span style={{ width: 26, height: 26, borderRadius: 7, background: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "var(--sh-blue)" }}><Icon name="MousePointer2,MousePointer" size={14} color="#fff" stroke={2.2} /></span>
-          <span style={{ fontSize: 16.5, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.01em" }}>KeyMouse IT</span>
+          <Logo height={35} />
         </div>
       </div>
     );

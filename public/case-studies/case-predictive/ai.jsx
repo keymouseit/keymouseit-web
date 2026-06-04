@@ -63,7 +63,7 @@ function AISection() {
           <div>
             <span className="eyebrow"><span className="bar"/>Application Map</span>
             <h3 style={{
-              fontSize: 26, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--text)",
+              fontSize: 26, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--blue)",
               marginTop: 12, marginBottom: 14, lineHeight: 1.15,
             }}>
               Detection runs at both levels — stockout prediction is operational; slow-mover identification feeds strategic capital decisions.
@@ -109,7 +109,7 @@ function AICard({ a }) {
         <QuadrantBadge q={a.quad}/>
       </div>
 
-      <h3 className="h3" style={{ fontSize: 20 }}>{a.title}</h3>
+      <h3 className="h3" style={{ fontSize: 20, color: "var(--blue)" }}>{a.title}</h3>
 
       <p style={{ fontSize: 14, lineHeight: 1.55, color: "var(--text-2)", margin: 0 }}>
         {a.body}

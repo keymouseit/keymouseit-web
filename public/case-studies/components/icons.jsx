@@ -16,8 +16,8 @@ const ArrowUpRight = ({ size = 14, stroke = "currentColor" }) => (
 // Failure-mode icons — each is a 56x56 diagrammatic glyph
 function IconCoordination() {
   return (
-    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round">
+    <svg width="24" height="24" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="3.2" strokeLinecap="round">
         <circle cx="12" cy="14" r="3.5" />
         <circle cx="44" cy="14" r="3.5" />
         <circle cx="12" cy="42" r="3.5" />
@@ -35,8 +35,8 @@ function IconCoordination() {
 
 function IconVisibility() {
   return (
-    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="8" y="14" width="40" height="28" rx="2" />
         <path d="M8 22 H48" />
         {/* dashboard bars, partly faded */}
@@ -55,8 +55,8 @@ function IconVisibility() {
 
 function IconSequencing() {
   return (
-    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
         {/* 3 boxes in wrong order */}
         <rect x="6" y="20" width="12" height="16" rx="1.5"/>
         <rect x="22" y="20" width="12" height="16" rx="1.5"/>
@@ -73,8 +73,8 @@ function IconSequencing() {
 
 function IconPlanning() {
   return (
-    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-      <g stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" strokeLinecap="round">
+    <svg width="24" height="24" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="3.2" strokeLinejoin="round" strokeLinecap="round">
         {/* curve: overshoot and undershoot */}
         <path d="M6 30 L14 30 L14 18 L22 18 L22 40 L30 40 L30 24 L38 24 L38 12 L46 12 L46 36 L50 36" />
         {/* target line */}
@@ -86,8 +86,8 @@ function IconPlanning() {
 
 function IconLatency() {
   return (
-    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-      <g stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 56 56" fill="none">
+      <g stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="28" cy="28" r="16"/>
         <path d="M28 16 V28 L36 33" />
         {/* tick marks */}

@@ -223,7 +223,7 @@ export default function FounderV2() {
               >
                 {/* Image scale parallax wrapper */}
                 <div ref={imageWrapperRef} style={{ overflow: "hidden", borderRadius: 22, transformOrigin: "center center" }}>
-                  <image-slot id="founder-photo-v2" src="/assets/founder_hd.png" style={{ display: "block", width: "100%", height: "440px" }} shape="rect" placeholder="Drop founder photo"></image-slot>
+                  <image-slot id="founder-photo-v2" src="/assets/founder_hd.jpeg" style={{ display: "block", width: "100%", height: "440px" }} shape="rect" placeholder="Drop founder photo"></image-slot>
                 </div>
                 
                 {/* Reflection Overlay */}

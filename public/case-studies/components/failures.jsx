@@ -71,13 +71,21 @@ function FailureCard({ f, idx }) {
       </span>
 
       {/* icon */}
-      <div style={{ color: "var(--text-2)", marginBottom: 22 }}>
+      <div style={{
+        width: 48, height: 48, borderRadius: 12,
+        background: "var(--blue-50)",
+        border: "1px solid var(--blue-100)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        color: "var(--blue)",
+        marginBottom: 22,
+        flexShrink: 0
+      }}>
         <f.Icon/>
       </div>
 
       <h3 style={{
         fontSize: 19, fontWeight: 500, letterSpacing: "-0.01em",
-        margin: "0 0 10px",
+        margin: "0 0 10px", color: "var(--blue)",
       }}>{f.title}</h3>
       <p style={{
         fontSize: 14, lineHeight: 1.55, color: "var(--muted)",

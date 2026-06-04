@@ -69,7 +69,7 @@ function MetricCell({ m, i }) {
         fontWeight: 500,
         letterSpacing: "-0.03em",
         lineHeight: 1,
-        color: "var(--text)",
+        color: "var(--blue)",
         marginTop: 16,
         marginBottom: 16,
         fontFeatureSettings: '"ss01"',

@@ -47,7 +47,7 @@ function WhoFor() {
                   }}>{r.k}</span>
                   <span style={{
                     fontSize: 16, lineHeight: 1.5,
-                    color: r.k === "Outcome" ? "#fff" : "var(--text-2)",
+                    color: r.k === "Outcome" ? "var(--accent)" : "var(--text-2)",
                     letterSpacing: "-0.005em", fontWeight: r.k === "Outcome" ? 500 : 400,
                   }}>{r.v}</span>
                 </div>

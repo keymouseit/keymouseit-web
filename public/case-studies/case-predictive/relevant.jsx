@@ -9,7 +9,7 @@ const RELEVANT_IF = [
 ];
 
 function RelevantGlyph({ kind }) {
-  const c = "var(--accent)";
+  const c = "currentColor";
   const common = { width: 20, height: 20, viewBox: "0 0 28 28", fill: "none", stroke: c, strokeWidth: "1.4", strokeLinecap: "round", strokeLinejoin: "round" };
   if (kind === "multi") return (
     <svg {...common}>
@@ -85,10 +85,11 @@ function Relevant() {
             onMouseLeave={e => e.currentTarget.style.borderColor = "var(--line)"}
             >
               <div style={{
-                width: 32, height: 32, borderRadius: 8,
-                background: "rgba(37, 99, 255,0.06)",
-                border: "1px solid rgba(37, 99, 255,0.20)",
+                width: 38, height: 38, borderRadius: 10,
+                background: "var(--blue-50)",
+                border: "1px solid var(--blue-100)",
                 display: "grid", placeItems: "center", flexShrink: 0,
+                color: "var(--blue)",
               }}>
                 <RelevantGlyph kind={r.glyph}/>
               </div>

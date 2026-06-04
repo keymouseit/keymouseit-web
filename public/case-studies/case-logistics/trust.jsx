@@ -42,10 +42,11 @@ function TrustLayerL() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }} className="trust-card-grid">
             {TRUST_POINTS.map((t, i) => (
               <div key={i} style={{
-                background: "linear-gradient(180deg, rgba(13,17,25,0.72), rgba(10,12,18,0.52))",
+                background: "linear-gradient(180deg, rgba(37, 99, 255, 0.04), rgba(255, 255, 255, 0.8))",
                 border: "1px solid var(--line)",
                 borderRadius: 16,
                 padding: "22px 22px 24px",
+                boxShadow: "0 2px 8px rgba(11,17,32,0.04)",
               }}>
                 <div style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
@@ -54,8 +55,8 @@ function TrustLayerL() {
                 }}>
                   <span className="live-dot"/> {String(i + 1).padStart(2, "0")}
                 </div>
-                <h3 className="h3" style={{ fontSize: 20, marginBottom: 10 }}>{t.k}</h3>
-                <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.55, fontSize: 14 }}>{t.v}</p>
+                <h3 className="h3" style={{ fontSize: 20, marginBottom: 10, color: "var(--blue)" }}>{t.k}</h3>
+                <p style={{ margin: 0, color: "var(--text-2)", lineHeight: 1.55, fontSize: 14 }}>{t.v}</p>
               </div>
             ))}
           </div>

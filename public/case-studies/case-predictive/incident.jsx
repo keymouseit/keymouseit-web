@@ -11,13 +11,13 @@ const TIMELINE = [
 function Incident() {
   return (
     <section className="section" id="incident" data-screen-label="Incident" style={{
-      background: "linear-gradient(180deg, rgba(255,107,107,0.025), transparent 70%)",
+      background: "linear-gradient(180deg, rgba(37, 99, 255, 0.025), transparent 70%)",
     }}>
       <div className="wrap">
         <header style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 40, gap: 40, flexWrap: "wrap" }}>
           <div style={{ maxWidth: 720 }}>
-            <span className="eyebrow" style={{ color: "var(--warn)" }}>
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--warn)", display: "inline-block" }}/>
+            <span className="eyebrow" style={{ color: "var(--accent)" }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)", display: "inline-block" }}/>
               <span className="num">02</span><span className="bar"/>
               One SKU · one cycle
             </span>
@@ -35,13 +35,13 @@ function Incident() {
           marginBottom: 22,
           padding: "26px 28px",
           borderRadius: 18,
-          border: "1px solid rgba(255,142,92,0.35)",
-          background: "linear-gradient(180deg, rgba(255,142,92,0.08), rgba(255,142,92,0.025))",
-          boxShadow: "0 0 80px -48px var(--warn)",
+          border: "1px solid rgba(37, 99, 255, 0.35)",
+          background: "linear-gradient(180deg, rgba(37, 99, 255, 0.08), rgba(37, 99, 255, 0.025))",
+          boxShadow: "0 0 80px -48px rgba(37, 99, 255, 0.35)",
         }}>
           <div style={{
             fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: "0.14em",
-            color: "var(--warn)", textTransform: "uppercase", marginBottom: 12,
+            color: "var(--accent)", textTransform: "uppercase", marginBottom: 12,
           }}>The money moment</div>
           <p style={{
             margin: 0,
@@ -81,7 +81,7 @@ function Terminal() {
         color: "var(--muted)", textTransform: "uppercase",
       }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--warn)", boxShadow: "0 0 8px var(--warn)" }}/>
+          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 8px var(--accent)" }}/>
           OPS.LOG · SKU-A47
         </span>
         <span>PEAK STOCKOUT · RECURRING PATTERN</span>
@@ -140,7 +140,7 @@ function TimelineEntry({ e, i }) {
       <span style={{
         gridColumn: "2 / 3",
         fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.06em",
-        color: "var(--text-2)", textAlign: "center",
+        color: "var(--accent)", textAlign: "center",
         background: "var(--bg-2)", padding: "4px 8px", borderRadius: 999,
         border: "1px solid var(--line)",
         position: "relative", zIndex: 2,
@@ -151,8 +151,8 @@ function TimelineEntry({ e, i }) {
       <span aria-hidden="true" className="te-spine-dot" style={{
         position: "absolute", left: "50%", top: "50%",
         width: 8, height: 8, borderRadius: "50%",
-        background: e.warn ? "var(--warn)" : "var(--accent)",
-        boxShadow: e.warn ? "0 0 8px var(--warn)" : "0 0 8px var(--accent)",
+        background: "var(--accent)",
+        boxShadow: "0 0 8px var(--accent)",
         transform: "translate(-50%, -50%)",
         zIndex: 1, opacity: 0,
       }}/>
@@ -160,10 +160,8 @@ function TimelineEntry({ e, i }) {
       {/* Card (left or right) */}
       <div className={right ? "te-side-r" : "te-side-l"} style={{
         gridColumn: right ? "3 / 4" : "1 / 2",
-        background: e.warn
-          ? "linear-gradient(180deg, rgba(255,107,107,0.06), rgba(255,107,107,0.02))"
-          : "rgba(255,255,255,0.02)",
-        border: `1px solid ${e.warn ? "rgba(255,107,107,0.30)" : "var(--line)"}`,
+        background: e.warn ? "linear-gradient(180deg, rgba(37, 99, 255, 0.06), rgba(37, 99, 255, 0.02))" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${e.warn ? "rgba(37, 99, 255, 0.30)" : "var(--line)"}`,
         borderRadius: 12,
         padding: "14px 16px",
         textAlign: right ? "left" : "right",
@@ -175,7 +173,7 @@ function TimelineEntry({ e, i }) {
         }}>
           <span style={{
             fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.14em",
-            color: e.warn ? "var(--warn)" : "var(--muted)",
+            color: e.warn ? "var(--accent)" : "var(--muted)",
             textTransform: "uppercase",
           }}>
             {e.warn && <span style={{ marginRight: 6 }}>⚠</span>}

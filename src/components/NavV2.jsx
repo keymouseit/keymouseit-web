@@ -29,7 +29,7 @@ export default function NavV2() {
   return (
     <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="container nav-inner">
-        <a className="brand" href="#top" onClick={() => setOpen(false)} style={{ display: "flex", alignItems: "center", textDecoration: "none", padding: "4px 0" }}>
+        <a className="brand" href="/" onClick={() => setOpen(false)} style={{ display: "flex", alignItems: "center", textDecoration: "none", padding: "4px 0" }}>
           <Logo height={44} />
         </a>
         <div className="nav-links">

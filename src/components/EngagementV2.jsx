@@ -61,7 +61,7 @@ export default function EngagementV2() {
                 }}>
                   {rec && <span style={{ position: "absolute", top: -11, left: 24, background: "var(--blue)", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: 0.4, padding: "4px 11px", borderRadius: 999, boxShadow: "var(--sh-blue)", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="Sparkles" size={12} stroke={2.2} />Recommended</span>}
                   <span className="icon-chip" style={{ width: 48, height: 48, borderRadius: 14, background: rec ? "var(--blue)" : "var(--blue-50)", color: rec ? "#fff" : "var(--blue)", borderColor: rec ? "var(--blue)" : "var(--blue-100)" }}><Icon name={m.icon} size={22} stroke={1.9} /></span>
-                  <h3 className="h3" style={{ marginTop: 20, fontSize: 18 }}>{m.title}</h3>
+                  <h3 className="h3" style={{ marginTop: 20, fontSize: 18, color: "var(--blue)" }}>{m.title}</h3>
                   <p className="body" style={{ marginTop: 10, fontSize: 14, flex: 1 }}>{m.desc}</p>
                   <div style={{ marginTop: 18, paddingTop: 14, borderTop: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: 0.6, textTransform: "uppercase", color: "var(--faint)" }}>Best for</span>

@@ -58,7 +58,7 @@ function FeaturedCase({ c }) {
               <div style={{ fontSize: 13.5, color: "#9FB0C8", marginTop: 6 }}>{m.l}</div>
             </div>
           ))}
-          <a className="btn btn-primary" href={c.link || "#contact"} target="_blank" rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
+          <a className="btn btn-primary" href={c.link || "#contact"} rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
         </div>
       </div>
     </Reveal>
@@ -68,15 +68,35 @@ function FeaturedCase({ c }) {
 function SupportingCase({ c, i }) {
   return (
     <Reveal variant="scale-in" delay={i * 120 + 80}>
-      <div className="card hover supp-case" style={{ padding: 0, height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <div className={`card ${c.comingSoon ? '' : 'hover'} supp-case`} style={{ padding: 0, height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <span className="supp-accent" style={{ height: 3, background: "linear-gradient(90deg,#2563FF,#7C3AED)", display: "block" }} />
         <div style={{ padding: "26px 28px", display: "flex", flexDirection: "column", flex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span className="icon-chip"><Icon name={c.icon} size={22} stroke={2} /></span>
-            <div>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--muted)" }}>{c.industry}</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginTop: 2, letterSpacing: "-0.01em" }}>{c.title}</div>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span className="icon-chip"><Icon name={c.icon} size={22} stroke={2} /></span>
+              <div>
+                <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--muted)" }}>{c.industry}</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginTop: 2, letterSpacing: "-0.01em" }}>{c.title}</div>
+              </div>
             </div>
+            {c.comingSoon && (
+              <span style={{
+                fontFamily: "var(--mono)",
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: 0.8,
+                textTransform: "uppercase",
+                background: "rgba(37, 99, 255, 0.08)",
+                color: "var(--blue)",
+                padding: "4px 10px",
+                borderRadius: 6,
+                border: "1px solid rgba(37, 99, 255, 0.15)",
+                whiteSpace: "nowrap",
+                marginTop: 2
+              }}>
+                Coming Soon
+              </span>
+            )}
           </div>
           {/* challenge -> solution */}
           <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -93,37 +113,60 @@ function SupportingCase({ c, i }) {
           {/* outcome — emphasized */}
           <div style={{ marginTop: "auto", paddingTop: 18 }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--green)", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}><Icon name="TrendingUp" size={13} stroke={2.2} /> Outcome</div>
-            <a 
-              className="supp-outcome-link" 
-              href={c.link || "#contact"} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              style={{ 
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "space-between", 
-                padding: "14px 16px", 
-                background: "linear-gradient(90deg, rgba(37,99,255,0.04), rgba(124,58,237,0.02))", 
-                borderRadius: 12, 
-                border: "1px solid var(--line)",
-                textDecoration: "none",
-                color: "inherit",
-                cursor: "pointer",
-                transition: "all 0.2s ease"
-              }}
-            >
-              <div style={{ display: "flex", gap: 22 }}>
-                {c.impact.slice(0, 2).map((m) => (
-                  <div key={m.l}>
-                    <div style={{ fontSize: 21, fontWeight: 800, color: "var(--blue)", letterSpacing: "-0.02em" }}>{m.v}</div>
-                    <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 1 }}>{m.l}</div>
-                  </div>
-                ))}
+            {!c.comingSoon ? (
+              <a 
+                className="supp-outcome-link" 
+                href={c.link || "#contact"} 
+                rel="noopener noreferrer" 
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  padding: "14px 16px", 
+                  background: "linear-gradient(90deg, rgba(37,99,255,0.04), rgba(124,58,237,0.02))", 
+                  borderRadius: 12, 
+                  border: "1px solid var(--line)",
+                  textDecoration: "none",
+                  color: "inherit",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <div style={{ display: "flex", gap: 22 }}>
+                  {c.impact.slice(0, 2).map((m) => (
+                    <div key={m.l}>
+                      <div style={{ fontSize: 21, fontWeight: 800, color: "var(--blue)", letterSpacing: "-0.02em" }}>{m.v}</div>
+                      <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 1 }}>{m.l}</div>
+                    </div>
+                  ))}
+                </div>
+                <span className="supp-arrow" style={{ color: "var(--blue)", display: "flex", alignItems: "center", transition: "transform 0.2s ease" }}>
+                  <Arrow size={16} />
+                </span>
+              </a>
+            ) : (
+              <div 
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  padding: "14px 16px", 
+                  background: "linear-gradient(90deg, rgba(37,99,255,0.02), rgba(124,58,237,0.01))", 
+                  borderRadius: 12, 
+                  border: "1px solid var(--line)",
+                  color: "inherit"
+                }}
+              >
+                <div style={{ display: "flex", gap: 22 }}>
+                  {c.impact.slice(0, 2).map((m) => (
+                    <div key={m.l}>
+                      <div style={{ fontSize: 21, fontWeight: 800, color: "var(--blue)", letterSpacing: "-0.02em" }}>{m.v}</div>
+                      <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 1 }}>{m.l}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <span className="supp-arrow" style={{ color: "var(--blue)", display: "flex", alignItems: "center", transition: "transform 0.2s ease" }}>
-                <Arrow size={16} />
-              </span>
-            </a>
+            )}
           </div>
         </div>
 
@@ -203,7 +246,7 @@ export default function CasesV2() {
             <Eyebrow>Featured case studies</Eyebrow>
             <h2 className="h2" style={{ marginTop: 16 }}>Real systems. Real business outcomes.</h2>
           </Reveal>
-          <Reveal delay={80}><a className="linka" href="/case-studies/index.html" target="_blank" rel="noopener noreferrer">Browse all work <Arrow /></a></Reveal>
+          <Reveal delay={80}><a className="linka" href="/case-studies/index.html" rel="noopener noreferrer">Browse all work <Arrow /></a></Reveal>
 
 
 

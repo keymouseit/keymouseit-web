@@ -197,7 +197,40 @@ export const TRUST_METRICS = [
   { value: "100%", label: "Client retention", icon: "HeartHandshake" },
   { value: "5/5", label: "Client satisfaction", icon: "Star" },
 ];
-export const CLIENT_LOGOS = ["SEforALL", "Private ID", "Outlier", "Passenger Coffee", "Penny Profit"];
+
+export const CLIENT_LOGOS = [
+  "SEforALL",
+  "Private ID",
+  "Outlier",
+  "Passenger Coffee",
+  "Penny Profit",
+  "Pipeline",
+  "Nooora",
+  "Nigeria ETP",
+  "Mission Efficiency",
+  "Policy Hub",
+  "Poker",
+  "Movemap",
+  "Aimmo",
+  "Kid Advisor",
+  "Authorify",
+  "Jardinette",
+  "unLockedCRM",
+  "Rolling Around",
+  "Hello Drama",
+  "Opi Rescue",
+  "Pop Daily",
+  "Chill Days",
+  "Quantum Chat",
+  "Batchleads",
+  "MOBE",
+  "YODI",
+  "SuitePeach",
+  "VVIP Pass",
+  "Le Tribe",
+  "EveryOne",
+  "Wine Culture"
+];
 
 /* ---- Problem ---- */
 export const PROBLEMS = [
@@ -225,7 +258,8 @@ export const CASES = [
     challenge: "Plant managers lacked a live view of OEE, quality, and downtime across lines.",
     solution: "A factory intelligence platform connecting MES, quality, and maintenance data.",
     impact: [{ v: "+18%", l: "OEE" }, { v: "−31%", l: "downtime" }],
-    link: "/case-studies/Manufacturing%20Control%20Tower.html"
+    link: "#",
+    comingSoon: true
   },
   {
     industry: "AI Automation", tag: "Workflow Automation", icon: "Sparkles", accent: BLUE,
@@ -241,7 +275,8 @@ export const CASES = [
     challenge: "Fragmented access control made audits painful and risky.",
     solution: "Zero-trust identity with SSO, governance, anomaly detection, and audit trails.",
     impact: [{ v: "Zero", l: "trust default" }, { v: "SOC 2", l: "ready" }],
-    link: "/case-studies/Decision%20Intelligence.html"
+    link: "#",
+    comingSoon: true
   },
 ];
 
@@ -318,6 +353,6 @@ export const WHY_COMPARE = [
 /* ---- Contact Form & Calendly configuration ---- */
 export const CONTACT_CONFIG = {
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY", // Get a free access key from https://web3forms.com/
-  calendlyUrl: "https://calendly.com/hi-shivenj/30min",
+  calendlyUrl: "https://calendly.com/hello-keymouseit/new-meeting",
 };
 

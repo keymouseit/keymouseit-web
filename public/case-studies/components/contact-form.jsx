@@ -1,4 +1,29 @@
 /* eslint-disable */
+/* ══════════════════════════════════════════════════════════════
+   ContactForm — Single source of truth for all case-study pages.
+   Loaded once via <script type="text/babel" src="components/contact-form.jsx">
+   and registered on window.ContactForm so every CTA can use <ContactForm/>.
+   ══════════════════════════════════════════════════════════════ */
+
+const FORM_STYLE = `
+  .case-field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+  .case-field label { font-size: 13px; font-weight: 600; color: #C7D2E0; letter-spacing: 0.2px; }
+  .case-field input, .case-field select, .case-field textarea {
+    font-family: var(--sans); font-size: 15px; color: #fff;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 10px; padding: 13px 15px; outline: none; transition: border-color 0.16s, background 0.16s;
+    width: 100%; box-sizing: border-box;
+  }
+  .case-field input::placeholder, .case-field textarea::placeholder { color: #6B7689; }
+  .case-field input:focus, .case-field select:focus, .case-field textarea:focus { border-color: var(--blue); background: rgba(255,255,255,0.08); }
+  .case-field select option { color: #111827; }
+  .case-error-container {
+    color: #F87171; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    display: flex; align-items: flex-start; gap: 10px; line-height: 1.4;
+  }
+`;
+
 function ContactForm() {
   const [formData, setFormData] = React.useState({
     name: '',
@@ -69,98 +94,96 @@ function ContactForm() {
     }
   };
 
-  if (sent) {
-    return (
-      <div style={{ textAlign: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 20 }}>
-          <span style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(22,163,74,0.16)", border: "1px solid rgba(22,163,74,0.4)", color: "#4ADE80", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M13.25 4.75L6 12L2.75 8.75" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </span>
-          <span style={{ color: "#fff", fontSize: 14, fontWeight: 600 }}>Inquiry sent! Book your time slot:</span>
-        </div>
-        <div style={{ width: "100%", height: 480, borderRadius: 12, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
-          <iframe 
-            src={`https://calendly.com/hi-shivenj/30min?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&hide_landing_page_details=1&hide_gdpr_banner=1`}
-            width="100%" 
-            height="100%" 
-            frameBorder="0" 
-            title="Schedule Strategy Call"
-          />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div style={{
       position: "relative",
       background: "rgba(8,10,15,0.6)",
       border: "1px solid rgba(255,255,255,0.08)",
       borderRadius: 16,
-      padding: "24px",
+      padding: "24px 22px",
       backdropFilter: "blur(10px)",
-      width: "100%",
+      color: "#fff",
+      width: "100%"
     }}>
-      {errorMsg && (
-        <div style={{ color: '#F87171', backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 10, padding: '10px 12px', marginBottom: 16, fontSize: 13, display: 'flex', alignItems: 'flex-start', gap: 8, lineHeight: 1.4 }}>
-          <span style={{ display: 'inline-flex', flexShrink: 0, marginTop: 2, color: '#EF4444' }}>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <circle cx="8" cy="8" r="7"/>
-              <line x1="8" y1="5" x2="8" y2="9"/>
-              <circle cx="8" cy="11" r="0.5" fill="currentColor"/>
-            </svg>
-          </span>
-          <span>{errorMsg}</span>
+      <style dangerouslySetInnerHTML={{__html: FORM_STYLE}} />
+      {sent ? (
+        <div style={{ textAlign: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 20 }}>
+            <span style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(22,163,74,0.16)", border: "1px solid rgba(22,163,74,0.4)", color: "#4ADE80", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M13.5 4.5l-7.5 7.5-3.5-3.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+            <span style={{ color: "#fff", fontSize: 15, fontWeight: 600 }}>Inquiry sent! Book your time slot:</span>
+          </div>
+          <div style={{ width: "100%", height: 480, borderRadius: 12, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}>
+            <iframe 
+              src={`https://calendly.com/hello-keymouseit/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&hide_landing_page_details=1&hide_gdpr_banner=1`}
+              width="100%" 
+              height="100%" 
+              frameBorder="0" 
+              title="Schedule Strategy Call"
+            />
+          </div>
         </div>
+      ) : (
+        <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {errorMsg && (
+            <div className="case-error-container">
+              <span style={{ display: 'inline-flex', flexShrink: 0, marginTop: 2, color: '#EF4444' }}>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="8" cy="8" r="7"/>
+                  <path d="M8 5v4M8 11h.01"/>
+                </svg>
+              </span>
+              <span>{errorMsg}</span>
+            </div>
+          )}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div className="case-field">
+              <label>Name</label>
+              <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" />
+            </div>
+            <div className="case-field">
+              <label>Work email</label>
+              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="you@company.com" />
+            </div>
+          </div>
+          <div className="case-field">
+            <label>Company</label>
+            <input required value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" />
+          </div>
+          <div className="case-field">
+            <label>Project challenge</label>
+            <textarea required rows="2" value={formData.challenge} onChange={e => setFormData({...formData, challenge: e.target.value})} placeholder="What problem are you trying to solve?" style={{ resize: "vertical" }}></textarea>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div className="case-field">
+              <label>Budget range</label>
+              <select value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})} required>
+                <option value="" disabled>Select range</option>
+                <option>{"< $25k"}</option>
+                <option>$25k – $75k</option>
+                <option>$75k – $200k</option>
+                <option>$200k+</option>
+              </select>
+            </div>
+            <div className="case-field">
+              <label>Timeline</label>
+              <select value={formData.timeline} onChange={e => setFormData({...formData, timeline: e.target.value})} required>
+                <option value="" disabled>Select timeline</option>
+                <option>ASAP</option>
+                <option>1–3 months</option>
+                <option>3–6 months</option>
+                <option>Exploring</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary" disabled={submitting} style={{ width: "100%", justifyContent: "center", padding: "13px 18px", fontSize: 14, marginTop: 8 }}>
+            {submitting ? "Sending Inquiry..." : "Book Strategy Call"}
+          </button>
+        </form>
       )}
-      <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <div className="field" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 12.5, fontWeight: 600, color: "#C7D2E0", display: "block" }}>Name</label>
-            <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 10, padding: "10px 12px", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
-          </div>
-          <div className="field" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 12.5, fontWeight: 600, color: "#C7D2E0", display: "block" }}>Work email</label>
-            <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="you@company.com" style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 10, padding: "10px 12px", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
-          </div>
-        </div>
-        <div className="field" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <label style={{ fontSize: 12.5, fontWeight: 600, color: "#C7D2E0", display: "block" }}>Company</label>
-          <input required value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 10, padding: "10px 12px", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
-        </div>
-        <div className="field" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <label style={{ fontSize: 12.5, fontWeight: 600, color: "#C7D2E0", display: "block" }}>Project challenge</label>
-          <textarea required rows="2" value={formData.challenge} onChange={e => setFormData({...formData, challenge: e.target.value})} placeholder="What operational problem are you trying to solve?" style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 10, padding: "10px 12px", color: "#fff", fontSize: 14, outline: "none", resize: "none", boxSizing: "border-box" }}></textarea>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <div className="field" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 12.5, fontWeight: 600, color: "#C7D2E0", display: "block" }}>Budget range</label>
-            <select value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})} required style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 10, padding: "10px 12px", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }}>
-              <option value="" disabled style={{ color: "#111827" }}>Select range</option>
-              <option style={{ color: "#111827" }}>{"< $25k"}</option>
-              <option style={{ color: "#111827" }}>$25k – $75k</option>
-              <option style={{ color: "#111827" }}>$75k – $200k</option>
-              <option style={{ color: "#111827" }}>$200k+</option>
-            </select>
-          </div>
-          <div className="field" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 12.5, fontWeight: 600, color: "#C7D2E0", display: "block" }}>Timeline</label>
-            <select value={formData.timeline} onChange={e => setFormData({...formData, timeline: e.target.value})} required style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 10, padding: "10px 12px", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }}>
-              <option value="" disabled style={{ color: "#111827" }}>Select timeline</option>
-              <option style={{ color: "#111827" }}>ASAP</option>
-              <option style={{ color: "#111827" }}>1–3 months</option>
-              <option style={{ color: "#111827" }}>3–6 months</option>
-              <option style={{ color: "#111827" }}>Exploring</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" disabled={submitting} className="btn btn-primary" style={{ marginTop: 8, padding: "12px 18px", width: "100%", justifyContent: "center" }}>
-          {submitting ? "Sending..." : "Book Strategy Call"} <span className="arrow">→</span>
-        </button>
-        <p style={{ fontSize: 11.5, color: "#6B7689", textAlign: "center", margin: "4px 0 0" }}>Free consultation · No commitment · Quick response</p>
-      </form>
     </div>
   );
 }

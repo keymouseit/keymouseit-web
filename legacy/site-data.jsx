@@ -201,7 +201,40 @@ const TRUST_METRICS = [
   { value: "95%", label: "Client retention" },
   { value: "4.9/5", label: "Client satisfaction" },
 ];
-const CLIENT_LOGOS = ["SEforALL", "Private ID", "Outlier", "Passenger Coffee", "Penny Profit"];
+
+const CLIENT_LOGOS = [
+  "SEforALL",
+  "Private ID",
+  "Outlier",
+  "Passenger Coffee",
+  "Penny Profit",
+  "Pipeline",
+  "Nooora",
+  "Nigeria ETP",
+  "Mission Efficiency",
+  "Policy Hub",
+  "Poker",
+  "Movemap",
+  "Aimmo",
+  "Kid Advisor",
+  "Authorify",
+  "Jardinette",
+  "unLockedCRM",
+  "Rolling Around",
+  "Hello Drama",
+  "Opi Rescue",
+  "Pop Daily",
+  "Chill Days",
+  "Quantum Chat",
+  "Batchleads",
+  "MOBE",
+  "YODI",
+  "SuitePeach",
+  "VVIP Pass",
+  "Le Tribe",
+  "EveryOne",
+  "Wine Culture"
+];
 
 /* ---- Problem ---- */
 const PROBLEMS = [

@@ -14,7 +14,7 @@ function SelfIdentification() {
         <div className="wrap" style={{ paddingTop: 24, paddingBottom: 24 }}>
           <div className="self-id-grid" style={{ display: "grid", gridTemplateColumns: "260px repeat(5, 1fr)", gap: 0, border: "1px solid var(--line)", borderRadius: 18, overflow: "hidden", background: "var(--panel)", boxShadow: "0 2px 8px rgba(11,17,32,0.04)" }}>
             <div style={{ padding: 24, background: "var(--bg-2)", borderRight: "1px solid var(--line)" }}>
-              <h3 style={{ margin: 0, fontSize: 22, lineHeight: 1.05, letterSpacing: "-0.02em", color: "var(--text)" }}>This is what broken operations look like:</h3>
+              <h3 style={{ margin: 0, fontSize: 22, lineHeight: 1.05, letterSpacing: "-0.02em", color: "var(--blue)" }}>This is what broken operations look like:</h3>
             </div>
             {items.map((item, i) => (
                 <div key={i} style={{ padding: 22, borderRight: i < items.length - 1 ? "1px solid var(--line)" : "none" }}>
@@ -72,7 +72,7 @@ function TrustLayer() {
             <div style={{ display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: 30, alignItems: "center" }} className="trust-layer-grid">
               <div>
                 <span className="eyebrow"><span className="dot"/>Built for real-world operations</span>
-                <h2 style={{ margin: "14px 0 0", fontSize: 32, lineHeight: 1.05, letterSpacing: "-0.02em", color: "var(--text)" }}>Trusted by operations that can’t afford chaos.</h2>
+                <h2 style={{ margin: "14px 0 0", fontSize: 32, lineHeight: 1.05, letterSpacing: "-0.02em", color: "var(--blue)" }}>Trusted by operations that can’t afford chaos.</h2>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }} className="trust-points">
                 {items.map((it, i) => <div key={i} style={{ padding: 16, border: "1px solid var(--line)", borderRadius: 14, background: "var(--panel)", color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.5 }}>{it}</div>)}
@@ -162,8 +162,7 @@ function MidCTA() {
             borderRadius: 14,
           }}>
             <div>
-              <div style={{ fontSize: 17, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text)", marginBottom: 4 }}>
-                Recognise your operation in one of these?
+              <div style={{ fontSize: 17, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--blue)", marginBottom: 4 }}>Recognise your operation in one of these?
               </div>
               <div style={{ fontSize: 13.5, color: "var(--muted)" }}>
                 Skip the deep dive. Get your operational system map — we’ll identify the missing layer behind the repeated issue.

@@ -256,11 +256,11 @@ export default function HeroV2() {
             <div className="gsap-hero-fade hero-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: 34, marginTop: 50, opacity: 0 }}>
               {TRUST_METRICS.map((m) => (
                 <div key={m.label} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                  <span className="icon" style={{ width: 40, height: 40, flexShrink: 0, borderRadius: "22%", background: "linear-gradient(145deg, #EEF2FF 0%, #DBEAFE 100%)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1, boxShadow: "0 1px 3px rgba(37,99,255,0.10), 0 4px 12px rgba(37,99,255,0.06), inset 0 1px 0 rgba(255,255,255,0.8)" }}>
-                    <Icon name={m.icon} size={19} stroke={1.8} />
+                  <span className="icon" style={{ width: 44, height: 44, flexShrink: 0, borderRadius: 13, background: "linear-gradient(145deg, rgba(238,242,255,0.85) 0%, rgba(219,234,254,0.65) 100%)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.7)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1, boxShadow: "0 2px 8px rgba(37,99,255,0.10), 0 8px 24px rgba(37,99,255,0.06), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 2px rgba(37,99,255,0.04)" }}>
+                    <Icon name={m.icon} size={25} stroke={1.5} />
                   </span>
                   <div>
-                    <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.03em", color: "var(--text)", lineHeight: 1 }}><CountUp value={m.value} /></div>
+                    <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.03em", color: "var(--blue)", lineHeight: 1 }}><CountUp value={m.value} /></div>
                     <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 2, lineHeight: 1.1 }}>{m.label}</div>
                   </div>
                 </div>

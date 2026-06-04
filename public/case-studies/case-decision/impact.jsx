@@ -54,7 +54,7 @@ function Impact() {
           <div>
             <span className="eyebrow"><span className="bar"/>What changed</span>
             <h3 style={{
-              fontSize: 24, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--text)",
+              fontSize: 24, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--blue)",
               marginTop: 12, marginBottom: 22, lineHeight: 1.2,
             }}>
               Leadership decides — instead of reconciling.
@@ -107,7 +107,7 @@ function BigMetric({ m, i, last }) {
       <div style={{
         fontSize: m.small ? "clamp(32px, 3.5vw, 48px)" : "clamp(44px, 4.4vw, 64px)",
         fontWeight: 500, letterSpacing: "-0.03em", lineHeight: 1,
-        color: "var(--text)", marginTop: 16, marginBottom: 14,
+        color: "var(--blue)", marginTop: 16, marginBottom: 14,
         fontFeatureSettings: '"ss01"',
       }}>{m.v}</div>
       <div style={{ fontSize: 15, color: "var(--text-2)" }}>{m.l}</div>
@@ -121,7 +121,7 @@ function BeforeAfterTable() {
     <div style={{
       border: "1px solid var(--line)",
       borderRadius: 16, overflow: "hidden",
-      background: "rgba(13,17,25,0.4)",
+      background: "var(--bg-2)",
     }}>
       <div className="ba-head" style={{
         display: "grid", gridTemplateColumns: "1.4fr 1.2fr 1.2fr 1fr",

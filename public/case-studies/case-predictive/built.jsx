@@ -28,7 +28,7 @@ function Built() {
         <ControlTowerDiagram/>
 
         <h3 style={{
-          fontSize: 20, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--text)",
+          fontSize: 20, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--blue)",
           marginTop: 72, marginBottom: 22,
         }}>Core components <span style={{ color: "var(--muted)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.1em", marginLeft: 10 }}>5 OF 5</span></h3>
 

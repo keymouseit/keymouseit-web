@@ -4,7 +4,7 @@ function Nav() {
   return (
     <nav className="nav" data-screen-label="Nav">
       <div className="wrap nav-inner">
-        <a href="#" className="brand" style={{ display: "inline-flex", alignItems: "center" }}>
+        <a href="/" className="brand" style={{ display: "inline-flex", alignItems: "center" }}>
           <Logo height={40} mode="light" />
           <span style={{
             fontFamily: "var(--mono)", fontSize: 11, color: "var(--muted)",

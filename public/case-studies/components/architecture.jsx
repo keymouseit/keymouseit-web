@@ -133,17 +133,14 @@ function ArchLayer({ L, i, total }) {
       {/* glyph */}
       <span style={{
         width: 48, height: 48, borderRadius: 10,
-        border: "1px solid var(--line)",
-        display: "grid", placeItems: "center",
-        color: "var(--accent)",
-        background: "rgba(37,99,255,0.08)",
+        border: "1px solid var(--blue-100)", display: "grid", placeItems: "center", color: "var(--blue)", background: "var(--blue-50)",
       }}>
         <LayerGlyph kind={L.key}/>
       </span>
 
       {/* Label + blurb */}
       <div>
-        <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--text)", lineHeight: 1.1 }}>
+        <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: "-0.015em", color: "var(--blue)", lineHeight: 1.1 }}>
           {L.label}
         </div>
         <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6 }}>{L.desc}</div>

@@ -39,8 +39,8 @@ const BREAKING = [
 ];
 
 function BreakingGlyph({ kind }) {
-  const c = "var(--text-2)";
-  const common = { width: 44, height: 44, viewBox: "0 0 44 44", fill: "none", stroke: c, strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" };
+  const c = "currentColor";
+  const common = { width: 24, height: 24, viewBox: "0 0 44 44", fill: "none", stroke: c, strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round" };
   if (kind === "comm") return (
     <svg {...common}>
       {/* chat bubbles, disconnected */}
@@ -106,11 +106,19 @@ function BreakingCard({ b }) {
           fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: "0.14em",
           color: "var(--muted)",
         }}>{b.code}</span>
-        <BreakingGlyph kind={b.glyph}/>
+        <div style={{
+          width: 48, height: 48, borderRadius: 12,
+          background: "var(--blue-50)",
+          border: "1px solid var(--blue-100)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          color: "var(--blue)", flexShrink: 0
+        }}>
+          <BreakingGlyph kind={b.glyph}/>
+        </div>
       </div>
 
       <div>
-        <h3 className="h3" style={{ marginBottom: 8 }}>{b.title}</h3>
+        <h3 className="h3" style={{ marginBottom: 8, color: "var(--blue)" }}>{b.title}</h3>
         <p style={{ fontSize: 14, lineHeight: 1.55, color: "var(--muted)", margin: 0 }}>
           {b.body}
         </p>

@@ -223,16 +223,11 @@ function CaseDetail({ sys }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 64px", gap: 24, alignItems: "start", marginBottom: 28 }}>
         <h3 style={{
           fontSize: 36, fontWeight: 500, letterSpacing: "-0.022em", lineHeight: 1.05,
-          margin: 0, color: "var(--text)",
-        }}>
-          {sys.title}
+          margin: 0, color: "var(--blue)", }}>{sys.title}
         </h3>
         <div style={{
           width: 64, height: 64, borderRadius: 14,
-          border: "1px solid var(--line-2)",
-          background: "rgba(37,99,255,0.08)",
-          display: "grid", placeItems: "center",
-          color: "var(--accent)",
+          border: "1px solid var(--blue-100)", background: "var(--blue-50)", display: "grid", placeItems: "center", color: "var(--blue)",
         }}>
           <LayerGlyph kind={sys.glyph}/>
         </div>
@@ -262,7 +257,7 @@ function CaseDetail({ sys }) {
           }}>
             <div style={{
               fontFamily: "var(--sans)", fontSize: 30, fontWeight: 500, letterSpacing: "-0.02em",
-              color: "var(--text)", lineHeight: 1,
+              color: "var(--blue)", lineHeight: 1,
             }}>{m.v}</div>
             <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 8 }}>{m.l}</div>
           </div>
