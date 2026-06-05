@@ -250,7 +250,7 @@ export const CASES = [
     challenge: "Shipment data lived in five disconnected systems; delays were found after the fact.",
     solution: "A unified control tower with live tracking, forecasting, and exception alerts.",
     impact: [{ v: "30%", l: "faster delivery" }, { v: "25%", l: "lower cost" }, { v: "95%", l: "data accuracy" }],
-    link: "/case-studies/Logistics%20Control%20Tower.html"
+    link: "/case-studies/logistics-control-tower"
   },
   {
     industry: "Manufacturing", tag: "Intelligence Platform", icon: "Factory", accent: BLUE,
@@ -267,7 +267,7 @@ export const CASES = [
     challenge: "Operations teams spent days on manual document handling and data entry.",
     solution: "Document intelligence plus agents that route, validate, and act — with review queues.",
     impact: [{ v: "70%", l: "manual work cut" }, { v: "4.2x", l: "faster" }],
-    link: "/case-studies/Predictive%20Inventory%20Planning.html"
+    link: "/case-studies/predictive-inventory-planning"
   },
   {
     industry: "Identity & Security", tag: "Identity Platform", icon: "ShieldCheck,Shield", accent: BLUE,

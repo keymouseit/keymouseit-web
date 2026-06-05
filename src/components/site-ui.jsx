@@ -227,32 +227,51 @@ export function CountUp({ value }) {
 export function ScrollScrubText({ text, style, className }) {
   const containerRef = useRef(null);
 
+  // Split text into tokens, keeping **highlight** markers intact
+  const tokens = text.split(/(\*\*[^*]+\*\*|\s+)/);
+  const spanData = [];
+
+  tokens.forEach((token, idx) => {
+    if (!token) return;
+    if (token.startsWith("**") && token.endsWith("**")) {
+      const clean = token.slice(2, -2);
+      const innerWords = clean.split(/\s+/);
+      innerWords.forEach((w, innerIdx) => {
+        spanData.push({
+          type: 'highlight',
+          text: w,
+          key: `highlight-${idx}-${innerIdx}`
+        });
+        if (innerIdx < innerWords.length - 1) {
+          spanData.push({
+            type: 'space',
+            text: ' ',
+            key: `highlight-space-${idx}-${innerIdx}`
+          });
+        }
+      });
+    } else if (token.trim() === "") {
+      spanData.push({
+        type: 'space',
+        text: token,
+        key: `space-${idx}`
+      });
+    } else {
+      spanData.push({
+        type: 'normal',
+        text: token,
+        key: `normal-${idx}`
+      });
+    }
+  });
+
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Split text into tokens, keeping **highlight** markers intact
-    const tokens = text.split(/(\*\*[^*]+\*\*|\s+)/);
-    
-    let html = "";
-    tokens.forEach(token => {
-      if (!token) return;
-      if (token.startsWith("**") && token.endsWith("**")) {
-        const clean = token.slice(2, -2);
-        const innerWords = clean.split(/\s+/);
-        innerWords.forEach((w, idx) => {
-          html += `<span class="scrub-word scrub-highlight grad-text" style="opacity: 0.15; display: inline-block; font-weight: 800; background-image: linear-gradient(110deg,#2563EB,#7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${w}</span>${idx < innerWords.length - 1 ? ' ' : ''}`;
-        });
-      } else if (token.trim() === "") {
-        html += token;
-      } else {
-        html += `<span class="scrub-word" style="opacity: 0.15; display: inline-block; color: var(--text-2);">${token}</span>`;
-      }
-    });
-
-    el.innerHTML = html;
-
     const spans = el.querySelectorAll(".scrub-word");
+    if (spans.length === 0) return;
+
     const anim = gsap.to(spans, {
       opacity: 1,
       stagger: 0.12,
@@ -274,7 +293,42 @@ export function ScrollScrubText({ text, style, className }) {
 
   return (
     <p ref={containerRef} className={className} style={{ margin: 0, ...style }}>
-      {text}
+      {spanData.map(span => {
+        if (span.type === 'highlight') {
+          return (
+            <span
+              key={span.key}
+              className="scrub-word scrub-highlight grad-text"
+              style={{
+                opacity: 0.15,
+                display: "inline-block",
+                fontWeight: 800,
+                backgroundImage: "linear-gradient(110deg,#2563EB,#7C3AED)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent"
+              }}
+            >
+              {span.text}
+            </span>
+          );
+        } else if (span.type === 'space') {
+          return <span key={span.key}>{span.text}</span>;
+        } else {
+          return (
+            <span
+              key={span.key}
+              className="scrub-word"
+              style={{
+                opacity: 0.15,
+                display: "inline-block",
+                color: "var(--text-2)"
+              }}
+            >
+              {span.text}
+            </span>
+          );
+        }
+      })}
     </p>
   );
 }

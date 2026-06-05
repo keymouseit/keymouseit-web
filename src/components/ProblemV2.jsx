@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import { Icon, Eyebrow, Reveal } from './site-ui';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -104,15 +104,17 @@ function SilosViz({ connected }) {
 }
 
 export default function ProblemV2() {
-  const trackRef = useRef(null);
+  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
   const [connected, setConnected] = useState(false);
   const [manual, setManual] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (manual) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const section = trackRef.current;
-    if (!section) return;
+    const section = sectionRef.current;
+    const container = containerRef.current;
+    if (!section || !container) return;
 
     // Fallback (mobile / prefers-reduced-motion): flip on scroll position, no pin.
     if (reduce || window.innerWidth < 769) {
@@ -135,14 +137,14 @@ export default function ProblemV2() {
       };
     }
 
-    // Desktop: pin the section and scrub the Before->After state
+    // Desktop: pin the container and scrub the Before->After state
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
         end: "+=900",
         scrub: 0.6,
-        pin: true,
+        pin: container,
         pinSpacing: true,
         anticipatePin: 1,
         onUpdate: (self) => setConnected(self.progress > 0.45),
@@ -166,8 +168,8 @@ export default function ProblemV2() {
   };
 
   return (
-    <section className="section band" id="problem" ref={trackRef}>
-      <div className="container">
+    <section className="section band" id="problem" ref={sectionRef}>
+      <div className="container" ref={containerRef}>
         <div className="v2-hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
           {/* copy */}
           <div>

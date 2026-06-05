@@ -22,7 +22,7 @@ export default function Footer() {
       case "Retail":
         return "#industries";
       case "Case Studies":
-        return "/case-studies/index.html";
+        return "/case-studies";
       case "Services":
         return "#services";
       case "Contact":
@@ -72,7 +72,13 @@ export default function Footer() {
             <div key={h}>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", letterSpacing: 0.3, marginBottom: 16 }}>{h}</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                {links.map((l) => <a key={l} href={getHref(l)} style={{ fontSize: 14.5, color: "#8A97AC", textDecoration: "none" }}>{l}</a>)}
+                {links.map((l) => {
+                  const href = getHref(l);
+                  if (href.startsWith('/')) {
+                    return <Link key={l} to={href} style={{ fontSize: 14.5, color: "#8A97AC", textDecoration: "none" }}>{l}</Link>;
+                  }
+                  return <a key={l} href={href} style={{ fontSize: 14.5, color: "#8A97AC", textDecoration: "none" }}>{l}</a>;
+                })}
               </div>
             </div>
           ))}

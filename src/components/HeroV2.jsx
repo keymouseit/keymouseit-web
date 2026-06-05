@@ -112,7 +112,7 @@ function LivingSystem() {
       {/* viz — desktop node map */}
       <div ref={vizWrapRef} className="ls-desktop" style={{ position: "relative", width: "100%", height: fit.h, margin: "0 auto" }}>
         <div style={{ position: "absolute", top: 0, left: fit.left, width: 600, height: 500, transform: `scale(${fit.scale})`, transformOrigin: "top left" }}>
-          <svg viewBox="0 0 600 500" width="600" height="500" style={{ position: "absolute", inset: 0, display: "block" }}>
+          <svg key={idx} viewBox="0 0 600 500" width="600" height="500" style={{ position: "absolute", inset: 0, display: "block" }}>
             <text x="84" y="22" textAnchor="middle" fontFamily="var(--mono)" fontSize="11" letterSpacing="1" fill="#98A2B3">INPUTS</text>
             <text x="300" y="22" textAnchor="middle" fontFamily="var(--mono)" fontSize="11" letterSpacing="1" fill="#98A2B3">INTELLIGENCE</text>
             <text x="516" y="22" textAnchor="middle" fontFamily="var(--mono)" fontSize="11" letterSpacing="1" fill="#98A2B3">OUTCOMES</text>

@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* eslint-disable */
 /* ══════════════════════════════════════════════════════════════
    ContactForm — Single source of truth for all case-study pages.
@@ -24,7 +26,7 @@ const FORM_STYLE = `
   }
 `;
 
-function ContactForm() {
+export function ContactForm() {
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
@@ -187,4 +189,3 @@ function ContactForm() {
     </div>
   );
 }
-window.ContactForm = ContactForm;
