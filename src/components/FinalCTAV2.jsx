@@ -56,25 +56,14 @@ export default function FinalCTAV2() {
 
     setSubmitting(true);
 
-    // Pre-emptively set cPanel anti-bot verification cookie to bypass firewalls
-    document.cookie = "humans_21909=1; path=/; max-age=31536000";
-
-    const params = new URLSearchParams();
-    params.append('name', formData.name);
-    params.append('email', formData.email);
-    params.append('company', formData.company);
-    params.append('challenge', formData.challenge);
-    params.append('budget', formData.budget);
-    params.append('timeline', formData.timeline);
-
     try {
-      const res = await fetch("/submit-lead.php", {
+      const res = await fetch("/.netlify/functions/submit-lead", {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: params
+        body: JSON.stringify(formData)
       });
 
       const result = await res.json();
