@@ -176,7 +176,7 @@ export async function handler(event) {
   const { name, email, company, challenge, budget, timeline, captchaToken } = data;
 
   // Validate required fields
-  if (!name || !email || !company || !challenge) {
+  if (!name || !email) {
     return json(400, { success: false, message: "Required fields missing" });
   }
 
