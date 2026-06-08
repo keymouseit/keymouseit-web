@@ -151,11 +151,11 @@ export function ContactForm() {
           </div>
           <div className="case-field">
             <label>Company</label>
-            <input required value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" />
+            <input value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" />
           </div>
           <div className="case-field">
             <label>Project challenge</label>
-            <textarea required rows="2" value={formData.challenge} onChange={e => setFormData({...formData, challenge: e.target.value})} placeholder="What problem are you trying to solve?" style={{ resize: "vertical" }}></textarea>
+            <textarea rows="2" value={formData.challenge} onChange={e => setFormData({...formData, challenge: e.target.value})} placeholder="What problem are you trying to solve?" style={{ resize: "vertical" }}></textarea>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div className="case-field">

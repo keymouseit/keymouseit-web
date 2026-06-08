@@ -510,7 +510,6 @@ export default function FinalCTAV2() {
                       <label>Company</label>
 
                       <input
-                        required
                         value={formData.company}
                         onChange={(e) =>
                           setFormData({
@@ -534,7 +533,6 @@ export default function FinalCTAV2() {
                       </label>
 
                       <textarea
-                        required
                         rows="3"
                         value={formData.challenge}
                         onChange={(e) =>
