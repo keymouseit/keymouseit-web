@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://keymouseit.com/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/privacy</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/terms</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/case-studies</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/case-studies/manufacturing-control-tower</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/case-studies/decision-intelligence</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/case-studies/inventory-intelligence</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/case-studies/logistics-control-tower</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://keymouseit.com/case-studies/predictive-inventory-planning</loc>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
