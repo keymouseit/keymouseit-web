@@ -7,6 +7,7 @@ const SMTP_USER     = process.env.SMTP_USER     || "hello@keymouseit.com";
 const SMTP_PASS     = process.env.SMTP_PASS     || "";          // set in Netlify UI
 const SMTP_FROM     = process.env.SMTP_FROM     || "hello@keymouseit.com";
 const ADMIN_EMAIL   = process.env.ADMIN_EMAIL   || "globalsales.kmit@gmail.com";
+const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY || "";
 
 // ─── Disposable email blocklist ──────────────────────────────────────
 const DISALLOWED_DOMAINS = [
@@ -25,6 +26,27 @@ function esc(s) {
 
 function nl2br(s) {
   return esc(s).replace(/\n/g, "<br>");
+}
+
+async function verifyCaptcha(token, remoteIp) {
+  if (!RECAPTCHA_SECRET) {
+    console.error("RECAPTCHA_SECRET_KEY env variable is not set");
+    return { success: false };
+  }
+
+  const params = new URLSearchParams({
+    secret: RECAPTCHA_SECRET,
+    response: token,
+  });
+  if (remoteIp) params.append("remoteip", remoteIp);
+
+  const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString(),
+  });
+
+  return res.json();
 }
 
 function json(statusCode, body) {
@@ -151,11 +173,32 @@ export async function handler(event) {
     for (const [k, v] of params) data[k] = v;
   }
 
-  const { name, email, company, challenge, budget, timeline } = data;
+  const { name, email, company, challenge, budget, timeline, captchaToken } = data;
 
   // Validate required fields
   if (!name || !email || !company || !challenge) {
     return json(400, { success: false, message: "Required fields missing" });
+  }
+
+  // Verify Google reCAPTCHA
+  if (!captchaToken) {
+    return json(400, { success: false, message: "Please complete the captcha verification." });
+  }
+
+  const remoteIp =
+    event.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+    event.headers["client-ip"] ||
+    "";
+
+  try {
+    const captchaResult = await verifyCaptcha(captchaToken, remoteIp);
+    if (!captchaResult.success) {
+      console.error("reCAPTCHA verification failed:", captchaResult["error-codes"]);
+      return json(400, { success: false, message: "Captcha verification failed. Please try again." });
+    }
+  } catch (err) {
+    console.error("reCAPTCHA request error:", err);
+    return json(500, { success: false, message: "Captcha verification error. Please try again." });
   }
 
   // Validate email

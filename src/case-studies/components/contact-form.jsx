@@ -1,4 +1,6 @@
 import React from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { CONTACT_CONFIG } from '../../data/site-data';
 
 /* eslint-disable */
 /* ══════════════════════════════════════════════════════════════
@@ -35,6 +37,7 @@ export function ContactForm() {
     budget: '',
     timeline: ''
   });
+  const [captchaToken, setCaptchaToken] = React.useState('');
   const [errorMsg, setErrorMsg] = React.useState('');
   const [submitting, setSubmitting] = React.useState(false);
   const [sent, setSent] = React.useState(false);
@@ -59,6 +62,11 @@ export function ContactForm() {
       return;
     }
 
+    if (!captchaToken) {
+      setErrorMsg("Please complete the captcha verification.");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -68,7 +76,7 @@ export function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, captchaToken })
       });
 
       const result = await res.json();
@@ -170,6 +178,13 @@ export function ContactForm() {
                 <option>Exploring</option>
               </select>
             </div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
+            <ReCAPTCHA
+              sitekey={CONTACT_CONFIG.recaptchaSiteKey}
+              onChange={(token) => setCaptchaToken(token || '')}
+              theme="dark"
+            />
           </div>
           <button type="submit" className="btn btn-primary" disabled={submitting} style={{ width: "100%", justifyContent: "center", padding: "13px 18px", fontSize: 14, marginTop: 8 }}>
             {submitting ? "Sending Inquiry..." : "Book Strategy Call"}

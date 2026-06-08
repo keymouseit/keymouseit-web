@@ -354,5 +354,8 @@ export const WHY_COMPARE = [
 export const CONTACT_CONFIG = {
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY", // Get a free access key from https://web3forms.com/
   calendlyUrl: "https://calendly.com/hello-keymouseit/new-meeting",
+  // Google reCAPTCHA v2 site key — set VITE_RECAPTCHA_SITE_KEY in .env for production
+  recaptchaSiteKey:
+    import.meta.env.VITE_RECAPTCHA_SITE_KEY,
 };
 
