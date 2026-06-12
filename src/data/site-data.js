@@ -258,8 +258,7 @@ export const CASES = [
     challenge: "Plant managers lacked a live view of OEE, quality, and downtime across lines.",
     solution: "A factory intelligence platform connecting MES, quality, and maintenance data.",
     impact: [{ v: "+18%", l: "OEE" }, { v: "−31%", l: "downtime" }],
-    link: "#",
-    comingSoon: true
+    link: "/case-studies/manufacturing-control-tower"
   },
   {
     industry: "AI Automation", tag: "Workflow Automation", icon: "Sparkles", accent: BLUE,
