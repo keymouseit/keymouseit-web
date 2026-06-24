@@ -1,6 +1,10 @@
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { CONTACT_CONFIG } from '../../data/site-data';
+import {
+  buildCalendlyEmbedUrl,
+  useCalendlyBookingListener
+} from '../../utils/calendly';
 
 /* eslint-disable */
 /* ══════════════════════════════════════════════════════════════
@@ -41,6 +45,8 @@ export function ContactForm() {
   const [errorMsg, setErrorMsg] = React.useState('');
   const [submitting, setSubmitting] = React.useState(false);
   const [sent, setSent] = React.useState(false);
+
+  useCalendlyBookingListener(formData, sent);
 
   const DISALLOWED_DOMAINS = ['mailinator.com', 'yopmail.com', 'tempmail.com', 'dispostable.com', 'trashmail.com', 'guerrillamail.com', 'mailinator2.com'];
 
@@ -117,11 +123,14 @@ export function ContactForm() {
             <span style={{ color: "#fff", fontSize: 15, fontWeight: 600 }}>Inquiry sent! Book your time slot:</span>
           </div>
           <div style={{ width: "100%", height: 480, borderRadius: 12, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}>
-            <iframe 
-              src={`https://calendly.com/hello-keymouseit/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&hide_landing_page_details=1&hide_gdpr_banner=1`}
-              width="100%" 
-              height="100%" 
-              frameBorder="0" 
+            <iframe
+              src={buildCalendlyEmbedUrl({
+                name: formData.name,
+                email: formData.email
+              })}
+              width="100%"
+              height="100%"
+              frameBorder="0"
               title="Schedule Strategy Call"
             />
           </div>
