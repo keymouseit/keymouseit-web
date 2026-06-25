@@ -8,6 +8,10 @@ import {
   Reveal
 } from './site-ui';
 import { CONTACT_CONFIG } from '../data/site-data';
+import {
+  buildCalendlyEmbedUrl,
+  useCalendlyBookingListener
+} from '../utils/calendly';
 
 const NET_NODES = [
   [80, 90],
@@ -114,6 +118,8 @@ export default function FinalCTAV2() {
     useState(false);
 
   const [sent, setSent] = useState(false);
+
+  useCalendlyBookingListener(formData, sent);
 
   const DISALLOWED_DOMAINS = [
     'mailinator.com',
@@ -408,11 +414,10 @@ export default function FinalCTAV2() {
                     }}
                   >
                     <iframe
-                      src={`https://calendly.com/hello-keymouseit/new-meeting?name=${encodeURIComponent(
-                        formData.name
-                      )}&email=${encodeURIComponent(
-                        formData.email
-                      )}&hide_landing_page_details=1&hide_gdpr_banner=1`}
+                      src={buildCalendlyEmbedUrl({
+                        name: formData.name,
+                        email: formData.email
+                      })}
                       width="100%"
                       height="100%"
                       frameBorder="0"
