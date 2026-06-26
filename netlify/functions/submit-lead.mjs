@@ -99,12 +99,10 @@ function adminHtml({ name, email, company, budget, timeline, challenge }) {
       <div class="info-row"><span class="label">Name:</span> <span class="value">${esc(name)}</span></div>
       <div class="info-row"><span class="label">Email:</span> <a href="mailto:${esc(email)}" class="value-link">${esc(email)}</a></div>
       <div class="info-row"><span class="label">Company:</span> <span class="value">${esc(company)}</span></div>
-      <div class="info-row"><span class="label">Budget:</span> <span class="badge-blue">${esc(budget)}</span></div>
-      <div class="info-row"><span class="label">Timeline:</span> <span class="badge-amber">${esc(timeline)}</span></div>
+      ${budget ? `<div class="info-row"><span class="label">Budget:</span> <span class="badge-blue">${esc(budget)}</span></div>` : ""}
+      ${timeline ? `<div class="info-row"><span class="label">Timeline:</span> <span class="badge-amber">${esc(timeline)}</span></div>` : ""}
     </div>
-    <div class="challenge-card">
-      <strong>Challenge Description:</strong><br><br>${nl2br(challenge)}
-    </div>
+    ${challenge ? `<div class="challenge-card"><strong>Challenge Description:</strong><br><br>${nl2br(challenge)}</div>` : ""}
     <div class="footer">
       This inquiry was sent from your website's contact form.<br>
       &copy; 2026 KeyMouse IT. AI-Powered Systems. Real Business Impact.
@@ -175,9 +173,16 @@ export async function handler(event) {
 
   const { name, email, company, challenge, budget, timeline, captchaToken } = data;
 
+  const trimmedName = String(name || "").trim();
+  const trimmedEmail = String(email || "").trim();
+  const trimmedCompany = String(company || "").trim();
+  const trimmedChallenge = String(challenge || "").trim();
+  const trimmedBudget = String(budget || "").trim();
+  const trimmedTimeline = String(timeline || "").trim();
+
   // Validate required fields
-  if (!name || !email) {
-    return json(400, { success: false, message: "Required fields missing" });
+  if (!trimmedName || !trimmedEmail || !trimmedCompany) {
+    return json(400, { success: false, message: "Name, email, and company are required." });
   }
 
   // Verify Google reCAPTCHA
@@ -202,12 +207,12 @@ export async function handler(event) {
   }
 
   // Validate email
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
     return json(400, { success: false, message: "Please enter a valid email address." });
   }
 
   // Block disposable domains
-  const domain = email.split("@").pop().toLowerCase();
+  const domain = trimmedEmail.split("@").pop().toLowerCase();
   if (DISALLOWED_DOMAINS.some((d) => domain.includes(d))) {
     return json(400, {
       success: false,
@@ -235,18 +240,25 @@ export async function handler(event) {
     await transporter.sendMail({
       from: `KeyMouse IT <${SMTP_FROM}>`,
       to: ADMIN_EMAIL,
-      replyTo: `${name} <${email}>`,
-      subject: `New KeyMouse IT Lead: ${name} (${company})`,
-      html: adminHtml({ name, email, company, budget, timeline, challenge }),
+      replyTo: `${trimmedName} <${trimmedEmail}>`,
+      subject: `New KeyMouse IT Lead: ${trimmedName} (${trimmedCompany})`,
+      html: adminHtml({
+        name: trimmedName,
+        email: trimmedEmail,
+        company: trimmedCompany,
+        budget: trimmedBudget,
+        timeline: trimmedTimeline,
+        challenge: trimmedChallenge,
+      }),
     });
 
     // Send client confirmation
     await transporter.sendMail({
       from: `KeyMouse IT <${SMTP_FROM}>`,
-      to: email,
+      to: trimmedEmail,
       replyTo: `KeyMouse IT <${SMTP_FROM}>`,
       subject: "Your Consultation Has Been Confirmed",
-      html: clientHtml(name),
+      html: clientHtml(trimmedName),
     });
 
     return json(200, { success: true, message: "Emails sent successfully" });

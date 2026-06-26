@@ -36,9 +36,9 @@ $budget = isset($data["budget"]) ? strip_tags(trim($data["budget"])) : "";
 $timeline = isset($data["timeline"]) ? strip_tags(trim($data["timeline"])) : "";
 
 // Validate required fields
-if (empty($name) || empty($email) || empty($company) || empty($challenge)) {
+if (empty($name) || empty($email) || empty($company)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Required fields missing"]);
+    echo json_encode(["success" => false, "message" => "Name, email, and company are required."]);
     exit;
 }
 
