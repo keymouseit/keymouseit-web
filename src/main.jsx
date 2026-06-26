@@ -10,10 +10,11 @@ import DecisionIntelligence from './case-studies/DecisionIntelligence';
 import InventoryIntelligence from './case-studies/InventoryIntelligence';
 import LogisticsControlTower from './case-studies/LogisticsControlTower';
 import PredictiveInventoryPlanning from './case-studies/PredictiveInventoryPlanning';
-import { initClarity } from './utils/clarity';
+import { initClarity, initGoogleAnalytics } from './utils/clarity';
 import ClarityJourney from './components/ClarityJourney';
 import '../image-slot.js';
 
+initGoogleAnalytics();
 initClarity();
 
 function ScrollToTop() {

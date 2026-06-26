@@ -13,8 +13,9 @@ export const JOURNEY_STEPS = {
   CALENDLY_BOOKING_CONFIRMED: 'calendly_booking_confirmed',
 };
 
-const GA_MEASUREMENT_ID =
-  import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-7RFZ980XQJ';
+function getGaMeasurementId() {
+  return import.meta.env.VITE_GA_MEASUREMENT_ID || '';
+}
 
 const JOURNEY_STORAGE_KEY = 'clarity_journey_path';
 const LANDING_TRACKED_KEY = 'clarity_landing_tracked';
@@ -83,12 +84,30 @@ function trackClarity(step, metadata, journeyPath) {
 
 function trackGAEvent(eventName, metadata = {}) {
   const gtag = gtagFn();
-  if (!gtag) return;
+  const measurementId = getGaMeasurementId();
+  if (!gtag || !measurementId) return;
 
   gtag('event', eventName, {
-    send_to: GA_MEASUREMENT_ID,
+    send_to: measurementId,
     ...metadata,
   });
+}
+
+export function initGoogleAnalytics() {
+  const measurementId = getGaMeasurementId();
+  if (!measurementId || gtagFn()) return;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.appendChild(script);
 }
 
 export function initClarity() {
@@ -154,9 +173,10 @@ export function trackPageView(pathname, search = '') {
   trackClarity(JOURNEY_STEPS.PAGE_VIEW, metadata, journeyPath);
 
   const gtag = gtagFn();
-  if (gtag) {
+  const measurementId = getGaMeasurementId();
+  if (gtag && measurementId) {
     gtag('event', 'page_view', {
-      send_to: GA_MEASUREMENT_ID,
+      send_to: measurementId,
       page_path: pagePath,
       page_title: pageName,
       page_location: window.location.href,
