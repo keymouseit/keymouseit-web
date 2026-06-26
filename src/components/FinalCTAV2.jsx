@@ -12,6 +12,7 @@ import {
   buildCalendlyEmbedUrl,
   useCalendlyBookingListener
 } from '../utils/calendly';
+import { JOURNEY_STEPS, trackJourneyStep } from '../utils/clarity';
 
 const NET_NODES = [
   [80, 90],
@@ -138,6 +139,15 @@ export default function FinalCTAV2() {
 
     setErrorMsg('');
 
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.company.trim()
+    ) {
+      setErrorMsg('Name, email, and company are required.');
+      return;
+    }
+
     const emailLower = formData.email
       .trim()
       .toLowerCase();
@@ -192,6 +202,11 @@ export default function FinalCTAV2() {
       const result = await res.json();
 
       if (result && result.success) {
+        trackJourneyStep(JOURNEY_STEPS.LEAD_FORM_SUBMITTED, {
+          company: formData.company,
+          budget: formData.budget,
+          timeline: formData.timeline
+        });
         setSent(true);
       } else {
         setErrorMsg(
@@ -474,7 +489,9 @@ export default function FinalCTAV2() {
                     }}
                   >
                     <div className="field">
-                      <label>Name</label>
+                      <label>
+                        Name <span className="required-mark" aria-hidden="true">*</span>
+                      </label>
 
                       <input
                         required
@@ -490,7 +507,9 @@ export default function FinalCTAV2() {
                     </div>
 
                     <div className="field">
-                      <label>Work email</label>
+                      <label>
+                        Work email <span className="required-mark" aria-hidden="true">*</span>
+                      </label>
 
                       <input
                         required
@@ -512,9 +531,12 @@ export default function FinalCTAV2() {
                         gridColumn: '1 / -1'
                       }}
                     >
-                      <label>Company</label>
+                      <label>
+                        Company <span className="required-mark" aria-hidden="true">*</span>
+                      </label>
 
                       <input
+                        required
                         value={formData.company}
                         onChange={(e) =>
                           setFormData({
@@ -563,12 +585,8 @@ export default function FinalCTAV2() {
                               e.target.value
                           })
                         }
-                        required
                       >
-                        <option
-                          value=""
-                          disabled
-                        >
+                        <option value="">
                           Select range
                         </option>
 
@@ -600,12 +618,8 @@ export default function FinalCTAV2() {
                               e.target.value
                           })
                         }
-                        required
                       >
-                        <option
-                          value=""
-                          disabled
-                        >
+                        <option value="">
                           Select timeline
                         </option>
 

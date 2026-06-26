@@ -5,6 +5,7 @@ import {
   buildCalendlyEmbedUrl,
   useCalendlyBookingListener
 } from '../../utils/calendly';
+import { JOURNEY_STEPS, trackJourneyStep } from '../../utils/clarity';
 
 /* eslint-disable */
 /* ══════════════════════════════════════════════════════════════
@@ -16,6 +17,7 @@ import {
 const FORM_STYLE = `
   .case-field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
   .case-field label { font-size: 13px; font-weight: 600; color: #C7D2E0; letter-spacing: 0.2px; }
+  .case-field label .required-mark { color: #F87171; margin-left: 2px; }
   .case-field input, .case-field select, .case-field textarea {
     font-family: var(--sans); font-size: 15px; color: #fff;
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
@@ -54,6 +56,11 @@ export function ContactForm() {
     e.preventDefault();
     setErrorMsg('');
 
+    if (!formData.name.trim() || !formData.email.trim() || !formData.company.trim()) {
+      setErrorMsg("Name, email, and company are required.");
+      return;
+    }
+
     const emailLower = formData.email.trim().toLowerCase();
     const domain = emailLower.split('@')[1];
     
@@ -87,6 +94,11 @@ export function ContactForm() {
 
       const result = await res.json();
       if (result && result.success) {
+        trackJourneyStep(JOURNEY_STEPS.LEAD_FORM_SUBMITTED, {
+          company: formData.company,
+          budget: formData.budget,
+          timeline: formData.timeline
+        });
         setSent(true);
       } else {
         setErrorMsg(result.message || "Failed to submit. Please try again.");
@@ -150,17 +162,17 @@ export function ContactForm() {
           )}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div className="case-field">
-              <label>Name</label>
+              <label>Name <span className="required-mark" aria-hidden="true">*</span></label>
               <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" />
             </div>
             <div className="case-field">
-              <label>Work email</label>
+              <label>Work email <span className="required-mark" aria-hidden="true">*</span></label>
               <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="you@company.com" />
             </div>
           </div>
           <div className="case-field">
-            <label>Company</label>
-            <input value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" />
+            <label>Company <span className="required-mark" aria-hidden="true">*</span></label>
+            <input required value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company name" />
           </div>
           <div className="case-field">
             <label>Project challenge</label>
@@ -169,8 +181,8 @@ export function ContactForm() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div className="case-field">
               <label>Budget range</label>
-              <select value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})} required>
-                <option value="" disabled>Select range</option>
+              <select value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})}>
+                <option value="">Select range</option>
                 <option>{"< $25k"}</option>
                 <option>$25k – $75k</option>
                 <option>$75k – $200k</option>
@@ -179,8 +191,8 @@ export function ContactForm() {
             </div>
             <div className="case-field">
               <label>Timeline</label>
-              <select value={formData.timeline} onChange={e => setFormData({...formData, timeline: e.target.value})} required>
-                <option value="" disabled>Select timeline</option>
+              <select value={formData.timeline} onChange={e => setFormData({...formData, timeline: e.target.value})}>
+                <option value="">Select timeline</option>
                 <option>ASAP</option>
                 <option>1–3 months</option>
                 <option>3–6 months</option>

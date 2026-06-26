@@ -53,11 +53,15 @@ export async function handler(event) {
 
   const { name, email, company, budget, timeline, challenge, calendlyPayload } = data;
 
-  if (!name || !email) {
-    return json(400, { success: false, message: "Required fields missing" });
+  const trimmedName = String(name || "").trim();
+  const trimmedEmail = String(email || "").trim();
+  const trimmedCompany = String(company || "").trim();
+
+  if (!trimmedName || !trimmedEmail || !trimmedCompany) {
+    return json(400, { success: false, message: "Name, email, and company are required." });
   }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
     return json(400, { success: false, message: "Invalid email address" });
   }
 
@@ -75,7 +79,14 @@ export async function handler(event) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: slackText({ name, email, company, budget, timeline, challenge }),
+        text: slackText({
+          name: trimmedName,
+          email: trimmedEmail,
+          company: trimmedCompany,
+          budget,
+          timeline,
+          challenge,
+        }),
       }),
     });
 

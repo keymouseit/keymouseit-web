@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import { CONTACT_CONFIG } from '../data/site-data';
+import { JOURNEY_STEPS, trackJourneyStep } from './clarity';
 
 export function buildCalendlyEmbedUrl({ name, email, baseUrl = CONTACT_CONFIG.calendlyUrl }) {
   const url = new URL(baseUrl);
@@ -15,7 +16,7 @@ export function buildCalendlyEmbedUrl({ name, email, baseUrl = CONTACT_CONFIG.ca
   return url.toString();
 }
 
-export async function notifyBookingScheduled(formData, calendlyPayload) {
+async function notifyBookingScheduled(formData, calendlyPayload) {
   try {
     await fetch('/.netlify/functions/notify-booking', {
       method: 'POST',
@@ -33,23 +34,50 @@ export async function notifyBookingScheduled(formData, calendlyPayload) {
   }
 }
 
+function isCalendlyMessage(event) {
+  return (
+    event.origin === 'https://calendly.com' &&
+    typeof event.data?.event === 'string' &&
+    event.data.event.startsWith('calendly.')
+  );
+}
+
 export function useCalendlyBookingListener(formData, enabled) {
-  const notifiedRef = useRef(false);
+  const embedViewedRef = useRef(false);
+  const bookingNotifiedRef = useRef(false);
 
   useEffect(() => {
     if (!enabled) return;
 
+    if (!embedViewedRef.current) {
+      embedViewedRef.current = true;
+      trackJourneyStep(JOURNEY_STEPS.CALENDLY_EMBED_VIEWED);
+    }
+
     const onMessage = (event) => {
-      if (
-        event.origin !== 'https://calendly.com' ||
-        event.data?.event !== 'calendly.event_scheduled' ||
-        notifiedRef.current
-      ) {
+      if (!isCalendlyMessage(event)) return;
+
+      const { event: calendlyEvent, payload } = event.data;
+
+      if (calendlyEvent === 'calendly.date_and_time_selected') {
+        trackJourneyStep(JOURNEY_STEPS.CALENDLY_DATE_SELECTED);
         return;
       }
 
-      notifiedRef.current = true;
-      notifyBookingScheduled(formData, event.data.payload);
+      if (
+        calendlyEvent === 'calendly.event_scheduled' &&
+        !bookingNotifiedRef.current
+      ) {
+        bookingNotifiedRef.current = true;
+
+        trackJourneyStep(JOURNEY_STEPS.CALENDLY_BOOKING_CONFIRMED, {
+          company: formData.company,
+          budget: formData.budget,
+          timeline: formData.timeline
+        });
+
+        notifyBookingScheduled(formData, payload);
+      }
     };
 
     window.addEventListener('message', onMessage);

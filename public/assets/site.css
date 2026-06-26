@@ -255,6 +255,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.02em; color: va
 /* form */
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-size: 13px; font-weight: 600; color: #C7D2E0; letter-spacing: 0.2px; }
+.required-mark { color: #F87171; margin-left: 2px; }
 .field input, .field select, .field textarea {
   font-family: var(--font); font-size: 15px; color: #fff;
   background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
