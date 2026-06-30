@@ -59,10 +59,12 @@ function FeaturedCase({ c }) {
               <div style={{ fontSize: 13.5, color: "#9FB0C8", marginTop: 6 }}>{m.l}</div>
             </div>
           ))}
-          {c.link && c.link.startsWith('/') ? (
+          {c.link && c.link.startsWith('/') && !c.static ? (
             <Link className="btn btn-primary" to={c.link} style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></Link>
+          ) : c.link ? (
+            <a className="btn btn-primary" href={c.link} style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
           ) : (
-            <a className="btn btn-primary" href={c.link || "#contact"} rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
+            <a className="btn btn-primary" href="#contact" rel="noopener noreferrer" style={{ position: "relative", marginTop: 8 }}>View Case Study <Arrow /></a>
           )}
         </div>
       </div>
@@ -119,7 +121,7 @@ function SupportingCase({ c, i }) {
           <div style={{ marginTop: "auto", paddingTop: 18 }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: 1, textTransform: "uppercase", color: "var(--green)", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}><Icon name="TrendingUp" size={13} stroke={2.2} /> Outcome</div>
             {!c.comingSoon ? (
-              c.link && c.link.startsWith('/') ? (
+              c.link && c.link.startsWith('/') && !c.static ? (
                 <Link 
                   className="supp-outcome-link" 
                   to={c.link} 

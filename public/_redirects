@@ -1,1 +1,38 @@
-/*    /index.html   200
+# --- Legacy old-site URLs (.html) → current app ---
+/privacy-policy.html              /privacy        301
+/privacy.html                     /privacy        301
+/terms-of-service.html            /terms          301
+/terms.html                       /terms          301
+/contact.html                     /#contact       301
+/career.html                      /               301
+/careers.html                     /               301
+/services.html                    /#services      301
+/portfolio.html                   /               301
+/about.html                       /               301
+/about-us.html                    /               301
+/team.html                        /               301
+/blog.html                        /               301
+/index.html                       /               301
+
+# Catch-all for any other legacy .html page
+/*.html                           /               301
+
+# --- Legacy paths without .html (old sitelinks in Google) ---
+/contact                          /#contact       301
+/contact-us                       /#contact       301
+/services                         /#services      301
+/career                           /               301
+/careers                          /               301
+/portfolio                        /               301
+/about                            /               301
+/about-us                         /               301
+/team                             /               301
+/blog                             /               301
+/blog/*                           /               301
+/terms-of-service                 /terms          301
+
+# Trailing slash canonical
+/case-studies/connected-care-operations/    /case-studies/connected-care-operations    301
+
+# SPA fallback — must be last
+/*                                /index.html    200
