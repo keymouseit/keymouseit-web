@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# Only these URLs are in sitemap.xml (10 pages). Legacy .html URLs redirect via _redirects.
 Sitemap: https://keymouseit.com/sitemap.xml

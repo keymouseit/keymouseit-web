@@ -7,7 +7,26 @@
 [build.environment]
   SECRETS_SCAN_OMIT_KEYS = "VITE_GA_MEASUREMENT_ID,VITE_CLARITY_PROJECT_ID,VITE_RECAPTCHA_SITE_KEY"
 
-# SPA fallback — serve index.html for all client-side routes
+# Redirect www → apex (canonical domain)
+[[redirects]]
+  from = "https://www.keymouseit.com/*"
+  to = "https://keymouseit.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.keymouseit.com/*"
+  to = "https://keymouseit.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://keymouseit.com/*"
+  to = "https://keymouseit.com/:splat"
+  status = 301
+  force = true
+
+# SPA fallback — legacy 301s live in public/_redirects
 [[redirects]]
   from = "/*"
   to = "/index.html"

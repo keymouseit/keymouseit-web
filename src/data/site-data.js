@@ -269,6 +269,14 @@ export const CASES = [
     link: "/case-studies/predictive-inventory-planning"
   },
   {
+    industry: "Healthcare", tag: "Care Operations", icon: "HeartPulse,Activity", accent: BLUE,
+    title: "Connected Care Operations",
+    challenge: "Scheduling, records, diagnostics and billing lived in separate tools — patients repeated intake at every handoff.",
+    solution: "A connected care operating system linking clinic workflows with a patient app across the full outpatient journey.",
+    impact: [{ v: "05", l: "care stages connected" }, { v: "One", l: "shared patient record" }, { v: "24/7", l: "patient self-service" }],
+    link: "/case-studies/connected-care-operations",
+  },
+  {
     industry: "Identity & Security", tag: "Identity Platform", icon: "ShieldCheck,Shield", accent: BLUE,
     title: "Identity & Security Platform",
     challenge: "Fragmented access control made audits painful and risky.",

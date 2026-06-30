@@ -499,6 +499,7 @@ const CASE_HREFS = {
   log:  "/case-studies/logistics-control-tower",
   pred: "/case-studies/predictive-inventory-planning",
   dec:  "/case-studies/decision-intelligence",
+  care: "/case-studies/connected-care-operations",
 };
 function caseHref(id) { return CASE_HREFS[id] || "#"; }
 
@@ -577,6 +578,21 @@ const SYSTEMS = [
       { v: "Eliminated", l: "conflicting report cycles" },
     ],
     forWho: "Founders · Leadership Teams",
+  },
+  {
+    id: "care",
+    code: "S.06",
+    title: "Connected Care Operations",
+    glyph: "orch",
+    tag: "CARE ORCHESTRATION",
+    problem: "Bookings on calls and WhatsApp, fragmented records, repeated patient intake, and follow-ups with no clear owner.",
+    detail: "For multi-specialty clinics where reception reconciles schedules manually and patients resubmit the same details at every specialty handoff.",
+    metrics: [
+      { v: "05", l: "care stages connected" },
+      { v: "One", l: "shared patient record" },
+      { v: "24/7", l: "patient self-service" },
+    ],
+    forWho: "Clinic Ops · Care Coordinators",
   },
 ];
 
@@ -1283,7 +1299,7 @@ function Footer() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(140px, 1fr))", gap: 40 }}>
-            <FootCol title="Systems" links={["Manufacturing Control Tower","Inventory Intelligence","Logistics Control Tower","Predictive Planning","Decision Intelligence"]}/>
+            <FootCol title="Systems" links={["Manufacturing Control Tower","Inventory Intelligence","Logistics Control Tower","Predictive Planning","Decision Intelligence","Connected Care Operations"]}/>
             {}
             <FootCol title="Contact" links={["hello@keymouseit.com"]}/>
           </div>
@@ -1307,6 +1323,7 @@ const LINK_MAP = {
   "Logistics Control Tower": "/case-studies/logistics-control-tower",
   "Predictive Planning": "/case-studies/predictive-inventory-planning",
   "Decision Intelligence": "/case-studies/decision-intelligence",
+  "Connected Care Operations": "/case-studies/connected-care-operations",
   "hello@keymouseit.com": "mailto:hello@keymouseit.com"
 };
 

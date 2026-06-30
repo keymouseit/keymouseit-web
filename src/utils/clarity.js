@@ -30,6 +30,7 @@ const PAGE_NAMES = {
   '/case-studies/inventory-intelligence': 'case_inventory',
   '/case-studies/logistics-control-tower': 'case_logistics',
   '/case-studies/predictive-inventory-planning': 'case_predictive',
+  '/case-studies/connected-care-operations': 'case_connected_care',
 };
 
 function clarityFn() {

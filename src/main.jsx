@@ -10,7 +10,9 @@ import DecisionIntelligence from './case-studies/DecisionIntelligence';
 import InventoryIntelligence from './case-studies/InventoryIntelligence';
 import LogisticsControlTower from './case-studies/LogisticsControlTower';
 import PredictiveInventoryPlanning from './case-studies/PredictiveInventoryPlanning';
+import ConnectedCareOperations from './case-studies/ConnectedCareOperations';
 import { initClarity, initGoogleAnalytics } from './utils/clarity';
+import { applyPageSeo } from './utils/page-seo';
 import ClarityJourney from './components/ClarityJourney';
 import '../image-slot.js';
 
@@ -22,6 +24,7 @@ function ScrollToTop() {
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
+    applyPageSeo(pathname);
   }, [pathname]);
 
   return null;
@@ -42,6 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/case-studies/inventory-intelligence" element={<InventoryIntelligence />} />
         <Route path="/case-studies/logistics-control-tower" element={<LogisticsControlTower />} />
         <Route path="/case-studies/predictive-inventory-planning" element={<PredictiveInventoryPlanning />} />
+        <Route path="/case-studies/connected-care-operations" element={<ConnectedCareOperations />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
