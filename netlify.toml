@@ -26,7 +26,7 @@
   status = 301
   force = true
 
-# SPA fallback — legacy 301s live in public/_redirects
+  # SPA fallback — legacy 301s live in public/_redirects
 [[redirects]]
   from = "/*"
   to = "/index.html"

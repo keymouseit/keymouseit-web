@@ -31,8 +31,5 @@
 /blog/*                           /               301
 /terms-of-service                 /terms          301
 
-# Trailing slash canonical
-/case-studies/connected-care-operations/    /case-studies/connected-care-operations    301
-
 # SPA fallback — must be last
 /*                                /index.html    200
