@@ -46,6 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/case-studies/logistics-control-tower" element={<LogisticsControlTower />} />
         <Route path="/case-studies/predictive-inventory-planning" element={<PredictiveInventoryPlanning />} />
         <Route path="/case-studies/connected-care-operations" element={<ConnectedCareOperations />} />
+        <Route path="/case-studies/connected-care-operations/" element={<ConnectedCareOperations />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
