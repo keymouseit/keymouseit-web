@@ -16,24 +16,6 @@ export function buildCalendlyEmbedUrl({ name, email, baseUrl = CONTACT_CONFIG.ca
   return url.toString();
 }
 
-async function notifyBookingScheduled(formData, calendlyPayload) {
-  try {
-    await fetch('/.netlify/functions/notify-booking', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify({
-        ...formData,
-        calendlyPayload
-      })
-    });
-  } catch (err) {
-    console.error('Failed to send booking Slack notification:', err);
-  }
-}
-
 function isCalendlyMessage(event) {
   return (
     event.origin === 'https://calendly.com' &&
@@ -44,7 +26,7 @@ function isCalendlyMessage(event) {
 
 export function useCalendlyBookingListener(formData, enabled) {
   const embedViewedRef = useRef(false);
-  const bookingNotifiedRef = useRef(false);
+  const bookingTrackedRef = useRef(false);
 
   useEffect(() => {
     if (!enabled) return;
@@ -57,7 +39,7 @@ export function useCalendlyBookingListener(formData, enabled) {
     const onMessage = (event) => {
       if (!isCalendlyMessage(event)) return;
 
-      const { event: calendlyEvent, payload } = event.data;
+      const { event: calendlyEvent } = event.data;
 
       if (calendlyEvent === 'calendly.date_and_time_selected') {
         trackJourneyStep(JOURNEY_STEPS.CALENDLY_DATE_SELECTED);
@@ -66,17 +48,15 @@ export function useCalendlyBookingListener(formData, enabled) {
 
       if (
         calendlyEvent === 'calendly.event_scheduled' &&
-        !bookingNotifiedRef.current
+        !bookingTrackedRef.current
       ) {
-        bookingNotifiedRef.current = true;
+        bookingTrackedRef.current = true;
 
         trackJourneyStep(JOURNEY_STEPS.CALENDLY_BOOKING_CONFIRMED, {
           company: formData.company,
           budget: formData.budget,
           timeline: formData.timeline
         });
-
-        notifyBookingScheduled(formData, payload);
       }
     };
 
