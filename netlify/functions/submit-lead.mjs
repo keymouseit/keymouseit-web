@@ -8,6 +8,7 @@ const SMTP_PASS     = process.env.SMTP_PASS     || "";          // set in Netlif
 const SMTP_FROM     = process.env.SMTP_FROM     || "hello@keymouseit.com";
 const ADMIN_EMAIL   = process.env.ADMIN_EMAIL   || "globalsales.kmit@gmail.com";
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY || "";
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
 
 // ─── Disposable email blocklist ──────────────────────────────────────
 const DISALLOWED_DOMAINS = [
@@ -47,6 +48,47 @@ async function verifyCaptcha(token, remoteIp) {
   });
 
   return res.json();
+}
+
+function slackLeadText({ name, email, company, budget, timeline, challenge }) {
+  const lines = [
+    "📋 *New strategy call inquiry*",
+    "",
+    `*Name:* ${name}`,
+    `*Email:* ${email}`,
+  ];
+
+  if (company) lines.push(`*Company:* ${company}`);
+  if (budget) lines.push(`*Budget:* ${budget}`);
+  if (timeline) lines.push(`*Timeline:* ${timeline}`);
+  if (challenge) {
+    lines.push("", `*Challenge:*\n${challenge}`);
+  }
+
+  lines.push("", "_User submitted the form — Calendly booking may still be pending._");
+
+  return lines.join("\n");
+}
+
+async function notifySlack(lead) {
+  if (!SLACK_WEBHOOK_URL) {
+    console.warn("SLACK_WEBHOOK_URL env variable is not set — skipping Slack notification");
+    return;
+  }
+
+  try {
+    const res = await fetch(SLACK_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: slackLeadText(lead) }),
+    });
+
+    if (!res.ok) {
+      console.error("Slack webhook error:", res.status, await res.text());
+    }
+  } catch (err) {
+    console.error("Slack request error:", err);
+  }
 }
 
 function json(statusCode, body) {
@@ -235,31 +277,33 @@ export async function handler(event) {
     tls: { rejectUnauthorized: false },
   });
 
-  try {
-    // Send admin notification
-    await transporter.sendMail({
-      from: `KeyMouse IT <${SMTP_FROM}>`,
-      to: ADMIN_EMAIL,
-      replyTo: `${trimmedName} <${trimmedEmail}>`,
-      subject: `New KeyMouse IT Lead: ${trimmedName} (${trimmedCompany})`,
-      html: adminHtml({
-        name: trimmedName,
-        email: trimmedEmail,
-        company: trimmedCompany,
-        budget: trimmedBudget,
-        timeline: trimmedTimeline,
-        challenge: trimmedChallenge,
-      }),
-    });
+  const lead = {
+    name: trimmedName,
+    email: trimmedEmail,
+    company: trimmedCompany,
+    budget: trimmedBudget,
+    timeline: trimmedTimeline,
+    challenge: trimmedChallenge,
+  };
 
-    // Send client confirmation
-    await transporter.sendMail({
-      from: `KeyMouse IT <${SMTP_FROM}>`,
-      to: trimmedEmail,
-      replyTo: `KeyMouse IT <${SMTP_FROM}>`,
-      subject: "Your Consultation Has Been Confirmed",
-      html: clientHtml(trimmedName),
-    });
+  try {
+    await Promise.all([
+      transporter.sendMail({
+        from: `KeyMouse IT <${SMTP_FROM}>`,
+        to: ADMIN_EMAIL,
+        replyTo: `${trimmedName} <${trimmedEmail}>`,
+        subject: `New KeyMouse IT Lead: ${trimmedName} (${trimmedCompany})`,
+        html: adminHtml(lead),
+      }),
+      transporter.sendMail({
+        from: `KeyMouse IT <${SMTP_FROM}>`,
+        to: trimmedEmail,
+        replyTo: `KeyMouse IT <${SMTP_FROM}>`,
+        subject: "Your Consultation Has Been Confirmed",
+        html: clientHtml(trimmedName),
+      }),
+      notifySlack(lead),
+    ]);
 
     return json(200, { success: true, message: "Emails sent successfully" });
   } catch (err) {
