@@ -24,6 +24,7 @@ const PAGE_NAMES = {
   '/': 'home',
   '/privacy': 'privacy',
   '/terms': 'terms',
+  '/testimonials': 'testimonials',
   '/case-studies': 'case_studies_index',
   '/case-studies/manufacturing-control-tower': 'case_manufacturing',
   '/case-studies/decision-intelligence': 'case_decision',

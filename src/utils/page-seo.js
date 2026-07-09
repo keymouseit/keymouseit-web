@@ -14,6 +14,11 @@ export const PAGE_SEO = {
     title: 'Terms of Service — KeyMouse IT',
     description: 'Terms of service for KeyMouse IT software development and consulting.',
   },
+  '/testimonials': {
+    title: 'Client Testimonials — KeyMouse IT',
+    description:
+      'Read client reviews for KeyMouse IT — React Native, web development, QA, and long-term product engagements since 2018.',
+  },
   '/case-studies': {
     title: 'Case Studies — KeyMouse IT',
     description: 'Operational system case studies for manufacturing, logistics, inventory, healthcare and leadership teams.',
