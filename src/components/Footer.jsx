@@ -6,7 +6,7 @@ export default function Footer() {
   const cols = [
     ["Solutions", ["Operational Intelligence", "AI Automation", "Enterprise Platforms", "Identity & Security"]],
     ["Industries", ["Logistics", "Manufacturing", "Energy", "Retail"]],
-    ["Company", ["Case Studies", "Services", "Contact"]],
+    ["Company", ["Case Studies", "Testimonials", "Services", "Contact"]],
   ];
 
   const getHref = (link) => {
@@ -23,6 +23,8 @@ export default function Footer() {
         return "#industries";
       case "Case Studies":
         return "/case-studies";
+      case "Testimonials":
+        return "/testimonials";
       case "Services":
         return "#services";
       case "Contact":

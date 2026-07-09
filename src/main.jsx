@@ -11,6 +11,7 @@ import InventoryIntelligence from './case-studies/InventoryIntelligence';
 import LogisticsControlTower from './case-studies/LogisticsControlTower';
 import PredictiveInventoryPlanning from './case-studies/PredictiveInventoryPlanning';
 import ConnectedCareOperations from './case-studies/ConnectedCareOperations';
+import Testimonials from './components/Testimonials';
 import { initClarity, initGoogleAnalytics } from './utils/clarity';
 import { applyPageSeo } from './utils/page-seo';
 import ClarityJourney from './components/ClarityJourney';
@@ -39,6 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/case-studies" element={<CaseStudiesIndex />} />
         <Route path="/case-studies/manufacturing-control-tower" element={<ManufacturingControlTower />} />
         <Route path="/case-studies/decision-intelligence" element={<DecisionIntelligence />} />
