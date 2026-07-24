@@ -26,6 +26,11 @@ export default function MobileCTABar() {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("mobile-cta-visible", show);
+    return () => document.documentElement.classList.remove("mobile-cta-visible");
+  }, [show]);
+
   return (
     <div className={`mobile-cta-bar ${show ? "show" : ""}`}>
       <div className="mc-txt">Build your operational system<span>Free consultation · 1-day response</span></div>

@@ -65,7 +65,7 @@ function Terminal() {
       {/* Timeline body */}
       <div style={{ position: "relative", padding: "28px 22px 32px" }}>
         {/* Center spine */}
-        <span aria-hidden="true" style={{
+        <span className="timeline-center-spine" aria-hidden="true" style={{
           position: "absolute", top: 28, bottom: 32, left: "50%",
           width: 1, background: "var(--line-2)",
           transform: "translateX(-0.5px)",

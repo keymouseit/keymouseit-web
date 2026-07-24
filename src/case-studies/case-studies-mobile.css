@@ -66,24 +66,33 @@
 
   /* Pipeline hero connectors — vertical flow on mobile */
   .case-study-theme .pipeline-row {
-    gap: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    align-items: stretch;
   }
 
-  .case-study-theme .pipeline-stage-card {
-    margin-bottom: 24px;
+  .case-study-theme .pipeline-stage-card,
+  .case-study-theme .pipeline-row .pipeline-stage {
+    margin-bottom: 0 !important;
   }
 
-  .case-study-theme .pipeline-stage-card:last-child {
-    margin-bottom: 0;
+  .case-study-theme .pipeline-row .pipeline-stage {
+    flex: none;
+    width: 100%;
+    overflow: visible;
   }
 
   .case-study-theme .pipeline-stage-arrow {
     left: 50% !important;
     top: auto !important;
-    bottom: -20px !important;
+    right: auto !important;
+    bottom: -25px !important;
     width: 1px !important;
     height: 14px !important;
     transform: translateX(-50%);
+    background: var(--line-3) !important;
+    z-index: 1;
   }
 
   .case-study-theme .pipeline-stage-arrow > span {
@@ -92,39 +101,11 @@
     top: auto !important;
     bottom: -3px !important;
     transform: translateX(-50%) !important;
+    border: none !important;
     border-left: 4px solid transparent !important;
     border-right: 4px solid transparent !important;
     border-top: 6px solid var(--accent) !important;
     border-bottom: 0 !important;
-  }
-
-  .case-study-theme .pipeline-row .pipeline-stage:not(:last-child) {
-    position: relative;
-    padding-bottom: 28px;
-  }
-
-  .case-study-theme .pipeline-row .pipeline-stage:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 10px;
-    width: 1px;
-    height: 14px;
-    background: var(--line-3);
-    transform: translateX(-50%);
-  }
-
-  .case-study-theme .pipeline-row .pipeline-stage:not(:last-child)::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 4px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 6px solid var(--accent);
-    transform: translateX(-50%);
   }
 
   .case-study-theme .module-node {
@@ -282,7 +263,6 @@
 
   .case-study-theme .who-grid,
   .case-study-theme .breaking-grid,
-  .case-study-theme .pipeline-row,
   .case-study-theme .modules-row,
   .case-study-theme .big-grid,
   .case-study-theme .relevant-grid,
@@ -343,8 +323,53 @@
   }
 
   .case-study-theme .timeline .te {
-    grid-template-columns: 56px 1fr !important;
+    grid-template-columns: 64px 1fr !important;
     gap: 12px !important;
+    align-items: start !important;
+  }
+
+  .case-study-theme .timeline-center-spine,
+  .case-study-theme .timeline-spine,
+  .case-study-theme .te-spine-dot,
+  .case-study-theme .te-dot {
+    display: none !important;
+  }
+
+  .case-study-theme .timeline .te > span:not(.te-spine-dot) {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    align-self: start !important;
+    position: static !important;
+    transform: none !important;
+    min-width: 0 !important;
+  }
+
+  .case-study-theme .te-time {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    align-self: start !important;
+    position: static !important;
+    transform: none !important;
+    min-width: 0 !important;
+  }
+
+  .case-study-theme .timeline .te .te-side-l,
+  .case-study-theme .timeline .te .te-side-r,
+  .case-study-theme .te-card {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 !important;
+    text-align: left !important;
+  }
+
+  .case-study-theme .timeline .te .te-side-l > div,
+  .case-study-theme .timeline .te .te-side-r > div {
+    justify-content: flex-start !important;
+  }
+
+  .case-study-theme .timeline .te > div:empty {
+    display: none !important;
   }
 
   .case-study-theme .mod-row {
@@ -496,6 +521,12 @@
     margin-top: 40px;
     padding: 18px 14px 20px;
     border-radius: 16px;
+    overflow: visible;
+    border-color: var(--line);
+  }
+
+  .case-study-theme .pipeline-corner {
+    display: none;
   }
 
   .case-study-theme .pipeline-head {
