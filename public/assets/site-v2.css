@@ -127,8 +127,8 @@
 
 @media (max-width: 1024px) {
   .v2-hero-grid { grid-template-columns: 1fr !important; }
-  .cap-stack { flex-direction: column; }
-  .cap-arrow { padding: 14px 0 !important; transform: rotate(90deg); }
+  .cap-stack { flex-direction: column; gap: 10px !important }
+  .cap-arrow { padding: 14px 0 !important; transform: rotate(90deg); display: none !important }
   .cap-chev { display: block; }
   .cap-head { cursor: pointer !important; }
   .cap-body { grid-template-rows: 0fr; transition: grid-template-rows 0.32s var(--ease); }
@@ -167,9 +167,9 @@
   .cmp-r { flex-direction: column !important; gap: 0 !important; border: 1px solid var(--line) !important; border-radius: 16px !important; margin-bottom: 14px; box-shadow: var(--sh-sm); overflow: hidden; background: #fff; }
   .cmp-r > div { width: 100% !important; flex: none !important; justify-content: flex-start !important; text-align: left !important; padding: 16px 18px !important; }
   .cmp-r .cmp-agency { background: #FBFCFE; }
-  .cmp-r .cmp-spine { width: 100% !important; height: 0 !important; }
+  .cmp-r .cmp-spine { width: 100% !important; height: 0 !important; display: none !important; }
   .cmp-r .cmp-spine > span:first-child { display: none !important; }
-  .cmp-r .cmp-arrow { position: absolute; right: 18px; top: -16px; transform: rotate(90deg); }
+  .cmp-r .cmp-arrow { position: absolute; right: 18px; top: -16px; transform: rotate(90deg); display: none !important; }
   .proc-grid { grid-template-columns: 1fr !important; gap: 0 !important; position: relative; }
   .proc-grid::before { content: ""; position: absolute; left: 27px; top: 28px; bottom: 28px; width: 2px; background: var(--line-strong); }
   .proc-line { display: none !important; }
