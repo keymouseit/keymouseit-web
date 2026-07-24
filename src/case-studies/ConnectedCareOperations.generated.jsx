@@ -53,21 +53,33 @@ export function CaseStudySections() {
       
               <div className="pipeline-row">
                 <div className="pipeline-stage">
+                  <span className="pipeline-stage-arrow" aria-hidden="true" style={{ position: 'absolute', left: '100%', top: '50%', width: 12, height: 1, background: 'var(--line-3)', zIndex: 2 }}>
+                    <span style={{ position: 'absolute', right: -3, top: -3, width: 0, height: 0, borderLeft: '5px solid var(--accent)', borderTop: '3px solid transparent', borderBottom: '3px solid transparent' }} />
+                  </span>
                   <div className="pipeline-stage-head"><small>01</small></div>
                   <strong>Discover & Book</strong>
                   <span>Specialty + slot</span>
                 </div>
                 <div className="pipeline-stage">
+                  <span className="pipeline-stage-arrow" aria-hidden="true" style={{ position: 'absolute', left: '100%', top: '50%', width: 12, height: 1, background: 'var(--line-3)', zIndex: 2 }}>
+                    <span style={{ position: 'absolute', right: -3, top: -3, width: 0, height: 0, borderLeft: '5px solid var(--accent)', borderTop: '3px solid transparent', borderBottom: '3px solid transparent' }} />
+                  </span>
                   <div className="pipeline-stage-head"><small>02</small></div>
                   <strong>Digital Intake</strong>
                   <span>History + consent</span>
                 </div>
                 <div className="pipeline-stage is-gate">
+                  <span className="pipeline-stage-arrow" aria-hidden="true" style={{ position: 'absolute', left: '100%', top: '50%', width: 12, height: 1, background: 'var(--line-3)', zIndex: 2 }}>
+                    <span style={{ position: 'absolute', right: -3, top: -3, width: 0, height: 0, borderLeft: '5px solid var(--accent)', borderTop: '3px solid transparent', borderBottom: '3px solid transparent' }} />
+                  </span>
                   <div className="pipeline-stage-head"><small>03</small><span className="gate-badge">GATE</span></div>
                   <strong>Clinical Encounter</strong>
                   <span>Notes + eRx</span>
                 </div>
                 <div className="pipeline-stage">
+                  <span className="pipeline-stage-arrow" aria-hidden="true" style={{ position: 'absolute', left: '100%', top: '50%', width: 12, height: 1, background: 'var(--line-3)', zIndex: 2 }}>
+                    <span style={{ position: 'absolute', right: -3, top: -3, width: 0, height: 0, borderLeft: '5px solid var(--accent)', borderTop: '3px solid transparent', borderBottom: '3px solid transparent' }} />
+                  </span>
                   <div className="pipeline-stage-head"><small>04</small></div>
                   <strong>Diagnostics</strong>
                   <span>Orders + results</span>

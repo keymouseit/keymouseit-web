@@ -160,10 +160,13 @@ const PREMIUM_EFFECTS = `
 }
 @media (max-width: 959px) {
   .whatsapp-float-btn {
-    bottom: 96px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
     right: 20px;
     width: 50px;
     height: 50px;
+  }
+  html.mobile-cta-visible .whatsapp-float-btn {
+    bottom: calc(88px + env(safe-area-inset-bottom));
   }
   .whatsapp-float-btn svg {
     width: 24px;
