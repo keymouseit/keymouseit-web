@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Logo, Icon, Arrow, Reveal } from '../components/site-ui';
 import { ContactForm } from './components/contact-form';
 import './case-studies.css';
+import './case-studies-mobile.css';
 import { ArrowRight, ArrowUpRight, IconCoordination, IconVisibility, IconSequencing, IconPlanning, IconLatency, LayerGlyph } from './components/icons';
 
 
@@ -187,7 +188,7 @@ function HeroDiagram() {
         </div>
 
         {}
-        <div style={{ position: "relative", display: "grid", gridTemplateColumns: "44px 1fr 44px", gap: 0 }}>
+        <div style={{ position: "relative", display: "grid", gridTemplateColumns: "44px 1fr 44px", gap: 0 }} className="hero-diagram-grid">
           {}
           <FlowGutter direction="up" label="DATA" />
 
@@ -310,7 +311,7 @@ function FlowGutter({ direction, label }) {
       display: "flex", flexDirection: "column", alignItems: "center",
       justifyContent: "space-between",
       paddingTop: 6, paddingBottom: 6,
-    }}>
+    }} className="hero-diagram-gutter">
       <span style={{
         fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: "0.18em",
         color: "var(--muted)", writingMode: "vertical-rl",
@@ -784,7 +785,7 @@ function CaseDetail({ sys }) {
         </span>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 64px", gap: 24, alignItems: "start", marginBottom: 28 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 64px", gap: 24, alignItems: "start", marginBottom: 28 }} className="case-detail-head">
         <h3 style={{
           fontSize: 36, fontWeight: 500, letterSpacing: "-0.022em", lineHeight: 1.05,
           margin: 0, color: "var(--blue)", }}>{sys.title}
@@ -792,7 +793,7 @@ function CaseDetail({ sys }) {
         <div style={{
           width: 64, height: 64, borderRadius: 14,
           border: "1px solid var(--blue-100)", background: "var(--blue-50)", display: "grid", placeItems: "center", color: "var(--blue)",
-        }}>
+        }} className="case-detail-icon">
           <LayerGlyph kind={sys.glyph}/>
         </div>
       </div>
@@ -811,7 +812,7 @@ function CaseDetail({ sys }) {
         marginTop: "auto",
         display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
         borderTop: "1px solid var(--line-2)", paddingTop: 24, gap: 0,
-      }}>
+      }} className="case-detail-metrics">
         {sys.metrics.map((m, i) => (
           <div key={i} style={{
             padding: "4px 0",
@@ -880,7 +881,7 @@ function Architecture() {
 
 function ArchitectureDiagram() {
   return (
-    <div style={{
+    <div className="arch-diagram-wrap" style={{
       position: "relative",
       background: "var(--panel)",
       border: "1px solid var(--line)",
@@ -924,7 +925,7 @@ function ArchitectureDiagram() {
         />
 
         {}
-        <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "0 24px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "0 24px" }} className="arch-grid-main">
           {ARCH_LAYERS.map((L, i) => (
             <ArchLayer key={L.key} L={L} i={i} total={ARCH_LAYERS.length}/>
           ))}
@@ -967,6 +968,7 @@ function ArchLayer({ L, i, total }) {
       transition: "border-color .2s",
       overflow: "hidden",
     }}
+    className="arch-layer"
     onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(37,99,255,0.25)"}
     onMouseLeave={e => e.currentTarget.style.borderColor = "var(--line)"}
     >
@@ -993,7 +995,7 @@ function ArchLayer({ L, i, total }) {
       </div>
 
       {}
-      <span style={{
+      <span className="arch-layer-blurb" style={{
         fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.1em",
         color: "var(--text-2)", textTransform: "uppercase",
         textAlign: "right", maxWidth: 220,
@@ -1007,7 +1009,7 @@ function ArchLayer({ L, i, total }) {
 function ArchGutter({ direction, title, subtitle, captions }) {
   const up = direction === "up";
   return (
-    <div style={{
+    <div className="arch-gutter" style={{
       position: "relative",
       display: "flex", flexDirection: "column",
       justifyContent: "space-between",
@@ -1217,7 +1219,7 @@ function CTA() {
                 </a>
               </div>
 
-              <div style={{ marginTop: 28, display: "flex", gap: 22, flexWrap: "wrap", fontSize: 12.5, color: "rgba(255,255,255,0.5)" }}>
+              <div className="cta-trust" style={{ marginTop: 28, display: "flex", gap: 22, flexWrap: "wrap", fontSize: 12.5, color: "rgba(255,255,255,0.5)" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                   <span style={{ color: "var(--accent)" }}>✓</span> No sales call
                 </span>
@@ -1354,7 +1356,7 @@ function Footer() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(140px, 1fr))", gap: 40 }}>
+          <div className="footer-links-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(140px, 1fr))", gap: 40 }}>
             <FootCol title="Systems" links={["Manufacturing Control Tower","Inventory Intelligence","Logistics Control Tower","Predictive Planning","Decision Intelligence","Connected Care Operations"]}/>
             {}
             <FootCol title="Contact" links={["hello@keymouseit.com"]}/>
@@ -1538,7 +1540,7 @@ function TrustStrip() {
           <div style={{
             display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center",
             flex: 1, justifyContent: "center", minWidth: 320,
-          }}>
+          }} className="trust-strip-chips">
             {sectors.map((s, i) => (
                 <span key={i} style={{
                   fontSize: 12.5,
@@ -2270,7 +2272,7 @@ function TweaksRoot() {
 
 export default function CaseStudiesIndex() {
   return (
-    <div className="case-study-theme">
+    <div className="case-study-theme case-studies-index">
       <Nav/>
       <Hero/>
       <SelfIdentification/>

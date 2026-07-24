@@ -189,7 +189,7 @@ function FactoryPipeline() {
 function PipelineStage({ s, i, last }) {
   const accent = s.critical;
   return (
-    <div style={{
+    <div className="pipeline-stage-card" style={{
       position: "relative",
       background: accent
         ? "linear-gradient(180deg, rgba(37, 99, 255,0.10), rgba(37, 99, 255,0.02))"
@@ -200,7 +200,7 @@ function PipelineStage({ s, i, last }) {
       display: "flex", flexDirection: "column", gap: 12,
     }}>
       {!last && (
-        <span aria-hidden="true" style={{
+        <span className="pipeline-stage-arrow" aria-hidden="true" style={{
           position: "absolute", left: "100%", top: "50%",
           width: 10, height: 1, background: "var(--line-3)", zIndex: 2,
         }}>
