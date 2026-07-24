@@ -3,44 +3,12 @@ import { Link } from 'react-router-dom';
 import { Logo } from '../components/site-ui';
 import { ContactForm } from './components/contact-form';
 import { ArrowRight, ArrowUpRight, IconCoordination, IconVisibility, IconSequencing, IconPlanning, IconLatency, LayerGlyph } from './components/icons';
+import CaseStudyDetailNav from './components/CaseStudyDetailNav';
 import './case-studies.css';
+import './case-studies-mobile.css';
 
 
 /* --- Section from case-predictive/nav.jsx --- */
-
-
-function CaseNav() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 8);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-
-  return (
-    <nav className={`nav ${scrolled ? "scrolled" : ""}`} data-screen-label="Nav">
-      <div className="wrap nav-inner">
-        <Link to="/" className="brand" style={{ display: "inline-flex", alignItems: "center" }}>
-          <Logo height={40} mode="light" />
-        </Link>
-
-        <div className="crumbs" style={{ display: "flex" }}>
-          <Link to="/case-studies">Case Studies</Link>
-          <span className="sep">/</span>
-          <span className="cur">Predictive Inventory Planning</span>
-        </div>
-
-        <div className="nav-cta" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <a href="#cta" className="btn btn-primary" style={{ padding: "9px 14px", fontSize: 13 }}>
-            Get System Map <ArrowRight />
-          </a>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 
 
@@ -241,7 +209,7 @@ function PlanningPipeline() {
 function PipelineStage({ s, i, last }) {
   const accent = s.critical;
   return (
-    <div style={{
+    <div className="pipeline-stage-card" style={{
       position: "relative",
       background: accent
         ? "linear-gradient(180deg, rgba(37, 99, 255,0.10), rgba(37, 99, 255,0.02))"
@@ -252,7 +220,7 @@ function PipelineStage({ s, i, last }) {
       display: "flex", flexDirection: "column", gap: 12,
     }}>
       {!last && (
-        <span aria-hidden="true" style={{
+        <span className="pipeline-stage-arrow" aria-hidden="true" style={{
           position: "absolute", left: "100%", top: "50%",
           width: 10, height: 1, background: "var(--line-3)", zIndex: 2,
         }}>
@@ -1022,7 +990,7 @@ function ControlTowerDiagram() {
             borderRadius: 16,
             padding: "20px 32px",
             textAlign: "center",
-            minWidth: 360,
+            minWidth: "min(360px, 100%)",
             boxShadow: "0 0 80px -20px rgba(37, 99, 255,0.30)",
           }}>
             <div style={{
@@ -1871,7 +1839,7 @@ function CaseCTA() {
                 </a>
               </div>
 
-              <div style={{ marginTop: 28, display: "flex", gap: 22, flexWrap: "wrap", fontSize: 12.5, color: "rgba(255,255,255,0.5)" }}>
+              <div className="cta-trust" style={{ marginTop: 28, display: "flex", gap: 22, flexWrap: "wrap", fontSize: 12.5, color: "rgba(255,255,255,0.5)" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                   <span style={{ color: "var(--accent)" }}>✓</span> No sales call
                 </span>
@@ -2071,7 +2039,7 @@ function MidCTA({ headline, sub, btn }) {
 export default function PredictiveInventoryPlanning() {
   return (
     <div className="case-study-theme">
-      <CaseNav/>
+      <CaseStudyDetailNav title="Predictive Inventory Planning" />
       <CaseHero/>
       <WhoFor/>
       <Breaking/>

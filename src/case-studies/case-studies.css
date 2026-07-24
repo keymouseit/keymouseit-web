@@ -383,8 +383,8 @@
     .hero-grid { grid-template-columns: 1fr; gap: 56px; }
     .nav-links { display: none; }
     .nav .nav-cta { display: none !important; }
-    .nav-burger { display: inline-flex; }
-    .brand-tag { display: none; }
+    .nav-burger { display: inline-flex !important; }
+    .brand-tag { display: none !important; }
     .crumbs { display: none !important; }
     .nav-inner { height: 64px; }
     .nav.scrolled .nav-inner { height: 56px; }

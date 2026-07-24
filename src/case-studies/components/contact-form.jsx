@@ -15,6 +15,7 @@ import { JOURNEY_STEPS, trackJourneyStep } from '../../utils/clarity';
    ══════════════════════════════════════════════════════════════ */
 
 const FORM_STYLE = `
+  .case-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .case-field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
   .case-field label { font-size: 13px; font-weight: 600; color: #C7D2E0; letter-spacing: 0.2px; }
   .case-field label .required-mark { color: #F87171; margin-left: 2px; }
@@ -31,6 +32,13 @@ const FORM_STYLE = `
     color: #F87171; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
     border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
     display: flex; align-items: flex-start; gap: 10px; line-height: 1.4;
+  }
+  .case-recaptcha-wrap { display: flex; justify-content: center; overflow-x: auto; max-width: 100%; }
+  @media (max-width: 767px) {
+    .case-form-row { grid-template-columns: 1fr !important; }
+    .case-form-shell { padding: 18px 16px !important; }
+    .case-recaptcha-wrap { transform-origin: center top; }
+    .case-calendly-frame { height: 420px !important; }
   }
 `;
 
@@ -113,7 +121,7 @@ export function ContactForm() {
   
 
   return (
-    <div style={{
+    <div className="case-form-shell" style={{
       position: "relative",
       background: "rgba(8,10,15,0.6)",
       border: "1px solid rgba(255,255,255,0.08)",
@@ -134,7 +142,7 @@ export function ContactForm() {
             </span>
             <span style={{ color: "#fff", fontSize: 15, fontWeight: 600 }}>Inquiry sent! Book your time slot:</span>
           </div>
-          <div style={{ width: "100%", height: 480, borderRadius: 12, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}>
+          <div className="case-calendly-frame" style={{ width: "100%", height: 480, borderRadius: 12, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}>
             <iframe
               src={buildCalendlyEmbedUrl({
                 name: formData.name,
@@ -160,7 +168,7 @@ export function ContactForm() {
               <span>{errorMsg}</span>
             </div>
           )}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="case-form-row">
             <div className="case-field">
               <label>Name <span className="required-mark" aria-hidden="true">*</span></label>
               <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" />
@@ -178,7 +186,7 @@ export function ContactForm() {
             <label>Project challenge</label>
             <textarea rows="2" value={formData.challenge} onChange={e => setFormData({...formData, challenge: e.target.value})} placeholder="What problem are you trying to solve?" style={{ resize: "vertical" }}></textarea>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="case-form-row">
             <div className="case-field">
               <label>Budget range</label>
               <select value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})}>
@@ -200,7 +208,7 @@ export function ContactForm() {
               </select>
             </div>
           </div>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
+          <div className="case-recaptcha-wrap" style={{ marginTop: 4 }}>
             <ReCAPTCHA
               sitekey={CONTACT_CONFIG.recaptchaSiteKey}
               onChange={(token) => setCaptchaToken(token || '')}

@@ -72,7 +72,7 @@ function ControlTowerDiagram() {
             borderRadius: 16,
             padding: "20px 32px",
             textAlign: "center",
-            minWidth: 360,
+            minWidth: "min(360px, 100%)",
             boxShadow: "0 0 80px -20px rgba(37, 99, 255,0.30)",
           }}>
             <div style={{

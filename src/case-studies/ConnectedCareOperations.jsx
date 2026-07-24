@@ -3,62 +3,32 @@ import { Link } from 'react-router-dom';
 import { Logo } from '../components/site-ui';
 import { ArrowRight, ArrowUpRight } from './components/icons';
 import { ContactForm } from './components/contact-form';
+import CaseStudyDetailNav from './components/CaseStudyDetailNav';
 import { CaseStudySections } from './ConnectedCareOperations.generated';
 import './case-studies.css';
+import './case-studies-mobile.css';
 import './clinic-case-study.css';
 import './clinic-mfg-layout.css';
 
-function CaseNav({ showPdfDownload }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const handlePrint = () => {
-    document.body.classList.add('is-printing');
-    window.print();
-    window.addEventListener('afterprint', () => document.body.classList.remove('is-printing'), { once: true });
-  };
-
+function MobileCaseCTA() {
   return (
-    <nav className={`nav ${scrolled ? 'scrolled' : ''}`} data-screen-label="Nav">
-      <div className="wrap nav-inner">
-        <Link to="/" className="brand" style={{ display: 'inline-flex', alignItems: 'center', lineHeight: 0 }}>
-          <Logo height={40} mode="light" />
-        </Link>
-
-        <div className="crumbs" style={{ display: 'flex', alignItems: 'center' }}>
-          <Link to="/case-studies">Case Studies</Link>
-          <span className="sep">/</span>
-          <span className="cur">Connected Care Operations</span>
-        </div>
-
-        <div className="nav-cta" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          {showPdfDownload && (
-            <button
-              type="button"
-              className="btn btn-ghost pdf-download-btn is-visible no-print"
-              title="Save this case study as a PDF"
-              onClick={handlePrint}
-            >
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              Download PDF
-            </button>
-          )}
-          <a href="#cta" className="btn btn-primary" style={{ padding: '9px 14px', fontSize: 13, color: '#fff' }}>
-            Get System Map<ArrowRight />
-          </a>
-        </div>
+    <div className="mobile-cta" aria-hidden="false">
+      <div className="slot">
+        <span className="live-dot" />
+        30-min system map · no obligation
       </div>
-    </nav>
+      <div className="row">
+        <a href="#cta" className="btn btn-primary">
+          Get System Map <ArrowRight />
+        </a>
+        <a href="mailto:hello@keymouseit.com" className="btn btn-ghost" aria-label="Email">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
+            <rect x="1.5" y="3" width="13" height="10" rx="1.5" />
+            <path d="M2 4l6 5 6-5" />
+          </svg>
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -137,6 +107,12 @@ function WhatsAppFloat() {
 export default function ConnectedCareOperations() {
   const [showPdfDownload, setShowPdfDownload] = useState(false);
 
+  const handlePrint = () => {
+    document.body.classList.add('is-printing');
+    window.print();
+    window.addEventListener('afterprint', () => document.body.classList.remove('is-printing'), { once: true });
+  };
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setShowPdfDownload(params.has('download'));
@@ -144,12 +120,17 @@ export default function ConnectedCareOperations() {
 
   return (
     <div className="case-study-theme">
-      <CaseNav showPdfDownload={showPdfDownload} />
+      <CaseStudyDetailNav
+        title="Connected Care Operations"
+        showPdfDownload={showPdfDownload}
+        onPrint={handlePrint}
+      />
       <div id="pdf-export">
         <CaseStudySections />
         <CaseCTA />
         <CaseFooter />
       </div>
+      <MobileCaseCTA />
       <WhatsAppFloat />
     </div>
   );
