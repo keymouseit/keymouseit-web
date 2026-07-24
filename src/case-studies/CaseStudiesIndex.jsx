@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Logo, Icon, Arrow, Reveal } from '../components/site-ui';
 import { ContactForm } from './components/contact-form';
@@ -11,6 +12,7 @@ import { ArrowRight, ArrowUpRight, IconCoordination, IconVisibility, IconSequenc
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
@@ -19,15 +21,58 @@ function Nav() {
     return () => window.removeEventListener("scroll", on);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  const links = [
+    ["Case Studies", "#systems"],
+    ["Architecture", "#architecture"],
+    ["Proof", "#proof"],
+    ["Contact", "#audit"],
+  ];
+
+  const closeMenu = () => setOpen(false);
+
+  const mobileMenu = (
+    <div
+      className={`nav-drawer${open ? " open" : ""}`}
+      aria-hidden={!open}
+      onClick={closeMenu}
+    >
+      <div className="nav-drawer-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="nav-drawer-header">
+          <Link to="/" className="brand" onClick={closeMenu}>
+            <Logo height={40} mode="light" />
+          </Link>
+          <button type="button" className="nav-drawer-close" aria-label="Close menu" onClick={closeMenu}>
+            <Icon name="X" size={22} stroke={2.2} color="var(--text)" />
+          </button>
+        </div>
+        <nav className="nav-drawer-links" aria-label="Mobile">
+          {links.map(([label, href]) => (
+            <a key={label} href={href} onClick={closeMenu}>
+              <span>{label}</span>
+              <Icon name="ArrowUpRight" size={18} stroke={2} color="var(--faint)" />
+            </a>
+          ))}
+        </nav>
+        <div className="nav-drawer-footer">
+          <a href="#audit" className="btn btn-primary" onClick={closeMenu}>
+            Get System Map <ArrowRight />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <nav className={`nav ${scrolled ? "scrolled" : ""}`} data-screen-label="Nav">
+    <nav className={`nav${scrolled ? " scrolled" : ""}${open ? " menu-open" : ""}`} data-screen-label="Nav">
       <div className="wrap nav-inner">
-        <Link to="/" className="brand" style={{ display: "inline-flex", alignItems: "center" }}>
+        <Link to="/" className="brand" onClick={closeMenu}>
           <Logo height={40} mode="light" />
-          <span style={{
-            fontFamily: "var(--mono)", fontSize: 11, color: "var(--muted)",
-            marginLeft: 12, paddingLeft: 12, borderLeft: "1px solid var(--line-2)"
-          }}>OPERATIONAL SYSTEMS</span>
+          <span className="brand-tag">OPERATIONAL SYSTEMS</span>
         </Link>
 
         <div className="nav-links">
@@ -41,11 +86,22 @@ function Nav() {
             Get System Map<ArrowRight />
           </a>
         </div>
+
+        <button
+          type="button"
+          className="nav-burger"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((isOpen) => !isOpen)}
+        >
+          <Icon name={open ? "X" : "Menu"} size={24} stroke={2.2} color="var(--text)" />
+        </button>
       </div>
+
+      {typeof document !== "undefined" ? createPortal(mobileMenu, document.body) : null}
     </nav>
   );
 }
-
 
 
 /* --- Section from components/hero.jsx --- */
