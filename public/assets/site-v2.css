@@ -100,6 +100,31 @@
 .cap-chev { display: none; }
 .cap-head { cursor: default !important; }
 
+/* ---- Signature ribbon (KeyMouse IT method) ---- */
+.sig-row {
+  display: flex;
+  align-items: center;
+}
+
+.sig-step {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+}
+
+.sig-step > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.sig-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
 @media (max-width: 1024px) {
   .v2-hero-grid { grid-template-columns: 1fr !important; }
   .cap-stack { flex-direction: column; }
@@ -108,9 +133,10 @@
   .cap-head { cursor: pointer !important; }
   .cap-body { grid-template-rows: 0fr; transition: grid-template-rows 0.32s var(--ease); }
   .cap-body.open { grid-template-rows: 1fr; }
-  .sig-row { flex-direction: column; gap: 14px; }
-  .sig-stage { justify-content: flex-start !important; max-width: 320px; margin: 0 auto; }
-  .sig-arrow { transform: rotate(90deg); align-self: center; }
+  .sig-row { flex-direction: column; gap: 14px; align-items: stretch; }
+  .sig-step { flex: none; width: 100%; }
+  .sig-stage { justify-content: flex-start !important; max-width: none; margin: 0; width: 100%; }
+  .sig-arrow { display: none !important; }
   /* industry: stack rail + main */
   .ind-grid { grid-template-columns: 1fr !important; }
   .ind-rail { display: flex !important; overflow-x: auto; gap: 8px !important; padding: 6px !important; -webkit-overflow-scrolling: touch; }
