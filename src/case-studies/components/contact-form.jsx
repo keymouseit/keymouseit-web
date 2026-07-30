@@ -1,17 +1,12 @@
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import GoogleAppointmentBooking from '../../components/GoogleAppointmentBooking';
 import { CONTACT_CONFIG } from '../../data/site-data';
-import {
-  buildCalendlyEmbedUrl,
-  useCalendlyBookingListener
-} from '../../utils/calendly';
 import { JOURNEY_STEPS, trackJourneyStep } from '../../utils/clarity';
 
 /* eslint-disable */
 /* ══════════════════════════════════════════════════════════════
    ContactForm — Single source of truth for all case-study pages.
-   Loaded once via <script type="text/babel" src="components/contact-form.jsx">
-   and registered on window.ContactForm so every CTA can use <ContactForm/>.
    ══════════════════════════════════════════════════════════════ */
 
 const FORM_STYLE = `
@@ -38,7 +33,6 @@ const FORM_STYLE = `
     .case-form-row { grid-template-columns: 1fr !important; }
     .case-form-shell { padding: 18px 16px !important; }
     .case-recaptcha-wrap { transform-origin: center top; }
-    .case-calendly-frame { height: 420px !important; }
   }
 `;
 
@@ -55,8 +49,6 @@ export function ContactForm() {
   const [errorMsg, setErrorMsg] = React.useState('');
   const [submitting, setSubmitting] = React.useState(false);
   const [sent, setSent] = React.useState(false);
-
-  useCalendlyBookingListener(formData, sent);
 
   const DISALLOWED_DOMAINS = ['mailinator.com', 'yopmail.com', 'tempmail.com', 'dispostable.com', 'trashmail.com', 'guerrillamail.com', 'mailinator2.com'];
 
@@ -97,7 +89,11 @@ export function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: JSON.stringify({ ...formData, captchaToken })
+        body: JSON.stringify({
+          ...formData,
+          bookingUrl: CONTACT_CONFIG.googleAppointmentUrl,
+          captchaToken
+        })
       });
 
       const result = await res.json();
@@ -140,19 +136,7 @@ export function ContactForm() {
                 <path d="M13.5 4.5l-7.5 7.5-3.5-3.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </span>
-            <span style={{ color: "#fff", fontSize: 15, fontWeight: 600 }}>Inquiry sent! Book your time slot:</span>
-          </div>
-          <div className="case-calendly-frame" style={{ width: "100%", height: 480, borderRadius: 12, overflow: "hidden", background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}>
-            <iframe
-              src={buildCalendlyEmbedUrl({
-                name: formData.name,
-                email: formData.email
-              })}
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              title="Schedule Strategy Call"
-            />
+            <span style={{ color: "#fff", fontSize: 15, fontWeight: 600 }}>Inquiry sent — check your email for next steps.</span>
           </div>
         </div>
       ) : (
@@ -208,6 +192,7 @@ export function ContactForm() {
               </select>
             </div>
           </div>
+          <GoogleAppointmentBooking />
           <div className="case-recaptcha-wrap" style={{ marginTop: 4 }}>
             <ReCAPTCHA
               sitekey={CONTACT_CONFIG.recaptchaSiteKey}
@@ -216,7 +201,7 @@ export function ContactForm() {
             />
           </div>
           <button type="submit" className="btn btn-primary" disabled={submitting} style={{ width: "100%", justifyContent: "center", padding: "13px 18px", fontSize: 14, marginTop: 8 }}>
-            {submitting ? "Sending Inquiry..." : "Book Strategy Call"}
+            {submitting ? "Sending..." : "Book Strategy Call"}
           </button>
         </form>
       )}

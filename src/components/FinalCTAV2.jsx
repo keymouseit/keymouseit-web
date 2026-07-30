@@ -8,10 +8,7 @@ import {
   Reveal
 } from './site-ui';
 import { CONTACT_CONFIG } from '../data/site-data';
-import {
-  buildCalendlyEmbedUrl,
-  useCalendlyBookingListener
-} from '../utils/calendly';
+import GoogleAppointmentBooking from './GoogleAppointmentBooking';
 import { JOURNEY_STEPS, trackJourneyStep } from '../utils/clarity';
 
 const NET_NODES = [
@@ -120,8 +117,6 @@ export default function FinalCTAV2() {
 
   const [sent, setSent] = useState(false);
 
-  useCalendlyBookingListener(formData, sent);
-
   const DISALLOWED_DOMAINS = [
     'mailinator.com',
     'yopmail.com',
@@ -194,6 +189,7 @@ export default function FinalCTAV2() {
           },
           body: JSON.stringify({
             ...formData,
+            bookingUrl: CONTACT_CONFIG.googleAppointmentUrl,
             captchaToken
           })
         }
@@ -412,32 +408,8 @@ export default function FinalCTAV2() {
                         fontWeight: 600
                       }}
                     >
-                      Inquiry sent! Now lock in
-                      your time slot below:
+                      Inquiry sent — check your email for next steps.
                     </span>
-                  </div>
-
-                  <div
-                    style={{
-                      width: '100%',
-                      height: 550,
-                      borderRadius: 14,
-                      overflow: 'hidden',
-                      background: '#fff',
-                      boxShadow:
-                        '0 8px 30px rgba(0,0,0,0.12)'
-                    }}
-                  >
-                    <iframe
-                      src={buildCalendlyEmbedUrl({
-                        name: formData.name,
-                        email: formData.email
-                      })}
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      title="Schedule Strategy Call"
-                    />
                   </div>
                 </div>
               ) : (
@@ -640,6 +612,10 @@ export default function FinalCTAV2() {
                     </div>
                   </div>
 
+                  <div style={{ gridColumn: '1 / -1', marginTop: 20 }}>
+                    <GoogleAppointmentBooking />
+                  </div>
+
                   {/* Google reCAPTCHA */}
                   <div
                     style={{
@@ -664,7 +640,7 @@ export default function FinalCTAV2() {
                     disabled={submitting}
                   >
                     {submitting
-                      ? 'Sending Inquiry...'
+                      ? 'Sending...'
                       : 'Book Strategy Call'}
                   </button>
 

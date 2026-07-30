@@ -9,6 +9,10 @@ const SMTP_FROM     = process.env.SMTP_FROM     || "hello@keymouseit.com";
 const ADMIN_EMAIL   = process.env.ADMIN_EMAIL   || "globalsales.kmit@gmail.com";
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY || "";
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
+const GOOGLE_APPOINTMENT_URL =
+  process.env.GOOGLE_APPOINTMENT_URL ||
+  process.env.VITE_GOOGLE_APPOINTMENT_URL ||
+  "";
 
 // ─── Disposable email blocklist ──────────────────────────────────────
 const DISALLOWED_DOMAINS = [
@@ -27,6 +31,48 @@ function esc(s) {
 
 function nl2br(s) {
   return esc(s).replace(/\n/g, "<br>");
+}
+
+function formatCallDateTime(callDate, callTime) {
+  if (!callDate) return "";
+
+  const [year, month, day] = callDate.split("-").map(Number);
+  if (!year || !month || !day) return `${callDate}${callTime ? ` at ${callTime}` : ""}`;
+
+  const date = new Date(year, month - 1, day);
+  const dateLabel = date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  if (!callTime) return dateLabel;
+
+  const [hours, minutes] = callTime.split(":").map(Number);
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+    return `${dateLabel} at ${callTime}`;
+  }
+
+  const timeDate = new Date(year, month - 1, day, hours, minutes);
+  const timeLabel = timeDate.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return `${dateLabel} at ${timeLabel}`;
+}
+
+function bookingCardHtml({ callDate, callTime, bookingUrl }) {
+  const formatted = formatCallDateTime(callDate, callTime);
+  if (!formatted && !bookingUrl) return "";
+
+  return `
+    <div class="booking-card" style="background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #1d4ed8; margin-bottom: 10px;">Strategy call</div>
+      ${formatted ? `<div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">${esc(formatted)}</div>` : ""}
+      ${bookingUrl ? `<a href="${esc(bookingUrl)}" style="display: inline-block; margin-top: 8px; color: #2563eb; font-weight: 600; text-decoration: none;">View or reschedule on Google Calendar →</a>` : ""}
+    </div>`;
 }
 
 async function verifyCaptcha(token, remoteIp) {
@@ -50,7 +96,7 @@ async function verifyCaptcha(token, remoteIp) {
   return res.json();
 }
 
-function slackLeadText({ name, email, company, budget, timeline, challenge }) {
+function slackLeadText({ name, email, company, budget, timeline, challenge, callDate, callTime, bookingUrl }) {
   const lines = [
     "📋 *New strategy call inquiry*",
     "",
@@ -61,11 +107,14 @@ function slackLeadText({ name, email, company, budget, timeline, challenge }) {
   if (company) lines.push(`*Company:* ${company}`);
   if (budget) lines.push(`*Budget:* ${budget}`);
   if (timeline) lines.push(`*Timeline:* ${timeline}`);
+
+  const formattedCall = formatCallDateTime(callDate, callTime);
+  if (formattedCall) lines.push(`*Call time:* ${formattedCall}`);
+  if (bookingUrl) lines.push(`*Booking link:* ${bookingUrl}`);
+
   if (challenge) {
     lines.push("", `*Challenge:*\n${challenge}`);
   }
-
-  lines.push("", "_User submitted the form — Calendly booking may still be pending._");
 
   return lines.join("\n");
 }
@@ -105,7 +154,7 @@ function json(statusCode, body) {
 }
 
 // ─── Email templates ─────────────────────────────────────────────────
-function adminHtml({ name, email, company, budget, timeline, challenge }) {
+function adminHtml({ name, email, company, budget, timeline, challenge, callDate, callTime, bookingUrl }) {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -137,6 +186,7 @@ function adminHtml({ name, email, company, budget, timeline, challenge }) {
       <span class="badge-admin" style="margin-top: 12px;">New Lead Alert</span>
     </div>
     <h2>New Project Inquiry</h2>
+    ${bookingCardHtml({ callDate, callTime, bookingUrl })}
     <div class="info-grid">
       <div class="info-row"><span class="label">Name:</span> <span class="value">${esc(name)}</span></div>
       <div class="info-row"><span class="label">Email:</span> <a href="mailto:${esc(email)}" class="value-link">${esc(email)}</a></div>
@@ -154,7 +204,9 @@ function adminHtml({ name, email, company, budget, timeline, challenge }) {
 </html>`;
 }
 
-function clientHtml(name) {
+function clientHtml({ name, callDate, callTime, bookingUrl }) {
+  const formattedCall = formatCallDateTime(callDate, callTime);
+
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -178,10 +230,12 @@ function clientHtml(name) {
     </div>
     <h3>Hi ${esc(name)},</h3>
     <p>Thank you for choosing KeyMouse IT.</p>
-    <p>Your consultation has been successfully confirmed. We look forward to meeting with you and discussing how KeyMouse IT can help transform your ideas into scalable digital solutions.</p>
-    <p>We are looking forward to discussing your goals, understanding your challenges, and identifying opportunities where technology can create measurable value for your business. Our team will connect with you at the scheduled time and guide you through the next steps based on your specific requirements.</p>
-    <p>If you need to reschedule or update any information before the meeting, please let us know.</p>
-    <p>We appreciate your trust in KeyMouse IT and look forward to the conversation.</p>
+    ${formattedCall
+      ? `<p>Your strategy call is scheduled for <strong>${esc(formattedCall)}</strong>. We look forward to meeting with you and discussing how we can help transform your ideas into scalable digital solutions.</p>`
+      : `<p>We received your inquiry and will review the details shortly. Our team will follow up within one business day.</p>`}
+    <p>We are looking forward to understanding your goals, challenges, and opportunities where technology can create measurable value for your business.</p>
+    ${bookingCardHtml({ callDate, callTime, bookingUrl })}
+    <p>If you need to reschedule or update any information before the meeting, please reply to this email or use the Google Calendar link above.</p>
     <div class="divider"></div>
     <p style="font-size: 14px; color: #64748b; margin-bottom: 0;">Warm regards,<br><br><strong style="color: #0f172a;">The KeyMouse IT Team</strong><br>Building Scalable Digital Solutions</p>
     <div class="footer" style="margin-top: 32px;">
@@ -213,7 +267,7 @@ export async function handler(event) {
     for (const [k, v] of params) data[k] = v;
   }
 
-  const { name, email, company, challenge, budget, timeline, captchaToken } = data;
+  const { name, email, company, challenge, budget, timeline, callDate, callTime, bookingUrl, captchaToken } = data;
 
   const trimmedName = String(name || "").trim();
   const trimmedEmail = String(email || "").trim();
@@ -221,6 +275,9 @@ export async function handler(event) {
   const trimmedChallenge = String(challenge || "").trim();
   const trimmedBudget = String(budget || "").trim();
   const trimmedTimeline = String(timeline || "").trim();
+  const trimmedCallDate = String(callDate || "").trim();
+  const trimmedCallTime = String(callTime || "").trim();
+  const trimmedBookingUrl = String(bookingUrl || GOOGLE_APPOINTMENT_URL || "").trim();
 
   // Validate required fields
   if (!trimmedName || !trimmedEmail || !trimmedCompany) {
@@ -284,7 +341,12 @@ export async function handler(event) {
     budget: trimmedBudget,
     timeline: trimmedTimeline,
     challenge: trimmedChallenge,
+    callDate: trimmedCallDate,
+    callTime: trimmedCallTime,
+    bookingUrl: trimmedBookingUrl,
   };
+
+  const formattedCall = formatCallDateTime(trimmedCallDate, trimmedCallTime);
 
   try {
     await Promise.all([
@@ -299,8 +361,10 @@ export async function handler(event) {
         from: `KeyMouse IT <${SMTP_FROM}>`,
         to: trimmedEmail,
         replyTo: `KeyMouse IT <${SMTP_FROM}>`,
-        subject: "Your Consultation Has Been Confirmed",
-        html: clientHtml(trimmedName),
+        subject: formattedCall
+          ? `Your Strategy Call — ${formattedCall}`
+          : "Your Consultation Has Been Confirmed",
+        html: clientHtml(lead),
       }),
       notifySlack(lead),
     ]);
