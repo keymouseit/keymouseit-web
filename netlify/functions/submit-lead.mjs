@@ -1,4 +1,8 @@
 import nodemailer from "nodemailer";
+import {
+  createStrategyCallEvent,
+  isGoogleCalendarConfigured,
+} from "./lib/google-calendar.mjs";
 
 // ─── SMTP Configuration ─────────────────────────────────────────────
 const SMTP_HOST     = process.env.SMTP_HOST     || "mail.keymouseit.com";
@@ -63,15 +67,17 @@ function formatCallDateTime(callDate, callTime) {
   return `${dateLabel} at ${timeLabel}`;
 }
 
-function bookingCardHtml({ callDate, callTime, bookingUrl }) {
+function bookingCardHtml({ callDate, callTime, bookingUrl, meetLink, htmlLink }) {
   const formatted = formatCallDateTime(callDate, callTime);
-  if (!formatted && !bookingUrl) return "";
+  if (!formatted && !bookingUrl && !meetLink && !htmlLink) return "";
 
   return `
     <div class="booking-card" style="background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
       <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #1d4ed8; margin-bottom: 10px;">Strategy call</div>
-      ${formatted ? `<div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">${esc(formatted)}</div>` : ""}
-      ${bookingUrl ? `<a href="${esc(bookingUrl)}" style="display: inline-block; margin-top: 8px; color: #2563eb; font-weight: 600; text-decoration: none;">View or reschedule on Google Calendar →</a>` : ""}
+      ${formatted ? `<div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">${esc(formatted)} IST</div>` : ""}
+      ${meetLink ? `<a href="${esc(meetLink)}" style="display: inline-block; margin-top: 8px; margin-right: 16px; color: #2563eb; font-weight: 600; text-decoration: none;">Join Google Meet →</a>` : ""}
+      ${htmlLink ? `<a href="${esc(htmlLink)}" style="display: inline-block; margin-top: 8px; color: #2563eb; font-weight: 600; text-decoration: none;">View in Google Calendar →</a>` : ""}
+      ${!meetLink && !htmlLink && bookingUrl ? `<a href="${esc(bookingUrl)}" style="display: inline-block; margin-top: 8px; color: #2563eb; font-weight: 600; text-decoration: none;">View or reschedule on Google Calendar →</a>` : ""}
     </div>`;
 }
 
@@ -96,7 +102,7 @@ async function verifyCaptcha(token, remoteIp) {
   return res.json();
 }
 
-function slackLeadText({ name, email, company, budget, timeline, challenge, callDate, callTime, bookingUrl }) {
+function slackLeadText({ name, email, company, budget, timeline, challenge, callDate, callTime, meetLink, htmlLink }) {
   const lines = [
     "📋 *New strategy call inquiry*",
     "",
@@ -109,8 +115,9 @@ function slackLeadText({ name, email, company, budget, timeline, challenge, call
   if (timeline) lines.push(`*Timeline:* ${timeline}`);
 
   const formattedCall = formatCallDateTime(callDate, callTime);
-  if (formattedCall) lines.push(`*Call time:* ${formattedCall}`);
-  if (bookingUrl) lines.push(`*Booking link:* ${bookingUrl}`);
+  if (formattedCall) lines.push(`*Call time:* ${formattedCall} IST`);
+  if (meetLink) lines.push(`*Google Meet:* ${meetLink}`);
+  if (htmlLink) lines.push(`*Calendar event:* ${htmlLink}`);
 
   if (challenge) {
     lines.push("", `*Challenge:*\n${challenge}`);
@@ -154,7 +161,7 @@ function json(statusCode, body) {
 }
 
 // ─── Email templates ─────────────────────────────────────────────────
-function adminHtml({ name, email, company, budget, timeline, challenge, callDate, callTime, bookingUrl }) {
+function adminHtml({ name, email, company, budget, timeline, challenge, callDate, callTime, meetLink, htmlLink, bookingUrl }) {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -186,7 +193,7 @@ function adminHtml({ name, email, company, budget, timeline, challenge, callDate
       <span class="badge-admin" style="margin-top: 12px;">New Lead Alert</span>
     </div>
     <h2>New Project Inquiry</h2>
-    ${bookingCardHtml({ callDate, callTime, bookingUrl })}
+    ${bookingCardHtml({ callDate, callTime, bookingUrl, meetLink, htmlLink })}
     <div class="info-grid">
       <div class="info-row"><span class="label">Name:</span> <span class="value">${esc(name)}</span></div>
       <div class="info-row"><span class="label">Email:</span> <a href="mailto:${esc(email)}" class="value-link">${esc(email)}</a></div>
@@ -204,7 +211,7 @@ function adminHtml({ name, email, company, budget, timeline, challenge, callDate
 </html>`;
 }
 
-function clientHtml({ name, callDate, callTime, bookingUrl }) {
+function clientHtml({ name, callDate, callTime, meetLink, htmlLink, bookingUrl }) {
   const formattedCall = formatCallDateTime(callDate, callTime);
 
   return `<!DOCTYPE html>
@@ -231,11 +238,12 @@ function clientHtml({ name, callDate, callTime, bookingUrl }) {
     <h3>Hi ${esc(name)},</h3>
     <p>Thank you for choosing KeyMouse IT.</p>
     ${formattedCall
-      ? `<p>Your strategy call is scheduled for <strong>${esc(formattedCall)}</strong>. We look forward to meeting with you and discussing how we can help transform your ideas into scalable digital solutions.</p>`
+      ? `<p>Your strategy call is confirmed for <strong>${esc(formattedCall)} IST</strong>. We look forward to meeting with you.</p>`
       : `<p>We received your inquiry and will review the details shortly. Our team will follow up within one business day.</p>`}
+    ${meetLink ? `<p><strong>Join link:</strong> <a href="${esc(meetLink)}" style="color:#2563eb;">${esc(meetLink)}</a></p>` : ""}
     <p>We are looking forward to understanding your goals, challenges, and opportunities where technology can create measurable value for your business.</p>
-    ${bookingCardHtml({ callDate, callTime, bookingUrl })}
-    <p>If you need to reschedule or update any information before the meeting, please reply to this email or use the Google Calendar link above.</p>
+    ${bookingCardHtml({ callDate, callTime, bookingUrl, meetLink, htmlLink })}
+    <p>If you need to reschedule, please reply to this email.</p>
     <div class="divider"></div>
     <p style="font-size: 14px; color: #64748b; margin-bottom: 0;">Warm regards,<br><br><strong style="color: #0f172a;">The KeyMouse IT Team</strong><br>Building Scalable Digital Solutions</p>
     <div class="footer" style="margin-top: 32px;">
@@ -282,6 +290,10 @@ export async function handler(event) {
   // Validate required fields
   if (!trimmedName || !trimmedEmail || !trimmedCompany) {
     return json(400, { success: false, message: "Name, email, and company are required." });
+  }
+
+  if (!trimmedCallDate || !trimmedCallTime) {
+    return json(400, { success: false, message: "Please pick a date and time slot." });
   }
 
   // Verify Google reCAPTCHA
@@ -344,9 +356,34 @@ export async function handler(event) {
     callDate: trimmedCallDate,
     callTime: trimmedCallTime,
     bookingUrl: trimmedBookingUrl,
+    meetLink: "",
+    htmlLink: "",
   };
 
   const formattedCall = formatCallDateTime(trimmedCallDate, trimmedCallTime);
+
+  if (isGoogleCalendarConfigured()) {
+    try {
+      const calendarEvent = await createStrategyCallEvent(lead);
+      if (calendarEvent) {
+        lead.meetLink = calendarEvent.meetLink || "";
+        lead.htmlLink = calendarEvent.htmlLink || "";
+      }
+    } catch (err) {
+      console.error("Google Calendar error:", err);
+
+      if (err.code === "SLOT_UNAVAILABLE") {
+        return json(409, { success: false, message: err.message });
+      }
+
+      return json(500, {
+        success: false,
+        message: "Could not book your call on the calendar. Please try again or pick another time.",
+      });
+    }
+  } else {
+    console.warn("Google Calendar API is not configured — sending emails without calendar event.");
+  }
 
   try {
     await Promise.all([

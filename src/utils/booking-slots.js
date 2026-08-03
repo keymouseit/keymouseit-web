@@ -38,6 +38,27 @@ export function formatSlotLabel(timeValue) {
   });
 }
 
+export function formatBookingSummary(callDate, callTime) {
+  if (!callDate) {
+    return { dateLabel: '', timeLabel: '', combined: '' };
+  }
+
+  const [year, month, day] = callDate.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  const dateLabel = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+  const timeLabel = callTime ? formatSlotLabel(callTime) : '';
+  const combined = timeLabel
+    ? `${dateLabel} · ${timeLabel} ${BOOKING_CONFIG.timezoneLabel}`
+    : dateLabel;
+
+  return { dateLabel, timeLabel, combined };
+}
+
 export function getSlotsForDate(dateKey) {
   if (!dateKey) return [];
 
@@ -49,10 +70,14 @@ export function getSlotsForDate(dateKey) {
   }
 
   const slots = [];
-  const { startHour, endHour, slotMinutes } = BOOKING_CONFIG;
-  const endTotalMinutes = endHour * 60;
+  const { startHour, endHour, endMinute = 0, slotMinutes } = BOOKING_CONFIG;
+  const lastSlotStartMinutes = endHour * 60 + endMinute;
 
-  for (let total = startHour * 60; total < endTotalMinutes; total += slotMinutes) {
+  for (
+    let total = startHour * 60;
+    total <= lastSlotStartMinutes;
+    total += slotMinutes
+  ) {
     const hours = Math.floor(total / 60);
     const minutes = total % 60;
     slots.push(`${pad(hours)}:${pad(minutes)}`);
@@ -63,10 +88,11 @@ export function getSlotsForDate(dateKey) {
 
   const now = new Date();
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const minLeadMinutes = (BOOKING_CONFIG.minLeadHours || 0) * 60;
 
   return slots.filter((slot) => {
     const [hours, minutes] = slot.split(':').map(Number);
-    return hours * 60 + minutes > nowMinutes + 30;
+    return hours * 60 + minutes > nowMinutes + minLeadMinutes;
   });
 }
 

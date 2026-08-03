@@ -1,6 +1,7 @@
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import GoogleAppointmentBooking from '../../components/GoogleAppointmentBooking';
+import TimeSlotPicker from '../../components/TimeSlotPicker';
+import BookingSuccessCard from '../../components/BookingSuccessCard';
 import { CONTACT_CONFIG } from '../../data/site-data';
 import { JOURNEY_STEPS, trackJourneyStep } from '../../utils/clarity';
 
@@ -43,7 +44,9 @@ export function ContactForm() {
     company: '',
     challenge: '',
     budget: '',
-    timeline: ''
+    timeline: '',
+    callDate: '',
+    callTime: ''
   });
   const [captchaToken, setCaptchaToken] = React.useState('');
   const [errorMsg, setErrorMsg] = React.useState('');
@@ -77,6 +80,11 @@ export function ContactForm() {
 
     if (!captchaToken) {
       setErrorMsg("Please complete the captcha verification.");
+      return;
+    }
+
+    if (!formData.callDate || !formData.callTime) {
+      setErrorMsg("Please pick a date and time slot.");
       return;
     }
 
@@ -116,6 +124,22 @@ export function ContactForm() {
   };
   
 
+  const resetForm = () => {
+    setSent(false);
+    setFormData({
+      name: '',
+      email: '',
+      company: '',
+      challenge: '',
+      budget: '',
+      timeline: '',
+      callDate: '',
+      callTime: ''
+    });
+    setCaptchaToken('');
+    setErrorMsg('');
+  };
+
   return (
     <div className="case-form-shell" style={{
       position: "relative",
@@ -129,16 +153,14 @@ export function ContactForm() {
     }}>
       <style dangerouslySetInnerHTML={{__html: FORM_STYLE}} />
       {sent ? (
-        <div style={{ textAlign: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 20 }}>
-            <span style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(22,163,74,0.16)", border: "1px solid rgba(22,163,74,0.4)", color: "#4ADE80", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M13.5 4.5l-7.5 7.5-3.5-3.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
-            <span style={{ color: "#fff", fontSize: 15, fontWeight: 600 }}>Inquiry sent — check your email for next steps.</span>
-          </div>
-        </div>
+        <BookingSuccessCard
+          name={formData.name}
+          email={formData.email}
+          callDate={formData.callDate}
+          callTime={formData.callTime}
+          onReset={resetForm}
+          compact
+        />
       ) : (
         <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {errorMsg && (
@@ -192,7 +214,13 @@ export function ContactForm() {
               </select>
             </div>
           </div>
-          <GoogleAppointmentBooking />
+          <TimeSlotPicker
+            callDate={formData.callDate}
+            callTime={formData.callTime}
+            onChange={({ callDate, callTime }) =>
+              setFormData({ ...formData, callDate, callTime })
+            }
+          />
           <div className="case-recaptcha-wrap" style={{ marginTop: 4 }}>
             <ReCAPTCHA
               sitekey={CONTACT_CONFIG.recaptchaSiteKey}

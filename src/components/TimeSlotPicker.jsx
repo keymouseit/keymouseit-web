@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { BOOKING_CONFIG, CONTACT_CONFIG } from '../data/site-data';
+import { BOOKING_CONFIG } from '../data/site-data';
 import {
   formatSlotLabel,
   getMaxBookingDate,
@@ -17,8 +17,9 @@ export default function TimeSlotPicker({
 }) {
   const minDate = getMinBookingDate();
   const maxDate = getMaxBookingDate();
-
-  const slots = useMemo(() => getSlotsForDate(callDate), [callDate]);
+  const [slots, setSlots] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [usingGoogle, setUsingGoogle] = useState(false);
 
   const handleDateChange = (nextDate) => {
     onChange({
@@ -26,6 +27,62 @@ export default function TimeSlotPicker({
       callTime: ''
     });
   };
+
+  useEffect(() => {
+    if (!callDate || !isWeekdayAvailable(callDate)) {
+      setSlots([]);
+      setUsingGoogle(false);
+      return undefined;
+    }
+
+    let cancelled = false;
+    const controller = new AbortController();
+
+    async function loadSlots() {
+      setLoading(true);
+
+      try {
+        const response = await fetch(
+          `/.netlify/functions/available-slots?date=${encodeURIComponent(callDate)}`,
+          { signal: controller.signal }
+        );
+        const data = await response.json();
+
+        if (cancelled) return;
+
+        if (response.ok && data.success && data.source === 'google') {
+          setSlots(Array.isArray(data.slots) ? data.slots : []);
+          setUsingGoogle(true);
+          return;
+        }
+
+        setSlots(getSlotsForDate(callDate));
+        setUsingGoogle(false);
+      } catch (error) {
+        if (cancelled || error.name === 'AbortError') return;
+
+        setSlots(getSlotsForDate(callDate));
+        setUsingGoogle(false);
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadSlots();
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [callDate]);
+
+  useEffect(() => {
+    if (callTime && slots.length > 0 && !slots.includes(callTime)) {
+      onChange({ callDate, callTime: '' });
+    }
+  }, [callDate, callTime, onChange, slots]);
 
   return (
     <div className={`time-slot-picker ${className}`.trim()}>
@@ -35,7 +92,8 @@ export default function TimeSlotPicker({
           marginBottom: 8,
           color: '#C7D2E0',
           fontSize: 13,
-          fontWeight: 600
+          fontWeight: 600,
+          marginTop: 15,
         }}
       >
         Pick a time <span style={{ color: '#F87171' }}>*</span>
@@ -79,9 +137,13 @@ export default function TimeSlotPicker({
             paddingRight: 2
           }}
         >
-          {slots.length === 0 ? (
+          {loading ? (
             <p style={{ margin: 0, gridColumn: '1 / -1', fontSize: 13, color: '#9CA3AF' }}>
-              No slots left today. Try another date.
+              Loading available times...
+            </p>
+          ) : slots.length === 0 ? (
+            <p style={{ margin: 0, gridColumn: '1 / -1', fontSize: 13, color: '#9CA3AF' }}>
+              No open slots on this day. Try another date.
             </p>
           ) : (
             slots.map((slot) => {
@@ -116,19 +178,11 @@ export default function TimeSlotPicker({
         </div>
       )}
 
-      {CONTACT_CONFIG.googleAppointmentUrl ? (
-        <p style={{ margin: '10px 0 0', fontSize: 12.5, color: '#6B7689', lineHeight: 1.45 }}>
-          Times shown in {BOOKING_CONFIG.timezoneLabel}.{' '}
-          <a
-            href={CONTACT_CONFIG.googleAppointmentUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: '#93C5FD', textDecoration: 'none', fontWeight: 600 }}
-          >
-            Open Google Calendar
-          </a>
-        </p>
-      ) : null}
+      <p style={{ margin: '10px 0 0', fontSize: 12.5, color: '#6B7689', lineHeight: 1.45 }}>
+        {usingGoogle
+          ? `Live availability from Google Calendar (${BOOKING_CONFIG.timezoneLabel}). Booking stays on this page.`
+          : `Times shown in ${BOOKING_CONFIG.timezoneLabel}. Booking stays on this page.`}
+      </p>
     </div>
   );
 }

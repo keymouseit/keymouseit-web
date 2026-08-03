@@ -359,12 +359,17 @@ export const WHY_COMPARE = [
 
 /* ---- Contact Form & Google Calendar booking ---- */
 export const BOOKING_CONFIG = {
+  timezone: 'Asia/Kolkata',
   timezoneLabel: 'IST',
-  startHour: 9,
-  endHour: 18,
+  // Match Google Appointment schedule: 10:00 AM – 5:30 PM (last slot start)
+  startHour: 10,
+  endHour: 17,
+  endMinute: 30,
   slotMinutes: 30,
   availableWeekdays: [1, 2, 3, 4, 5],
-  minDaysAhead: 0,
+  // Google appointment schedules often block same-day booking
+  minLeadHours: 0,
+  minDaysAhead: 1,
   maxDaysAhead: 30
 };
 
