@@ -8,9 +8,9 @@ export const JOURNEY_STEPS = {
   SECTION_VIEWED: 'section_viewed',
   CTA_CLICK: 'cta_click',
   LEAD_FORM_SUBMITTED: 'lead_form_submitted',
-  CALENDLY_EMBED_VIEWED: 'calendly_embed_viewed',
-  CALENDLY_DATE_SELECTED: 'calendly_date_selected',
-  CALENDLY_BOOKING_CONFIRMED: 'calendly_booking_confirmed',
+  BOOKING_SCHEDULER_VIEWED: 'booking_scheduler_viewed',
+  BOOKING_LINK_CLICKED: 'booking_link_clicked',
+  BOOKING_CONFIRMED: 'booking_confirmed',
 };
 
 function getGaMeasurementId() {

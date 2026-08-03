@@ -357,11 +357,28 @@ export const WHY_COMPARE = [
   { agency: "Short-term engagement", us: "Long-term partnership", icon: "Handshake,Heart" },
 ];
 
-/* ---- Contact Form & Calendly configuration ---- */
+/* ---- Contact Form & Google Calendar booking ---- */
+export const BOOKING_CONFIG = {
+  timezone: 'Asia/Kolkata',
+  timezoneLabel: 'IST',
+  // Match Google Appointment schedule: 10:00 AM – 5:30 PM (last slot start)
+  startHour: 10,
+  endHour: 17,
+  endMinute: 30,
+  slotMinutes: 30,
+  availableWeekdays: [1, 2, 3, 4, 5],
+  // Google appointment schedules often block same-day booking
+  minLeadHours: 0,
+  minDaysAhead: 1,
+  maxDaysAhead: 30
+};
+
 export const CONTACT_CONFIG = {
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY", // Get a free access key from https://web3forms.com/
-  calendlyUrl: "https://calendly.com/hello-keymouseit/new-meeting",
-  // Google reCAPTCHA v2 site key — set VITE_RECAPTCHA_SITE_KEY in .env for production
+  // Google Calendar appointment schedule URL — set VITE_GOOGLE_APPOINTMENT_URL in Netlify/env
+  // Create in Google Calendar: Create > Appointment schedule > Share booking page
+  googleAppointmentUrl:
+    import.meta.env.VITE_GOOGLE_APPOINTMENT_URL || "",
   recaptchaSiteKey:
     import.meta.env.VITE_RECAPTCHA_SITE_KEY,
 };

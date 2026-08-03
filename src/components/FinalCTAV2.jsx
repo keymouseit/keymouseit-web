@@ -8,10 +8,8 @@ import {
   Reveal
 } from './site-ui';
 import { CONTACT_CONFIG } from '../data/site-data';
-import {
-  buildCalendlyEmbedUrl,
-  useCalendlyBookingListener
-} from '../utils/calendly';
+import TimeSlotPicker from './TimeSlotPicker';
+import BookingSuccessCard from './BookingSuccessCard';
 import { JOURNEY_STEPS, trackJourneyStep } from '../utils/clarity';
 
 const NET_NODES = [
@@ -108,7 +106,9 @@ export default function FinalCTAV2() {
     company: '',
     challenge: '',
     budget: '',
-    timeline: ''
+    timeline: '',
+    callDate: '',
+    callTime: ''
   });
 
   const [captchaToken, setCaptchaToken] =
@@ -119,8 +119,6 @@ export default function FinalCTAV2() {
     useState(false);
 
   const [sent, setSent] = useState(false);
-
-  useCalendlyBookingListener(formData, sent);
 
   const DISALLOWED_DOMAINS = [
     'mailinator.com',
@@ -181,6 +179,11 @@ export default function FinalCTAV2() {
       return;
     }
 
+    if (!formData.callDate || !formData.callTime) {
+      setErrorMsg('Please pick a date and time slot.');
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -194,6 +197,7 @@ export default function FinalCTAV2() {
           },
           body: JSON.stringify({
             ...formData,
+            bookingUrl: CONTACT_CONFIG.googleAppointmentUrl,
             captchaToken
           })
         }
@@ -226,6 +230,22 @@ export default function FinalCTAV2() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    setSent(false);
+    setFormData({
+      name: '',
+      email: '',
+      company: '',
+      challenge: '',
+      budget: '',
+      timeline: '',
+      callDate: '',
+      callTime: ''
+    });
+    setCaptchaToken('');
+    setErrorMsg('');
   };
 
   const notes = [
@@ -373,73 +393,13 @@ export default function FinalCTAV2() {
               }}
             >
               {sent ? (
-                <div style={{ textAlign: 'center' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 10,
-                      marginBottom: 20
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: 26,
-                        height: 26,
-                        borderRadius: '50%',
-                        background:
-                          'rgba(22,163,74,0.16)',
-                        border:
-                          '1px solid rgba(22,163,74,0.4)',
-                        color: '#4ADE80',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      <Icon
-                        name="Check"
-                        size={15}
-                        stroke={2.6}
-                      />
-                    </span>
-
-                    <span
-                      style={{
-                        color: '#fff',
-                        fontSize: 16,
-                        fontWeight: 600
-                      }}
-                    >
-                      Inquiry sent! Now lock in
-                      your time slot below:
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      width: '100%',
-                      height: 550,
-                      borderRadius: 14,
-                      overflow: 'hidden',
-                      background: '#fff',
-                      boxShadow:
-                        '0 8px 30px rgba(0,0,0,0.12)'
-                    }}
-                  >
-                    <iframe
-                      src={buildCalendlyEmbedUrl({
-                        name: formData.name,
-                        email: formData.email
-                      })}
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      title="Schedule Strategy Call"
-                    />
-                  </div>
-                </div>
+                <BookingSuccessCard
+                  name={formData.name}
+                  email={formData.email}
+                  callDate={formData.callDate}
+                  callTime={formData.callTime}
+                  onReset={resetForm}
+                />
               ) : (
                 <form onSubmit={submit}>
                   {errorMsg && (
@@ -640,6 +600,20 @@ export default function FinalCTAV2() {
                     </div>
                   </div>
 
+                  <div style={{ gridColumn: '1 / -1', marginTop: 4 }}>
+                    <TimeSlotPicker
+                      callDate={formData.callDate}
+                      callTime={formData.callTime}
+                      onChange={({ callDate, callTime }) =>
+                        setFormData({
+                          ...formData,
+                          callDate,
+                          callTime
+                        })
+                      }
+                    />
+                  </div>
+
                   {/* Google reCAPTCHA */}
                   <div
                     style={{
@@ -664,7 +638,7 @@ export default function FinalCTAV2() {
                     disabled={submitting}
                   >
                     {submitting
-                      ? 'Sending Inquiry...'
+                      ? 'Sending...'
                       : 'Book Strategy Call'}
                   </button>
 
